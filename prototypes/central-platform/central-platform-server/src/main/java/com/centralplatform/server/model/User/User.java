@@ -31,10 +31,6 @@ public class User implements UserDetails {
     private UUID id;
     private String firstname;
     private String lastname;
-    private String profilePicture;
-    private String socialUsername;
-    private String socialTag;
-    private String status;
 
     @Column(unique = true)
     private String email;

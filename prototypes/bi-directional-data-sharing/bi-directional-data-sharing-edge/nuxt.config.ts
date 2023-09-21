@@ -39,5 +39,13 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {}
     }
+  },
+  nitro: {
+    storage: {
+      db: {
+        driver: 'fs',
+        base: './.data/db'
+      }
+    }
   }
 })
