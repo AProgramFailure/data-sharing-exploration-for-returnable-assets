@@ -42,6 +42,9 @@ export const useConnectionStore = defineStore("authenticatedServer", () => {
         } as Connection
         const { data } = await useAsyncData<Connection[]>('connections', () => $fetch(`http://${user.value.address}:${user.value.port}/api/authenticate`, {
             method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: newConnecttion
         }))
 
