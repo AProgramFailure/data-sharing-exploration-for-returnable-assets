@@ -6,7 +6,22 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const useDatabase = defineStore("databse", () => {
     const database : RemovableRef<Database> = useSessionStorage<Database>("databse", {
-        tables: []
+        tables: [{
+            name: "Items",
+            rows: []
+        },
+        {
+            name: "Trucks",
+            rows: []
+        },
+        {
+            name: "Routes",
+            rows: []
+        },
+        {
+            name: "Warehouses",
+            rows: []
+        }]
     })
 
     const client : ComputedRef<Database> = computed(() => database.value)
@@ -77,4 +92,6 @@ export const useDatabase = defineStore("databse", () => {
         client, create, table, findById, add, remove,database
     }
 
+},{
+    persist: true
 })

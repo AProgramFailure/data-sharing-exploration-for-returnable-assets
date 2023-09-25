@@ -1,4 +1,4 @@
-package com.centralplatform.server.payload.request;
+package com.centralplatform.server.payload.request.Auth;
 
 import com.centralplatform.server.model.Role.Role;
 import lombok.AllArgsConstructor;

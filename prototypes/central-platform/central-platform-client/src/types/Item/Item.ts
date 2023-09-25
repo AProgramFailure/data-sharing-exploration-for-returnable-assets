@@ -1,7 +1,7 @@
 export type Item = {
     id: string
     name: string,
-    type: "create" | "bottle" | "pallete" | "keg",
+    type: "CRATE" | "BOTTLE" | "PALETTE" | "KEG",
     capacity: number,
     barcode: string
 }

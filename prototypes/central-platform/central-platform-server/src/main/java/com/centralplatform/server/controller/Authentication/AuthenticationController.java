@@ -1,7 +1,7 @@
 package com.centralplatform.server.controller.Authentication;
 
-import com.centralplatform.server.payload.request.AuthenticationRequest;
-import com.centralplatform.server.payload.request.RegisterRequest;
+import com.centralplatform.server.payload.request.Auth.AuthenticationRequest;
+import com.centralplatform.server.payload.request.Auth.RegisterRequest;
 import com.centralplatform.server.payload.response.AuthenticationResponse;
 import com.centralplatform.server.service.Authentication.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;

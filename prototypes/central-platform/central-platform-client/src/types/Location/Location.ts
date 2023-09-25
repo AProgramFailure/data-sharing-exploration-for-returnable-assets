@@ -6,5 +6,5 @@ export type Location = {
     institution: Institution
     latitude: string,
     longitude: string,
-    emptyItems: Item[]
+    items: Item[]
 }

@@ -4,12 +4,14 @@ import { Connection, ConnectionAddress } from "~/types/Connection/Connection";
 import { v4 as uuidv4 } from 'uuid';
 
 import { useUserStore } from "../user/userStore";
+import { useToast } from "vue-toastification";
 
 export const useConnectionStore = defineStore("authenticatedServer", () => {
 
     const connections : RemovableRef<Connection[]> = useSessionStorage<Connection[]>("connections", [] as Connection[])
 
     const userStore = useUserStore();
+    const toast = useToast()
 
     const { user } = storeToRefs(userStore);
 
@@ -24,6 +26,10 @@ export const useConnectionStore = defineStore("authenticatedServer", () => {
             user.value.address = address;
             user.value.port = port;
         }
+
+        setTimeout(() => {
+           toast.info("Reading Credentials")
+        }, 300);
         const newConnecttion: Connection = <Connection>{
             address: {
                 address: address,
@@ -40,6 +46,10 @@ export const useConnectionStore = defineStore("authenticatedServer", () => {
                 }
             }
         } as Connection
+
+        setTimeout(() => {
+            toast.info("Created Connections")
+        }, 1000);
         const { data } = await useAsyncData<Connection[]>('connections', () => $fetch(`http://${user.value.address}:${user.value.port}/api/authenticate`, {
             method: 'POST',
             headers: {
@@ -48,12 +58,23 @@ export const useConnectionStore = defineStore("authenticatedServer", () => {
             body: newConnecttion
         }))
 
-        console.log(data)
+        setTimeout(()=>{
+            toast.info("Connecting")
+        },1700)
 
         if(data.value == null){
+            toast.error("Could not Connect to Server")
             return
         }
         connections.value.push(...data.value)
+
+        setTimeout(() => {
+            toast.success("Successfully Connected")
+        }, 3700);
+
+        setTimeout(() => {
+            navigateTo("/home")
+        }, 4000);
 
     }
 
@@ -76,14 +97,18 @@ export const useConnectionStore = defineStore("authenticatedServer", () => {
         }));
 
         if(data === undefined){
+            toast.error("Connection Failed")
             return
+
         }
         if(data.value !== null){
-            connections.value = data.value
+            toast.info("Connection Established")
+            setTimeout(() => {
+                toast.info("Server Read Successfully")
+                connections.value = data.value
+            }, 700);
         }
-
-
-  }
+    }
     return {
         connections, connect,authenticate
     }

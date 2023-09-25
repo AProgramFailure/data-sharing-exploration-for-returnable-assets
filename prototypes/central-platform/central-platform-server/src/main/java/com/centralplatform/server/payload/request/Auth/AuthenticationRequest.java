@@ -1,4 +1,4 @@
-package com.centralplatform.server.payload.request;
+package com.centralplatform.server.payload.request.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
