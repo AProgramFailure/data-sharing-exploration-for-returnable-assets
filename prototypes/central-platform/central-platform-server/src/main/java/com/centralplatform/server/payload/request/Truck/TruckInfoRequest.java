@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-public class TruckInfoRequest implements TruckRequest{
+public class TruckInfoRequest extends TruckRequest{
 }

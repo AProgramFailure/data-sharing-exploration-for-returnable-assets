@@ -2,6 +2,7 @@ package com.centralplatform.server.controller.Item;
 
 
 import com.centralplatform.server.dto.Item.ItemDTO;
+import com.centralplatform.server.payload.request.Item.ItemInfoRequest;
 import com.centralplatform.server.payload.request.Item.ItemRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ public interface ItemController<R extends ItemRequest> {
 
     // GET
     @RequestMapping(value = "/item", method = RequestMethod.GET)
-    ResponseEntity<? extends List<ItemDTO>> getInstitutions(@RequestBody R request);
+    ResponseEntity<? extends List<ItemDTO>> getInstitutions(@RequestBody ItemInfoRequest request);
 
     @RequestMapping(value = "/item/{id}", method = RequestMethod.GET)
     ResponseEntity<? extends ItemDTO> getInstitutionById(@PathVariable("id") String id);

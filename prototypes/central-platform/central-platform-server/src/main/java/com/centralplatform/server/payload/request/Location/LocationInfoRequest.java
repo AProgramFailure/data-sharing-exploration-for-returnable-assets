@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-public class LocationInfoRequest implements LocationRequest{
+public class LocationInfoRequest extends LocationRequest {
 }

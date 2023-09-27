@@ -2,10 +2,12 @@ package com.centralplatform.server.dto.Location;
 
 import com.centralplatform.server.model.Location.Location;
 import com.centralplatform.server.util.Converters.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
 
+@Component
 public class LocationDTOConverter implements GenericConverter<Location, LocationDTO> {
     @Override
     public LocationDTO apply(Location location) {

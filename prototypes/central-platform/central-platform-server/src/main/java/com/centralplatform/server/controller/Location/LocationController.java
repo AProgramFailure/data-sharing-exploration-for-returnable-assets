@@ -1,6 +1,7 @@
 package com.centralplatform.server.controller.Location;
 
 import com.centralplatform.server.dto.Location.LocationDTO;
+import com.centralplatform.server.payload.request.Location.LocationInfoRequest;
 import com.centralplatform.server.payload.request.Location.LocationRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,7 @@ public interface LocationController<R extends LocationRequest>{
 
     // GET
     @RequestMapping(value = "/location", method = RequestMethod.GET)
-    ResponseEntity<? extends List<LocationDTO>> getInstitutions(@RequestBody R request);
+    ResponseEntity<? extends List<LocationDTO>> getInstitutions(@RequestBody LocationInfoRequest request);
 
     @RequestMapping(value = "/location/{id}", method = RequestMethod.GET)
     ResponseEntity<? extends LocationDTO> getInstitutionById(@PathVariable("id") String id);

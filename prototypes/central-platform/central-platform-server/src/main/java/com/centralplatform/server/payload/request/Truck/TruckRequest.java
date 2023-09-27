@@ -1,4 +1,6 @@
 package com.centralplatform.server.payload.request.Truck;
 
-public interface TruckRequest {
+import com.centralplatform.server.payload.request.Request;
+
+public class TruckRequest extends Request {
 }

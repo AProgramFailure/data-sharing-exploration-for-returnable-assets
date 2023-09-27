@@ -1,4 +1,6 @@
 package com.centralplatform.server.payload.request.Route;
 
-public interface RouteRequest {
+import com.centralplatform.server.payload.request.Request;
+
+public class RouteRequest extends Request {
 }

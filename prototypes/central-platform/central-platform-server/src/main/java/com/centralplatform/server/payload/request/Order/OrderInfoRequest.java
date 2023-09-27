@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-public class OrderInfoRequest implements OrderRequest{
+public class OrderInfoRequest extends OrderRequest{
 }

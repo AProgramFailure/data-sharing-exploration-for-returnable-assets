@@ -2,10 +2,12 @@ package com.centralplatform.server.dto.Route;
 
 import com.centralplatform.server.model.Route.Route;
 import com.centralplatform.server.util.Converters.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
 
+@Component
 public class RouteDTOConverter implements GenericConverter<Route, RouteDTO> {
     @Override
     public RouteDTO apply(Route route) {

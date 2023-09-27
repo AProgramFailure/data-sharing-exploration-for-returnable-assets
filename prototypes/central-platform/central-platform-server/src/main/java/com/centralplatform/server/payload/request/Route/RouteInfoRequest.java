@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-public class RouteInfoRequest implements RouteRequest{
+public class RouteInfoRequest extends RouteRequest{
 }

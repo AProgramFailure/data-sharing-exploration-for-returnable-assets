@@ -2,10 +2,12 @@ package com.centralplatform.server.dto.Order;
 
 import com.centralplatform.server.model.Order.Order;
 import com.centralplatform.server.util.Converters.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
 
+@Component
 public class OrderDTOConverter implements GenericConverter<Order, OrderDTO> {
     @Override
     public OrderDTO apply(Order order) {

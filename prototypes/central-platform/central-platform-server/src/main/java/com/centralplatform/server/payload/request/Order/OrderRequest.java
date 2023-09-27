@@ -1,4 +1,6 @@
 package com.centralplatform.server.payload.request.Order;
 
-public interface OrderRequest {
+import com.centralplatform.server.payload.request.Request;
+
+public class OrderRequest extends Request {
 }

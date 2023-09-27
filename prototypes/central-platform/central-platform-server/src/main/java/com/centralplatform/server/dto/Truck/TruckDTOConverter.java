@@ -2,10 +2,12 @@ package com.centralplatform.server.dto.Truck;
 
 import com.centralplatform.server.model.Truck.Truck;
 import com.centralplatform.server.util.Converters.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
 
+@Component
 public class TruckDTOConverter implements GenericConverter<Truck, TruckDTO> {
     @Override
     public TruckDTO apply(Truck truck) {

@@ -2,10 +2,12 @@ package com.centralplatform.server.dto.Item;
 
 import com.centralplatform.server.model.Item.Item;
 import com.centralplatform.server.util.Converters.GenericConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
 
+@Component
 public class ItemDTOConverter implements GenericConverter<Item, ItemDTO> {
     @Override
     public ItemDTO apply(Item item) {

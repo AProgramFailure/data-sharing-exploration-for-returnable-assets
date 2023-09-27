@@ -1,6 +1,7 @@
 package com.centralplatform.server.controller.Institution;
 
 import com.centralplatform.server.dto.Institution.InstitutionDTO;
+import com.centralplatform.server.payload.request.Institution.InstitutionInfoRequest;
 import com.centralplatform.server.payload.request.Institution.InstitutionRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface InstitutionController<R extends InstitutionRequest> {
     // GET
     @RequestMapping(value = "/institution", method = RequestMethod.GET)
-    ResponseEntity<? extends List<InstitutionDTO>> getInstitutions(@RequestBody R request);
+    ResponseEntity<? extends List<InstitutionDTO>> getInstitutions(@RequestBody InstitutionInfoRequest request);
 
     @RequestMapping(value = "/institution/{id}", method = RequestMethod.GET)
     ResponseEntity<? extends InstitutionDTO> getInstitutionById(@PathVariable("id") String id);

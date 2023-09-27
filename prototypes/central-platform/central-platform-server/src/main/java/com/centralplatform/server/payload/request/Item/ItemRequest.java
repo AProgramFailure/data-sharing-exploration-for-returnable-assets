@@ -1,4 +1,4 @@
 package com.centralplatform.server.payload.request.Item;
 
-public interface ItemRequest {
+public class ItemRequest {
 }
