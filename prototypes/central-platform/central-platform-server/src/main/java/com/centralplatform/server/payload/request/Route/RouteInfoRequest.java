@@ -1,11 +1,9 @@
 package com.centralplatform.server.payload.request.Route;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 public class RouteInfoRequest extends RouteRequest{

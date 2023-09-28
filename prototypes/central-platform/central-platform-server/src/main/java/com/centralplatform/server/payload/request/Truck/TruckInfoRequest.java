@@ -1,11 +1,10 @@
 package com.centralplatform.server.payload.request.Truck;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Service;
 
-@Data
+@Service
+@Getter
 @Builder
 @NoArgsConstructor
 public class TruckInfoRequest extends TruckRequest{

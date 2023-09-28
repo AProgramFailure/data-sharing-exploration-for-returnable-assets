@@ -28,7 +28,7 @@ public class Institution {
 
     @Column(name = "location")
     @OneToMany(mappedBy = "institution")
-    @JsonManagedReference
+    @JsonManagedReference(value = "institution-location")
     private List<Location> locations;
 
     @OneToOne(mappedBy = "institution")

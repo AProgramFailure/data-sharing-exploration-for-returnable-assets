@@ -31,11 +31,12 @@ public class Route {
 
 
     @OneToMany(mappedBy = "route")
-    @JsonManagedReference
+    @JsonManagedReference(value = "route-location")
     private List<Location> locations;
 
 
     @OneToMany(mappedBy = "route")
+    @JsonManagedReference(value = "truck-route")
     private List<Truck> trucks;
 
 }

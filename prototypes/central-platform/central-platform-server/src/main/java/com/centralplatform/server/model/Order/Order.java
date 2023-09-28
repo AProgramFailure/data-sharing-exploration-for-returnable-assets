@@ -26,7 +26,7 @@ public class Order {
 
     @Column(name = "amount")
     @OneToMany(mappedBy = "order")
-    @JsonManagedReference
+    @JsonManagedReference(value = "order-amount")
     private List<Item> amount;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -18,7 +18,7 @@ public class OrderControllerImpl implements OrderController<OrderRequest> {
     private final OrderServiceImpl orderService;
 
     @Override
-    public ResponseEntity<? extends List<OrderDTO>> getOrders(OrderInfoRequest request) {
+    public <T extends OrderRequest> ResponseEntity<? extends List<OrderDTO>> getOrders(T request) {
         return ResponseEntity.ok(orderService.getOrders(request));
     }
 
@@ -28,29 +28,29 @@ public class OrderControllerImpl implements OrderController<OrderRequest> {
     }
 
     @Override
-    public ResponseEntity<? extends OrderDTO> updateOrder(OrderRequest request, String id) {
-        return ResponseEntity.ok(orderService.updateOrder(request, id));
+    public <T extends OrderRequest> ResponseEntity<? extends OrderDTO> updateOrder(T request, String id) {
+        return ResponseEntity.ok(orderService.updateOrder(request,id));
     }
 
     @Override
-    public ResponseEntity<? extends OrderDTO> uploadOrder(OrderRequest request) {
+    public <T extends OrderRequest> ResponseEntity<? extends OrderDTO> uploadOrder(T request) {
         return ResponseEntity.ok(orderService.uploadOrder(request));
     }
 
     @Override
-    public ResponseEntity<? extends List<OrderDTO>> uploadOrders(OrderRequest request) {
+    public <T extends OrderRequest> ResponseEntity<? extends List<OrderDTO>> uploadOrders(T request) {
         return ResponseEntity.ok(orderService.uploadOrders(request));
     }
 
     @Override
     public ResponseEntity<?> deleteOrderById(String id) {
         orderService.deleteOrderById(id);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 
     @Override
-    public ResponseEntity<?> deleteOrders(OrderRequest request) {
+    public <T extends OrderRequest> ResponseEntity<?> deleteOrders(T request) {
         orderService.deleteOrders(request);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 }

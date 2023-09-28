@@ -17,9 +17,8 @@ import java.util.List;
 public class TruckControllerImpl implements TruckController<TruckRequest>{
     private final TruckServiceImpl truckService;
 
-
     @Override
-    public ResponseEntity<? extends List<TruckDTO>> getTrucks(TruckInfoRequest request) {
+    public <T extends TruckRequest> ResponseEntity<? extends List<TruckDTO>> getTrucks(T request) {
         return ResponseEntity.ok(truckService.getTrucks(request));
     }
 
@@ -29,29 +28,29 @@ public class TruckControllerImpl implements TruckController<TruckRequest>{
     }
 
     @Override
-    public ResponseEntity<? extends TruckDTO> uploadTruck(TruckRequest request) {
+    public <T extends TruckRequest> ResponseEntity<? extends TruckDTO> uploadTruck(T request) {
         return ResponseEntity.ok(truckService.uploadTruck(request));
     }
 
     @Override
-    public ResponseEntity<? extends TruckDTO> updateTruck(TruckRequest request, String id) {
+    public <T extends TruckRequest> ResponseEntity<? extends TruckDTO> updateTruck(T request, String id) {
         return ResponseEntity.ok(truckService.updateTruck(request,id));
     }
 
     @Override
-    public ResponseEntity<? extends List<TruckDTO>> uploadTrucks(TruckRequest request) {
+    public <T extends TruckRequest> ResponseEntity<? extends List<TruckDTO>> uploadTrucks(T request) {
         return ResponseEntity.ok(truckService.uploadTrucks(request));
     }
 
     @Override
     public ResponseEntity<?> deleteTruckById(String id) {
         truckService.deleteTruckById(id);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 
     @Override
-    public ResponseEntity<?> deleteTrucks(TruckRequest request) {
+    public <T extends TruckRequest> ResponseEntity<?> deleteTrucks(T request) {
         truckService.deleteTrucks(request);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 }

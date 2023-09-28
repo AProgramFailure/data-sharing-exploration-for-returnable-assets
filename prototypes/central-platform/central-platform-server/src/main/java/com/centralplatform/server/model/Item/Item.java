@@ -38,14 +38,14 @@ public class Item {
     private String barcode;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value = "item-location")
     private Location location;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value = "item-truck")
     private Truck truck;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value = "order-amount")
     private Order order;
 }

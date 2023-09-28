@@ -1,7 +1,6 @@
 package com.centralplatform.server.controller.Institution;
 
 import com.centralplatform.server.dto.Institution.InstitutionDTO;
-import com.centralplatform.server.payload.request.Institution.InstitutionInfoRequest;
 import com.centralplatform.server.payload.request.Institution.InstitutionRequest;
 import com.centralplatform.server.service.Institution.InstitutionServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +16,6 @@ import java.util.List;
 public class InstitutionControllerImpl implements InstitutionController<InstitutionRequest> {
 
     private final InstitutionServiceImpl institutionService;
-    @Override
-    public ResponseEntity<? extends List<InstitutionDTO>> getInstitutions(InstitutionInfoRequest request) {
-        return ResponseEntity.ok(institutionService.getInstitutions(request));
-    }
 
     @Override
     public ResponseEntity<? extends InstitutionDTO> getInstitutionById(String id) {
@@ -28,17 +23,24 @@ public class InstitutionControllerImpl implements InstitutionController<Institut
     }
 
     @Override
-    public ResponseEntity<? extends InstitutionDTO> uploadInstitution(InstitutionRequest request) {
+    public <T extends InstitutionRequest> ResponseEntity<? extends List<InstitutionDTO>> getInstitutions( T request) {
+        return ResponseEntity.ok(institutionService.getInstitutions(request));
+    }
+
+
+    @Override
+    public <T extends InstitutionRequest> ResponseEntity<? extends InstitutionDTO> uploadInstitution(T request) {
         return ResponseEntity.ok(institutionService.uploadInstitution(request));
     }
 
     @Override
-    public ResponseEntity<? extends InstitutionDTO> updateInstitution(InstitutionRequest request, String id) {
-        return ResponseEntity.ok(institutionService.updateInstitution(request,id));
+    public <T extends InstitutionRequest> ResponseEntity<? extends InstitutionDTO> updateInstitution( T request, String id) {
+        return null;
     }
 
+
     @Override
-    public ResponseEntity<? extends List<InstitutionDTO>> uploadInstitutions(InstitutionRequest request) {
+    public <T extends InstitutionRequest> ResponseEntity<? extends List<InstitutionDTO>> uploadInstitutions(T request) {
         return ResponseEntity.ok(institutionService.uploadInstitutions(request));
     }
 
@@ -49,7 +51,7 @@ public class InstitutionControllerImpl implements InstitutionController<Institut
     }
 
     @Override
-    public ResponseEntity<?> deleteInstitutions(InstitutionRequest request) {
+    public <T extends InstitutionRequest> ResponseEntity<?> deleteInstitutions(T request) {
         institutionService.deleteInstitutions(request);
         return ResponseEntity.ok("Successfully deleted");
     }

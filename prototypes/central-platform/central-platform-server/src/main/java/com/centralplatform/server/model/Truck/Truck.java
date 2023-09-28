@@ -2,6 +2,8 @@ package com.centralplatform.server.model.Truck;
 
 import com.centralplatform.server.model.Item.Item;
 import com.centralplatform.server.model.Route.Route;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -30,9 +32,11 @@ public class Truck {
 
 
     @OneToMany(mappedBy = "truck")
+    @JsonManagedReference(value = "item-truck")
     private List<Item> storage;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference(value = "truck-route")
     private Route route;
 
 

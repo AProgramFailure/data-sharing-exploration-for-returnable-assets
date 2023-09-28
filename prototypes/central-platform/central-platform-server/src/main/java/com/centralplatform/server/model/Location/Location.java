@@ -4,6 +4,7 @@ import com.centralplatform.server.model.Institution.Institution;
 import com.centralplatform.server.model.Item.Item;
 import com.centralplatform.server.model.Route.Route;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -28,7 +29,7 @@ public class Location {
     private String address;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value = "institution-location")
     @JoinColumn(name = "_institution_id", nullable = false)
     private Institution institution;
 
@@ -40,10 +41,11 @@ public class Location {
 
     @Column(name = "items")
     @OneToMany(mappedBy = "location")
+    @JsonManagedReference(value = "item-location")
     private List<Item> items;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value = "route-location")
     private Route route;
 
 

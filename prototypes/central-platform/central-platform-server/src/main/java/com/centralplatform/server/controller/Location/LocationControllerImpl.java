@@ -18,7 +18,7 @@ public class LocationControllerImpl implements LocationController<LocationReques
     private final LocationServiceImpl locationService;
 
     @Override
-    public ResponseEntity<? extends List<LocationDTO>> getInstitutions(LocationInfoRequest request) {
+    public <T extends LocationRequest> ResponseEntity<? extends List<LocationDTO>> getInstitutions(T request) {
         return ResponseEntity.ok(locationService.getLocations(request));
     }
 
@@ -28,29 +28,29 @@ public class LocationControllerImpl implements LocationController<LocationReques
     }
 
     @Override
-    public ResponseEntity<? extends LocationDTO> uploadInstitution(LocationRequest request) {
+    public <T extends LocationRequest> ResponseEntity<? extends LocationDTO> uploadInstitution(T request) {
         return ResponseEntity.ok(locationService.uploadLocation(request));
     }
 
     @Override
-    public ResponseEntity<? extends LocationDTO> updateInstitution(LocationRequest request, String id) {
-        return ResponseEntity.ok(locationService.updateLocation(request, id));
+    public <T extends LocationRequest> ResponseEntity<? extends LocationDTO> updateInstitution(T request, String id) {
+        return ResponseEntity.ok(locationService.updateLocation(request,id));
     }
 
     @Override
-    public ResponseEntity<? extends List<LocationDTO>> uploadInstitutions(LocationRequest request) {
+    public <T extends LocationRequest> ResponseEntity<? extends List<LocationDTO>> uploadInstitutions(T request) {
         return ResponseEntity.ok(locationService.uploadLocations(request));
     }
 
     @Override
     public ResponseEntity<?> deleteInstitutionById(String id) {
         locationService.deleteLocationById(id);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 
     @Override
-    public ResponseEntity<?> deleteInstitutions(LocationRequest request) {
+    public <T extends LocationRequest> ResponseEntity<?> deleteInstitutions(T request) {
         locationService.deleteLocations(request);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 }

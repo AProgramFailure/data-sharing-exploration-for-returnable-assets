@@ -18,39 +18,39 @@ public class ItemControllerImpl implements ItemController<ItemRequest> {
     private final ItemServiceImpl itemService;
 
     @Override
-    public ResponseEntity<? extends List<ItemDTO>> getInstitutions(ItemInfoRequest request) {
+    public <T extends ItemRequest> ResponseEntity<? extends List<ItemDTO>> getItems(T request) {
         return ResponseEntity.ok(itemService.getItems(request));
     }
 
     @Override
-    public ResponseEntity<? extends ItemDTO> getInstitutionById(String id) {
+    public ResponseEntity<? extends ItemDTO> getItemById(String id) {
         return ResponseEntity.ok(itemService.getItemById(id));
     }
 
     @Override
-    public ResponseEntity<? extends ItemDTO> uploadInstitution(ItemRequest request) {
+    public <T extends ItemRequest> ResponseEntity<? extends ItemDTO> uploadItem(T request) {
         return ResponseEntity.ok(itemService.uploadItem(request));
     }
 
     @Override
-    public ResponseEntity<? extends ItemDTO> updateInstitution(ItemRequest request, String id) {
-        return ResponseEntity.ok(itemService.updateItem(request, id));
+    public <T extends ItemRequest> ResponseEntity<? extends ItemDTO> updateItem(T request, String id) {
+        return ResponseEntity.ok(itemService.updateItem(request,id));
     }
 
     @Override
-    public ResponseEntity<? extends List<ItemDTO>> uploadInstitutions(ItemRequest request) {
+    public <T extends ItemRequest> ResponseEntity<? extends List<ItemDTO>> uploadItems(T request) {
         return ResponseEntity.ok(itemService.uploadItems(request));
     }
 
     @Override
-    public ResponseEntity<?> deleteInstitutionById(String id) {
+    public ResponseEntity<?> deleteItemById(String id) {
         itemService.deleteItemById(id);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 
     @Override
-    public ResponseEntity<?> deleteInstitutions(ItemRequest request) {
+    public <T extends ItemRequest> ResponseEntity<?> deleteItems(T request) {
         itemService.deleteItems(request);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 }

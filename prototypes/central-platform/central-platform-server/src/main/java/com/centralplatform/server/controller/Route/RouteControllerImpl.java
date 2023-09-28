@@ -17,8 +17,9 @@ import java.util.List;
 public class RouteControllerImpl implements RouteController<RouteRequest>{
     private final RouteServiceImpl routeService;
 
+
     @Override
-    public ResponseEntity<? extends List<RouteDTO>> getRoutes(RouteInfoRequest request) {
+    public <T extends RouteRequest> ResponseEntity<? extends List<RouteDTO>> getRoutes(T request) {
         return ResponseEntity.ok(routeService.getRoutes(request));
     }
 
@@ -28,29 +29,29 @@ public class RouteControllerImpl implements RouteController<RouteRequest>{
     }
 
     @Override
-    public ResponseEntity<? extends RouteDTO> uploadRoute(RouteRequest request) {
+    public <T extends RouteRequest> ResponseEntity<? extends RouteDTO> uploadRoute(T request) {
         return ResponseEntity.ok(routeService.uploadRoute(request));
     }
 
     @Override
-    public ResponseEntity<? extends RouteDTO> updateRoute(RouteRequest request, String id) {
-        return ResponseEntity.ok(routeService.updateRoute(request, id));
+    public <T extends RouteRequest> ResponseEntity<? extends RouteDTO> updateRoute(T request, String id) {
+        return ResponseEntity.ok(routeService.updateRoute(request,id));
     }
 
     @Override
-    public ResponseEntity<? extends List<RouteDTO>> uploadRoutes(RouteRequest request) {
+    public <T extends RouteRequest> ResponseEntity<? extends List<RouteDTO>> uploadRoutes(T request) {
         return ResponseEntity.ok(routeService.uploadRoutes(request));
     }
 
     @Override
     public ResponseEntity<?> deleteRouteById(String id) {
         routeService.deleteRouteById(id);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 
     @Override
-    public ResponseEntity<?> deleteRoutes(RouteRequest request) {
+    public <T extends RouteRequest> ResponseEntity<?> deleteRoutes(T request) {
         routeService.deleteRoutes(request);
-        return ResponseEntity.ok("Successfully Deleted");
+        return ResponseEntity.ok("Success");
     }
 }

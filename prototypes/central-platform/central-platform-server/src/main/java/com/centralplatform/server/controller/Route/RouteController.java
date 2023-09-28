@@ -14,20 +14,20 @@ import java.util.List;
 public interface RouteController<R extends RouteRequest> {
     // GET
     @RequestMapping(value = "/route", method = RequestMethod.GET)
-    ResponseEntity<? extends List<RouteDTO>> getRoutes(@RequestBody RouteInfoRequest request);
+    <T extends R>ResponseEntity<? extends List<RouteDTO>> getRoutes(@RequestBody T request);
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.GET)
     ResponseEntity<? extends RouteDTO> getRoutesById(@PathVariable("id") String id);
 
     // POST
     @RequestMapping(value = "/route", method = RequestMethod.POST)
-    ResponseEntity<? extends RouteDTO> uploadRoute(@RequestBody R request);
+    <T extends R> ResponseEntity<? extends RouteDTO> uploadRoute(@RequestBody T request);
 
     @RequestMapping(value = "/route/update/{id}", method = RequestMethod.POST)
-    ResponseEntity<? extends RouteDTO> updateRoute(@RequestBody R request, @PathVariable("id") String id);
+    <T extends R> ResponseEntity<? extends RouteDTO> updateRoute(@RequestBody T request, @PathVariable("id") String id);
 
     @RequestMapping(value = "/route/update", method = RequestMethod.POST)
-    ResponseEntity<? extends List<RouteDTO>> uploadRoutes(@RequestBody R request);
+    <T extends R> ResponseEntity<? extends List<RouteDTO>> uploadRoutes(@RequestBody T request);
 
 
     // DELETE
@@ -35,5 +35,5 @@ public interface RouteController<R extends RouteRequest> {
     ResponseEntity<?> deleteRouteById(@PathVariable("id") String id);
 
     @RequestMapping(value = "/route/delete", method = RequestMethod.GET)
-    ResponseEntity<?> deleteRoutes(@RequestBody R request);
+    <T extends R> ResponseEntity<?> deleteRoutes(@RequestBody T request);
 }

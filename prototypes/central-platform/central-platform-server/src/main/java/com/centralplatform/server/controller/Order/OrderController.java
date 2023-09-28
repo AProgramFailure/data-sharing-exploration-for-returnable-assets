@@ -14,20 +14,20 @@ import java.util.List;
 public interface OrderController<R extends OrderRequest> {
     // GET
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    ResponseEntity<? extends List<OrderDTO>> getOrders(@RequestBody OrderInfoRequest request);
+    <T extends R> ResponseEntity<? extends List<OrderDTO>> getOrders(@RequestBody T request);
 
     @RequestMapping(value = "/order/{id}", method = RequestMethod.GET)
     ResponseEntity<? extends OrderDTO> getOrderById(@PathVariable("id") String id);
 
     // POST
     @RequestMapping(value = "/order/update/{id}", method = RequestMethod.POST)
-    ResponseEntity<? extends OrderDTO> updateOrder(@RequestBody R request, @PathVariable("id") String id);
+    <T extends R> ResponseEntity<? extends OrderDTO> updateOrder(@RequestBody T request, @PathVariable("id") String id);
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    ResponseEntity<? extends OrderDTO> uploadOrder(@RequestBody R request);
+    <T extends R> ResponseEntity<? extends OrderDTO> uploadOrder(@RequestBody T request);
 
     @RequestMapping(value = "/order/update", method = RequestMethod.POST)
-    ResponseEntity<? extends List<OrderDTO>> uploadOrders(@RequestBody R request);
+    <T extends R> ResponseEntity<? extends List<OrderDTO>> uploadOrders(@RequestBody T request);
 
 
     // DELETE
@@ -35,5 +35,5 @@ public interface OrderController<R extends OrderRequest> {
     ResponseEntity<?> deleteOrderById(@PathVariable("id") String id);
 
     @RequestMapping(value = "/order/delete", method = RequestMethod.GET)
-    ResponseEntity<?> deleteOrders(@RequestBody R request);
+    <T extends R> ResponseEntity<?> deleteOrders(@RequestBody T request);
 }

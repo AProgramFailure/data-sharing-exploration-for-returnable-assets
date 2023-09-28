@@ -1,12 +1,11 @@
 package com.centralplatform.server.payload.request.Institution;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 public class InstitutionInfoRequest extends InstitutionRequest {
+
 }

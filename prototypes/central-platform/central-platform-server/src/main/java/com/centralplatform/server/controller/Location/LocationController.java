@@ -15,20 +15,20 @@ public interface LocationController<R extends LocationRequest>{
 
     // GET
     @RequestMapping(value = "/location", method = RequestMethod.GET)
-    ResponseEntity<? extends List<LocationDTO>> getInstitutions(@RequestBody LocationInfoRequest request);
+    <T extends R>ResponseEntity<? extends List<LocationDTO>> getInstitutions(@RequestBody T request);
 
     @RequestMapping(value = "/location/{id}", method = RequestMethod.GET)
     ResponseEntity<? extends LocationDTO> getInstitutionById(@PathVariable("id") String id);
 
     // POST
     @RequestMapping(value = "/location", method = RequestMethod.POST)
-    ResponseEntity<? extends LocationDTO> uploadInstitution(@RequestBody R request);
+    <T extends R>ResponseEntity<? extends LocationDTO> uploadInstitution(@RequestBody T request);
 
     @RequestMapping(value = "/location/update/{id}", method = RequestMethod.POST)
-    ResponseEntity<? extends LocationDTO> updateInstitution(@RequestBody R request, @PathVariable("id") String id);
+    <T extends R>ResponseEntity<? extends LocationDTO> updateInstitution(@RequestBody T request, @PathVariable("id") String id);
 
     @RequestMapping(value = "/location/update", method = RequestMethod.POST)
-    ResponseEntity<? extends List<LocationDTO>> uploadInstitutions(@RequestBody R request);
+    <T extends R>ResponseEntity<? extends List<LocationDTO>> uploadInstitutions(@RequestBody T request);
 
 
     // DELETE
@@ -36,5 +36,5 @@ public interface LocationController<R extends LocationRequest>{
     ResponseEntity<?> deleteInstitutionById(@PathVariable("id") String id);
 
     @RequestMapping(value = "/location/delete", method = RequestMethod.GET)
-    ResponseEntity<?> deleteInstitutions(@RequestBody R request);
+    <T extends R>ResponseEntity<?> deleteInstitutions(@RequestBody T request);
 }

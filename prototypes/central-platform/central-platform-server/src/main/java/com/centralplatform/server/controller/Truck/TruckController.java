@@ -14,20 +14,20 @@ import java.util.List;
 public interface TruckController<R extends TruckRequest> {
     // GET
     @RequestMapping(value = "/truck", method = RequestMethod.GET)
-    ResponseEntity<? extends List<TruckDTO>> getTrucks(@RequestBody TruckInfoRequest request);
+    <T extends R> ResponseEntity<? extends List<TruckDTO>> getTrucks(@RequestBody T request);
 
     @RequestMapping(value = "/truck/{id}", method = RequestMethod.GET)
     ResponseEntity<? extends TruckDTO> getTruckById(@PathVariable("id") String id);
 
     // POST
     @RequestMapping(value = "/truck", method = RequestMethod.POST)
-    ResponseEntity<? extends TruckDTO> uploadTruck(@RequestBody R request);
+    <T extends R> ResponseEntity<? extends TruckDTO> uploadTruck(@RequestBody T request);
 
     @RequestMapping(value = "/truck/update/{id}", method = RequestMethod.POST)
-    ResponseEntity<? extends TruckDTO> updateTruck(@RequestBody R request, @PathVariable("id") String id);
+    <T extends R> ResponseEntity<? extends TruckDTO> updateTruck(@RequestBody T request, @PathVariable("id") String id);
 
     @RequestMapping(value = "/truck/update", method = RequestMethod.POST)
-    ResponseEntity<? extends List<TruckDTO>> uploadTrucks(@RequestBody R request);
+    <T extends R> ResponseEntity<? extends List<TruckDTO>> uploadTrucks(@RequestBody T request);
 
 
     // DELETE
@@ -35,5 +35,5 @@ public interface TruckController<R extends TruckRequest> {
     ResponseEntity<?> deleteTruckById(@PathVariable("id") String id);
 
     @RequestMapping(value = "/truck/delete", method = RequestMethod.GET)
-    ResponseEntity<?> deleteTrucks(@RequestBody R request);
+    <T extends R> ResponseEntity<?> deleteTrucks(@RequestBody T request);
 }
