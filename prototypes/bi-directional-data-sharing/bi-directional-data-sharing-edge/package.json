@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
+    "@nuxt/ui": "^2.8.1",
     "@pinia/nuxt": "^0.4.11",
     "pinia": "^2.1.4",
     "uuid": "^9.0.1",

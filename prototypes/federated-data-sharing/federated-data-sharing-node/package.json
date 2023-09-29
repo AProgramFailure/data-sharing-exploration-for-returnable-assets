@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
+    "@nuxt/ui": "^2.8.1",
     "@pinia/nuxt": "^0.4.11",
     "@trpc/client": "^10.38.5",
     "@trpc/server": "^10.38.5",

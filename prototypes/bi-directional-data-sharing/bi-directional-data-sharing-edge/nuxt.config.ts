@@ -23,6 +23,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@vueuse/nuxt',
+    '@nuxt/ui',
     [
       '@pinia/nuxt',
       {
