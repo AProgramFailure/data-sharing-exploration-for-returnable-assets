@@ -1,1 +1,0 @@
-we will use this folder to define schemas and protocos we must adhere to

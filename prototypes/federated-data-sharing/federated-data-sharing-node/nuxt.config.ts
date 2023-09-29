@@ -1,11 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  srcDir: 'src',
+  devtools: { enabled: false },
   build: {
-    transpile: [
-      'vue-toastification'
-    ]
+    transpile: ['trpc-nuxt', 'vue-toastification']
   },
   runtimeConfig: {
     public: {
@@ -39,5 +37,5 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {}
     }
-  }
+  },
 })
