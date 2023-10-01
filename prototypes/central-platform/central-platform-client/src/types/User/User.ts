@@ -7,7 +7,8 @@ export type User = {
     id: string,
     firstname: string,
     lastname: string,
-    institution: string
-    role : string[]
+    institution: string,
+    role : string[],
+    token: string
 
 } & UserCredentials

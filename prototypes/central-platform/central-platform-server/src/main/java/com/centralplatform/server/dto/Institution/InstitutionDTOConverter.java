@@ -11,7 +11,9 @@ import java.util.function.Function;
 public class InstitutionDTOConverter implements GenericConverter<Institution, InstitutionDTO> {
     @Override
     public InstitutionDTO apply(Institution institution) {
-        return new InstitutionDTO();
+        InstitutionDTO dto = new InstitutionDTO();
+        dto.setName(institution.getName());
+        return dto;
     }
 
     @Override
