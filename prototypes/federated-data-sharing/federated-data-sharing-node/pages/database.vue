@@ -1,12 +1,9 @@
 <script setup lang="ts">
 
-
 </script>
 
 <template>
     <div>
-        <LazySlideover>
-            <h1>Hello</h1>
-        </LazySlideover>
+
     </div>
 </template>

@@ -1,5 +1,9 @@
 <script lang="ts" setup>
 
+    definePageMeta({
+        layout: "auth"
+    })
+
     const email: Ref<string> = ref<string>('');
     const password: Ref<string> = ref<string>('');
 
@@ -23,7 +27,7 @@
                     name=""
                     id=""
                     placeholder="Enter Email Address"
-                    class="w-full px-4 py-3 rounded-lg bg-neutral-100 mt-2 border-4 border-transparent focus:border-emerald-400 focus:bg-white focus:outline-none transition duration-300" autofocus required>
+                    class="w-full px-4 py-3 rounded-lg bg-neutral-100 mt-2 border-4 border-transparent focus:border-emerald-400 focus:bg-white focus:outline-none transition duration-300 text-neutral-900" autofocus required>
                 </div>
 
                 <div class="mt-4">
@@ -34,8 +38,9 @@
                     name=""
                     id=""
                     placeholder="Enter Password"
+                    v-on:keyup.enter="authenticate()"
                     minlength="6"
-                    class="w-full px-4 py-3 rounded-lg bg-neutral-100 mt-2 border-4 focus:border-emerald-400 transition duration-300 focus:bg-white focus:outline-none" required>
+                    class="w-full px-4 py-3 text-neutral-900 rounded-lg bg-neutral-100 mt-2 border-4 focus:border-emerald-400 transition duration-300 focus:bg-white focus:outline-none" required>
                 </div>
 
                 <div
