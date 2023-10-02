@@ -66,8 +66,8 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
     <aside
       class="w-1/4 my-1 mr-1 px-6 py-4 flex flex-col bg-neutral-900 text-emerald-400 rounded-r-lg overflow-y-auto"
     >
-      <span class="mt-4 text-neutral-200 font-semibold">Lorem</span>
-      <span class="mt-1 text-3xl font-semibold">€ big monies</span>
+      <span class="mt-4 text-neutral-200 font-semibold">Lorem Ipsum</span>
+      <span class="mt-1 text-3xl font-semibold">€ 0</span>
 
       <button
         class="mt-8 flex border-2 border-transparent items-center py-4 px-3 text-white rounded-lg bg-emerald-500 shadow focus:outline-none hover:bg-emerald-400 hover:border-emerald-300 transition duration-500"
@@ -76,12 +76,11 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
         </svg>
 
-        <span>Take from your Clients</span>
+        <span>Lorem ipsum</span>
       </button>
 
       <div class="mt-12 flex items-center">
-        <!-- Payments -->
-        <span>Payments</span>
+        <span>Lorem ipsum</span>
         <button class="ml-2 focus:outline-none">
           <svg class="h-5 w-5 fill-current" viewBox="0 0 256 512">
             <path
@@ -95,7 +94,7 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
         </button>
       </div>
 
-      <div class="mt-4 flex justify-center capitalize text-blue-600">
+      <div class="mt-4 flex justify-center capitalize text-emerald-600">
         <a href="#">see all</a>
       </div>
     </aside>
@@ -130,10 +129,10 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
       </l-map>
     </div>
     <div
-      class="my-1 w-1/4 pt-2 pb-2 px-10  bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto"
+      class="w-1/4 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto "
     >
       <div
-        class="mr-6 mt-8 py-2 flex flex-col bg-neutral-800 border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
+        class="mr-6 py-1 flex flex-col bg-neutral-800 border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
       >
         <div>
           <ul class="pt-1 pb-2 px-3 overflow-y-auto">

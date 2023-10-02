@@ -64,7 +64,22 @@
           "address": "Albert Heijn Supermarket Location 1, Netherlands",
           "latitude": "51.9213",
           "longitude": "4.4818",
-          "items": []
+          "items": [
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            },
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            }
+          ]
         }
       ]
     },
@@ -74,8 +89,14 @@
       "locations": [
         {
           "address": "Lidl Supermarket Location 1, Netherlands",
-          "latitude": "51.9202",
-          "longitude": "4.4823",
+          "latitude": "52.9202",
+          "longitude": "5.4823",
+          "items": []
+        },
+        {
+          "address": "Lidl Supermarket Location 2, Netherlands",
+          "latitude": "52.9202",
+          "longitude": "6.4823",
           "items": []
         }
       ]
@@ -86,9 +107,59 @@
       "locations": [
         {
           "address": "Aldi Supermarket Location 1, Netherlands",
-          "latitude": "51.9217",
-          "longitude": "4.4792",
-          "items": []
+          "latitude": "52.9217",
+          "longitude": "5.692",
+          "items": [
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            },
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            },
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            },
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            }
+          ]
+        },
+        {
+          "address": "Aldi Supermarket Location 1, Netherlands",
+          "latitude": "52.9217",
+          "longitude": "5.392",
+          "items": [
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            },
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            }
+          ]
         }
       ]
     },
@@ -98,8 +169,8 @@
       "locations": [
         {
           "address": "Hoogvliet Supermarket Location 1, Netherlands",
-          "latitude": "51.9199",
-          "longitude": "4.4715",
+          "latitude": "51.4199",
+          "longitude": "5.8715",
           "items": []
         }
       ]
@@ -111,8 +182,30 @@
         {
           "address": "Jumbo Supermarket Location 1, Netherlands",
           "latitude": "51.9277",
-          "longitude": "4.4806",
-          "items": []
+          "longitude": "4.8806",
+          "items": [
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            },
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            },
+            {
+              "id": "g1r2o3l4s5c6h7-5b6e7e8r",
+              "name": "Grolsch",
+              "type": "PELLET",
+              "capacity": 100,
+              "barcode": "1234567890"
+            }
+          ]
         }
       ]
     }
