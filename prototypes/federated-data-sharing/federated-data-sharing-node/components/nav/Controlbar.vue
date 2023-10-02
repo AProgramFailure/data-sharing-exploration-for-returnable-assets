@@ -1,6 +1,5 @@
 <script lang="ts" setup>
     import { HomeIcon, CircleStackIcon, ChartPieIcon, AdjustmentsHorizontalIcon } from "@heroicons/vue/24/solid"
-    const emits = defineEmits(["sdiemenu"])
 </script>
 
 <template>

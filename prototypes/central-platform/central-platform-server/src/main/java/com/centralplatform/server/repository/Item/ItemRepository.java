@@ -20,4 +20,5 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
     @Modifying
     @Query(nativeQuery = true, value = "update item set name = ?2, type = ?3, capacity = ?4, barcode = ?5, location = ?6 where id = ?1")
     Optional<Item> updateItem(UUID id, String name, ItemType type, Integer capacity, String barcode, Location location, Truck truck, Order order);
+
 }

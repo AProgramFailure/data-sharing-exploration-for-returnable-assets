@@ -15,5 +15,5 @@ export const useRouteStore = defineStore("routes", () => {
         getRoutes
     }
 }, {
-    persist: false
+    persist: true
 })

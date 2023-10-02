@@ -4,8 +4,8 @@
 
 <template>
     <main class="h-screen w-full bg-neutral-900 overflow-hidden">
-        <LazyNavbar />
-        <LazyControlbar />
+        <Navbar />
+        <Controlbar />
         <NuxtPage/>
     </main>
 </template>

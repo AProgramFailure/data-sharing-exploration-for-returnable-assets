@@ -2,12 +2,15 @@
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 
-const open : Ref<boolean> = ref<boolean>(true)
+const emits = defineEmits(['update:slide-open'])
+const props = defineProps({
+  isSlideOpen: Boolean
+})
 </script>
 
 <template>
-    <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-10" @close="open = false">
+    <TransitionRoot as="template" :show="isSlideOpen">
+      <Dialog as="div" class="relative z-10" @close="$emit('update:slide-open', !props.isSlideOpen)">
         <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
@@ -19,7 +22,7 @@ const open : Ref<boolean> = ref<boolean>(true)
                 <DialogPanel class="pointer-events-auto relative w-screen max-w-2xl">
                   <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
                     <div class="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
-                      <button type="button" class="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white" @click="open = false">
+                      <button type="button" class="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white" @click="$emit('update:slide-open', !props.isSlideOpen)">
                         <span class="absolute -inset-2.5" />
                         <span class="sr-only">Close panel</span>
                         <XMarkIcon class="h-6 w-6" aria-hidden="true" />
