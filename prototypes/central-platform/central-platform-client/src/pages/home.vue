@@ -1,99 +1,77 @@
 <script lang="ts" setup>
-import { useInstitutionStore } from "~/stores/Institution/institutionStore";
-import { storeToRefs } from "pinia";
+import "leaflet/dist/leaflet.css";
+import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
+import dummyData from "../assets/dummyData.json";
+import { PointExpression } from "leaflet";
 
-const institutionStore = useInstitutionStore();
-const { awaitData } = institutionStore;
-const { institutions } = storeToRefs(institutionStore);
+const supermarkets = dummyData.institutions.filter((institution) => {
+  const supermarketNames = [
+    "Albert Heijn",
+    "Lidl",
+    "Aldi",
+    "Hoogvliet",
+    "Jumbo",
+  ];
+  return supermarketNames.includes(institution.name);
+});
+const showLocations = ref(Array(supermarkets.length).fill(false));
 
-const institutionsList = async () => {
-  const test = await awaitData();
+const toggleLocations = (index: number) => {
+  showLocations.value[index] = !showLocations.value[index];
 };
-institutionsList();
+
+const filteredLocations = (index: number) => {
+  if (showLocations.value[index]) {
+    return supermarkets[index].locations;
+  } else {
+    return [];
+  }
+};
+
+const brewers = dummyData.institutions.filter((institution) => {
+  const supermarketNames = [
+    "Albert Heijn",
+    "Lidl",
+    "Aldi",
+    "Hoogvliet",
+    "Jumbo",
+  ];
+  return supermarketNames.includes(institution.name);
+});
+
+const mapLocations = computed(() => {
+  const locations = [];
+  for (let i = 0; i < supermarkets.length; i++) {
+    if (showLocations.value[i]) {
+      for (const location of supermarkets[i].locations) {
+        locations.push({
+          name: supermarkets[i].name,
+          lat: location.latitude,
+          lon: location.longitude,
+          address: location.address,
+          itemCount: location.items.length,
+        });
+      }
+    }
+  }
+  return locations;
+});
+
+let zoom = ref(7);
+let center = ref<PointExpression>([52.1926, 5.2913]);
 </script>
 
 <template>
-  <!-- component -->
-  <div class="h-screen w-full flex overflow-hidden select-none">
-    <main
-      class="my-1 pt-2 pb-2 px-10 flex-1 bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto"
-    >
-      <div class="flex">
-        <div
-          class="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col bg-neutral-800 border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
-        >
-          <!-- Card list container -->
-          <button class="ml-3 mt-1 flex items-center">
-            <span class="text-lg font-semibold capitalize text-gray-300"
-              >Institutions</span
-            >
-            <svg class="h-5 w-5 fill-current ml-2" viewBox="0 0 256 512">
-              <path
-                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-              ></path>
-            </svg>
-          </button>
-
-          <div>
-            <!-- List -->
-
-            <ul class="pt-1 pb-2 px-3 overflow-y-auto">
-              <li class="mt-2" v-for="institution in institutions">
-                <a
-                  class="p-5 flex flex-col justify-between bg-gray-100 rounded-lg"
-                  href="#"
-                >
-                  <div
-                    class="flex items-center justify-between font-semibold capitalize text-gray-700"
-                  >
-                    <!-- Top section -->
-
-                    <span>{{ institution.name }}</span>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div
-          class="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col bg-neutral-800 rounded-lg text-white border-2 border-transparent hover:border-emerald-500 transition duration-500"
-        >
-          <h3
-            class="flex items-center pt-1 pb-1 px-8 text-lg font-bold capitalize"
-          >
-            <!-- Header -->
-            <NuxtLink to="/stats">View Dashboard </NuxtLink>
-          </h3>
-
-          <div class="flex flex-col items-center pb-10">
-            <img
-              src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-2130362-1800926.png"
-              alt=" empty schedule"
-            />
-            <button
-              class="bg-emerald-500 border-2 border-transparent hover:border-emerald-200 hover:bg-emerald-400 duration-500 transition rounded-lg py-2 px-4"
-            >
-              View Dashboard
-            </button>
-          </div>
-        </div>
-      </div>
-    </main>
-
+  <div class="max-h-[calc(100vh-4rem)] w-full flex overflow-hidden select-none">
     <aside
       class="w-1/4 my-1 mr-1 px-6 py-4 flex flex-col bg-neutral-900 text-emerald-400 rounded-r-lg overflow-y-auto"
     >
-      <!-- Right side NavBar -->
-
-      <span class="mt-4 text-neutral-200 font-semibold">Monthly earnings</span>
-      <span class="mt-1 text-3xl font-semibold">$ 1,579.20</span>
+      <span class="mt-4 text-neutral-200 font-semibold">Lorem</span>
+      <span class="mt-1 text-3xl font-semibold">€ big monies</span>
 
       <button
         class="mt-8 flex border-2 border-transparent items-center py-4 px-3 text-white rounded-lg bg-emerald-500 shadow focus:outline-none hover:bg-emerald-400 hover:border-emerald-300 transition duration-500"
       >
-        <!-- Action -->
-
         <svg class="h-5 w-5 fill-current mr-2 ml-3" viewBox="0 0 24 24">
           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
         </svg>
@@ -117,6 +95,8 @@ institutionsList();
         </button>
       </div>
 
+<<<<<<< HEAD
+=======
       <a
         href="#"
         class="mt-8 p-4 flex justify-between bg-gray-300 rounded-lg font-semibold capitalize"
@@ -183,9 +163,89 @@ institutionsList();
         <span>$ 25</span>
       </a>
 
+>>>>>>> 9e69fc4fab083dc203ec80d13580404b4f545b8d
       <div class="mt-4 flex justify-center capitalize text-blue-600">
         <a href="#">see all</a>
       </div>
     </aside>
+<<<<<<< HEAD
+    <div
+      class="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-800 rounded-lg text-white border-2 border-transparent hover:border-emerald-500 transition duration-500"
+    >
+      <l-map
+        ref="map"
+        v-model:zoom="zoom"
+        v-model:center="center"
+        :style="{ height: '100%', width: '100%' }"
+        :useGlobalLeaflet="false"
+      >
+        <l-tile-layer
+          url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+          layer-type="base"
+          name="Locations map"
+        ></l-tile-layer
+        ><l-marker
+          v-for="(location, locationIndex) in mapLocations"
+          :key="locationIndex"
+          :lat-lng="[parseFloat(location.lat), parseFloat(location.lon)]"
+        >
+          <l-popup>
+            <div>
+              <strong>{{ location.name }}</strong>
+            </div>
+            <div>{{ location.address }}</div>
+            <div>Items Count: {{ location.itemCount }}</div>
+          </l-popup>
+        </l-marker>
+      </l-map>
+    </div>
+    <div
+      class="my-1 w-1/4 pt-2 pb-2 px-10  bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto"
+    >
+      <div
+        class="mr-6 mt-8 py-2 flex flex-col bg-neutral-800 border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
+      >
+        <div>
+          <ul class="pt-1 pb-2 px-3 overflow-y-auto">
+            <li
+              class="mt-2"
+              v-for="(supermarket, index) in supermarkets"
+              :key="index"
+            >
+              <a
+                class="p-5 flex flex-col bg-neutral-100 rounded-lg"
+                href="#"
+                @click="toggleLocations(index)"
+              >
+                <div
+                  class="flex items-center justify-between font-semibold capitalize text-gray-700"
+                >
+                  <span>{{ supermarket.name }}</span>
+                  <span>{{
+                    showLocations[index] ? "Hide Locations" : "Show Locations"
+                  }}</span>
+                </div>
+              </a>
+              <ul>
+                <li
+                  v-for="(location, locationIndex) in filteredLocations(index)"
+                  :key="locationIndex"
+                  class="mt-2"
+                >
+                  <ul
+                    class="p-5 flex flex-col  bg-neutral-900 rounded-lg text-white"
+                  >
+                    <li>{{ location.address }}</li>
+                    <li>Items Count: {{ location.items.length }}</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+=======
+>>>>>>> 9e69fc4fab083dc203ec80d13580404b4f545b8d
   </div>
 </template>
