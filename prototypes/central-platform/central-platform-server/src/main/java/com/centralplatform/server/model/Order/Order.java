@@ -1,12 +1,12 @@
 package com.centralplatform.server.model.Order;
 
 import com.centralplatform.server.model.Location.Location;
+import com.centralplatform.server.model.OrderItem.OrderItem;
 import com.centralplatform.server.model.Organization.Organization;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

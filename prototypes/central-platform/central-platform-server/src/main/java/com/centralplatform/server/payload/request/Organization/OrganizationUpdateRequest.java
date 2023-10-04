@@ -7,5 +7,5 @@ import lombok.*;
 @NoArgsConstructor
 public class OrganizationUpdateRequest extends OrganizationRequest {
 
-    Organization organizationToUpdate;
+    Organization organization;
 }

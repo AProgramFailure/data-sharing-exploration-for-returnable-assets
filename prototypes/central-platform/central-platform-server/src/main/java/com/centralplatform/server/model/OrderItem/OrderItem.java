@@ -1,6 +1,7 @@
-package com.centralplatform.server.model.Order;
+package com.centralplatform.server.model.OrderItem;
 
 import com.centralplatform.server.model.ItemType.ItemType;
+import com.centralplatform.server.model.Order.Order;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
