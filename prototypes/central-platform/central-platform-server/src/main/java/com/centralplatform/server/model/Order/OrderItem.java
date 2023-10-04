@@ -1,5 +1,6 @@
 package com.centralplatform.server.model.Order;
 
+import com.centralplatform.server.model.ItemType.ItemType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -19,7 +20,8 @@ public class OrderItem {
     @Id
     @UuidGenerator
     private UUID id;
-    private String brand;
+    @Enumerated(EnumType.STRING)
+    private ItemType itemType;
     private int requestedQuantity;
     private int actualQuantity;
 

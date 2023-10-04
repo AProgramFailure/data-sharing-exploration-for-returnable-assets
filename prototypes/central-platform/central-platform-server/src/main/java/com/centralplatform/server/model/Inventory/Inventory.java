@@ -1,5 +1,6 @@
 package com.centralplatform.server.model.Inventory;
 
+import com.centralplatform.server.model.ItemType.ItemType;
 import com.centralplatform.server.model.Location.Location;
 import com.centralplatform.server.model.Order.Order;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -20,8 +21,8 @@ public class Inventory {
     @Id
     @UuidGenerator
     private UUID id;
-
-    private String brand;
+    @Enumerated(EnumType.STRING)
+    private ItemType itemType;
     private int quantity;
 
     @ManyToOne
