@@ -1,13 +1,12 @@
 package com.centralplatform.server.model.Order;
 
-import com.centralplatform.server.model.Institution.Institution;
-import com.centralplatform.server.model.Item.Item;
-import com.centralplatform.server.model.Route.Route;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.centralplatform.server.model.Location.Location;
+import com.centralplatform.server.model.Organization.Organization;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,16 +23,21 @@ public class Order {
     @UuidGenerator
     private UUID id;
 
-    @Column(name = "amount")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "organization_id", referencedColumnName = "id")
+    private Organization organization;
+
+    @ManyToOne
+    @JoinColumn(name = "source_location_id", referencedColumnName = "id")
+    private Location sourceLocation;
+
+    @ManyToOne
+    @JoinColumn(name = "destination_location_id", referencedColumnName = "id")
+    private Location destinationLocation;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
     @OneToMany(mappedBy = "order")
-    @JsonManagedReference(value = "order-amount")
-    private List<Item> amount;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "institution_id", referencedColumnName = "id")
-    private Institution institution;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_id", referencedColumnName = "id")
-    private Route route;
+    private List<OrderItem> orderItems;
 }

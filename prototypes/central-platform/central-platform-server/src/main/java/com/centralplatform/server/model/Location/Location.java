@@ -1,10 +1,9 @@
 package com.centralplatform.server.model.Location;
 
-import com.centralplatform.server.model.Institution.Institution;
-import com.centralplatform.server.model.Item.Item;
-import com.centralplatform.server.model.Route.Route;
+import com.centralplatform.server.model.Inventory.Inventory;
+import com.centralplatform.server.model.Organization.Organization;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.centralplatform.server.model.Order.Order;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -28,25 +27,23 @@ public class Location {
     @Column(name = "address")
     private String address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference(value = "institution-location")
-    @JoinColumn(name = "_institution_id", nullable = false)
-    private Institution institution;
-
     @Column(name = "latitude")
     private String latitude;
 
     @Column(name = "longitude")
     private String longitude;
 
-    @Column(name = "items")
-    @OneToMany(mappedBy = "location")
-    @JsonManagedReference(value = "item-location")
-    private List<Item> items;
-
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference(value = "route-location")
-    private Route route;
+    @JsonBackReference(value = "institution-location")
+    @JoinColumn(name = "organization_id", nullable = false)
+    private Organization organization;
+    @Column(name = "inventory")
+    @OneToMany(mappedBy = "location")
+    private List<Inventory> inventory;
 
+    @OneToMany(mappedBy = "sourceLocation")
+    private List<Order> sourceOrders;
 
+    @OneToMany(mappedBy = "destinationLocation")
+    private List<Order> destinationOrders;
 }
