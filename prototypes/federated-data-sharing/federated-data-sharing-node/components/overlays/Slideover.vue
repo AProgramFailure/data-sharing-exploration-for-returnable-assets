@@ -6,6 +6,7 @@ const emits = defineEmits(['update:slide-open'])
 const props = defineProps({
   isSlideOpen: Boolean
 })
+
 </script>
 
 <template>

@@ -4,7 +4,7 @@ import Database from "better-sqlite3";
  * Creates context for an incoming request
  * @link https://trpc.io/docs/context
  */
-export const createContext = () => {
+export const createContext = () : unknown => {
     const db = new Database('./federated.db')
     const createTable = db.prepare(`
         CREATE TABLE IF NOT EXISTS sample (
@@ -15,6 +15,7 @@ export const createContext = () => {
     `);
 
     createTable.run();
+
     return {
         db
     }

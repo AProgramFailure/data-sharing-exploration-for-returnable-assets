@@ -10,6 +10,8 @@
     function authenticate(){
         navigateTo('/home')
     }
+
+
 </script>
 
 <template>
