@@ -1,6 +1,6 @@
 import type { Inventory } from "../Inventory/Inventory"
 import type { Organization } from "../Organization/Organization"
-import { Privacy } from "../Privacy/Privacy"
+import type { Privacy } from "../Privacy/Privacy"
 
 export type Location = {
     id: string,

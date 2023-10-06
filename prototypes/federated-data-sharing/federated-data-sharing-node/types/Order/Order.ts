@@ -1,7 +1,7 @@
 import type { Organization } from "../Organization/Organization"
 import type { Location } from "../Location/Location"
 import type { OrderItem } from "../OrderItem/OrderItem"
-import { Privacy } from "../Privacy/Privacy"
+import type { Privacy } from "../Privacy/Privacy"
 
 export type Order = {
     id: string,

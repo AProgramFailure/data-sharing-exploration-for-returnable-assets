@@ -1,5 +1,5 @@
 import type { Order } from "../Order/Order"
-import { Privacy } from "../Privacy/Privacy"
+import type { Privacy } from "../Privacy/Privacy"
 
 export type OrderItem = {
     id: string,
