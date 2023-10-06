@@ -1,5 +1,6 @@
 package com.centralplatform.server.dto.Location;
 
+import com.centralplatform.server.dto.Inventory.InventoryDTO;
 import com.centralplatform.server.model.Location.Location;
 import com.centralplatform.server.util.Converters.GenericConverter;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,13 @@ import java.util.function.Function;
 public class LocationDTOConverter implements GenericConverter<Location, LocationDTO> {
     @Override
     public LocationDTO apply(Location location) {
-        return new LocationDTO();
+        LocationDTO dto = new LocationDTO();
+        dto.setName(location.getName());
+        dto.setAddress(location.getAddress());
+        dto.setLatitude(location.getLatitude());
+        dto.setLongitude(location.getLongitude());
+        dto.setInventory(location.getInventory());
+        return dto;
     }
 
     @Override

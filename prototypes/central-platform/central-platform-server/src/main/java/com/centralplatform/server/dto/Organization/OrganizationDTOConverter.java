@@ -13,6 +13,8 @@ public class OrganizationDTOConverter implements GenericConverter<Organization, 
     public OrganizationDTO apply(Organization organization) {
         OrganizationDTO dto = new OrganizationDTO();
         dto.setName(organization.getName());
+        dto.setOrganizationType(organization.getOrganizationType());
+        dto.setLocations(organization.getLocations());
         return dto;
     }
 
@@ -28,6 +30,7 @@ public class OrganizationDTOConverter implements GenericConverter<Organization, 
 
     @Override
     public OrganizationDTO convert(Organization input) {
+
         return GenericConverter.super.convert(input);
     }
 

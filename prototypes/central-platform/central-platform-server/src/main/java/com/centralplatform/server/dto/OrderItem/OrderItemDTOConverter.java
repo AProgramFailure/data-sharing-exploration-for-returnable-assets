@@ -1,5 +1,6 @@
 package com.centralplatform.server.dto.OrderItem;
 
+import com.centralplatform.server.dto.Inventory.InventoryDTO;
 import com.centralplatform.server.model.OrderItem.OrderItem;
 import com.centralplatform.server.util.Converters.GenericConverter;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,11 @@ import java.util.function.Function;
 public class OrderItemDTOConverter implements GenericConverter<OrderItem, OrderItemDTO> {
     @Override
     public OrderItemDTO apply(OrderItem orderItem) {
-        return new OrderItemDTO();
+        OrderItemDTO dto = new OrderItemDTO();
+        dto.setItemType(orderItem.getItemType());
+        dto.setActualQuantity(orderItem.getActualQuantity());
+        dto.setRequestedQuantity(orderItem.getRequestedQuantity());
+        return dto;
     }
 
     @Override

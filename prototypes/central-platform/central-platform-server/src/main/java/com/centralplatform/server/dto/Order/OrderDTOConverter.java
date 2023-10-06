@@ -11,7 +11,12 @@ import java.util.function.Function;
 public class OrderDTOConverter implements GenericConverter<Order, OrderDTO> {
     @Override
     public OrderDTO apply(Order order) {
-        return new OrderDTO();
+        OrderDTO dto = new OrderDTO();
+        dto.setOrderStatus(order.getStatus());
+        dto.setOrderItems(order.getOrderItems());
+        dto.setDestinationLocation(order.getDestinationLocation());
+        dto.setSourceLocation(order.getSourceLocation());
+        return dto;
     }
 
     @Override

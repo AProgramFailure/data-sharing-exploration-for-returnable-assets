@@ -18,38 +18,38 @@ public class LocationControllerImpl implements LocationController<LocationReques
     private final LocationServiceImpl locationService;
 
     @Override
-    public <T extends LocationRequest> ResponseEntity<? extends List<LocationDTO>> getInstitutions(T request) {
+    public <T extends LocationRequest> ResponseEntity<? extends List<LocationDTO>> getLocations(T request) {
         return ResponseEntity.ok(locationService.getLocations(request));
     }
 
     @Override
-    public ResponseEntity<? extends LocationDTO> getInstitutionById(String id) {
+    public ResponseEntity<? extends LocationDTO> getLocationById(String id) {
         return ResponseEntity.ok(locationService.getLocationById(id));
     }
 
     @Override
-    public <T extends LocationRequest> ResponseEntity<? extends LocationDTO> uploadInstitution(T request) {
+    public <T extends LocationRequest> ResponseEntity<? extends LocationDTO> uploadLocation(T request) {
         return ResponseEntity.ok(locationService.uploadLocation(request));
     }
 
     @Override
-    public <T extends LocationRequest> ResponseEntity<? extends LocationDTO> updateInstitution(T request, String id) {
+    public <T extends LocationRequest> ResponseEntity<? extends LocationDTO> updateLocation(T request, String id) {
         return ResponseEntity.ok(locationService.updateLocation(request,id));
     }
 
     @Override
-    public <T extends LocationRequest> ResponseEntity<? extends List<LocationDTO>> uploadInstitutions(T request) {
+    public <T extends LocationRequest> ResponseEntity<? extends List<LocationDTO>> uploadLocations(T request) {
         return ResponseEntity.ok(locationService.uploadLocations(request));
     }
 
     @Override
-    public ResponseEntity<?> deleteInstitutionById(String id) {
+    public ResponseEntity<?> deleteLocationById(String id) {
         locationService.deleteLocationById(id);
         return ResponseEntity.ok("Success");
     }
 
     @Override
-    public <T extends LocationRequest> ResponseEntity<?> deleteInstitutions(T request) {
+    public <T extends LocationRequest> ResponseEntity<?> deleteLocations(T request) {
         locationService.deleteLocations(request);
         return ResponseEntity.ok("Success");
     }
