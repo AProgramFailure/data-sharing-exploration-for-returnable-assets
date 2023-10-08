@@ -2,6 +2,8 @@
     import { HomeModernIcon, AdjustmentsHorizontalIcon, Square3Stack3DIcon, Squares2X2Icon } from "@heroicons/vue/24/solid"
 
     defineEmits(['update:slide'])
+
+    const isPageOpen :  Ref<boolean> = ref<boolean>(false)
 </script>
 
 <template>
@@ -24,8 +26,10 @@
                 <Squares2X2Icon  />
             </LazyNuxtLink>
             <div
+            @click="$emit('update:slide', !isPageOpen)"
+            class="w-12 text-white p-2 border-2 border-transparent hover:border-emerald-300 hover:bg-emerald-400 transition duration-300 rounded-md"
 
-            class="w-12 text-white p-2 border-2 border-transparent hover:border-emerald-300 hover:bg-emerald-400 transition duration-300 rounded-md">
+            >
                 <AdjustmentsHorizontalIcon />
             </div>
         </aside>

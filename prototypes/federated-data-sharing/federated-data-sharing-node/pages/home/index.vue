@@ -2,10 +2,6 @@
 
     const { $trpcClient } = useNuxtApp();
 
-    const { data } = await $trpcClient.institutions.getInstitutions.useLazyQuery({
-        email: "umairl@gmail.com"
-    })
-
     const isSidemenuOpen : Ref<boolean> = ref<boolean>(false);
     const isModalOpen : Ref<boolean> = ref<boolean>(false);
 

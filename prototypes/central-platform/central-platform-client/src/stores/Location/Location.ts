@@ -14,6 +14,4 @@ export const useLocationStore = defineStore("locations", () => {
     return {
         getLocations
     }
-}, {
-    persist: true
 })

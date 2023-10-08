@@ -17,28 +17,29 @@ export const useOrganizationStore = defineStore(
 
     // function -> mutattion -> do some kind of logic
     async function fetchOrganizations() {
-      const { data } = await useAsyncData<Organization[]>("organizations", () =>
-        $fetch("127.0.0.1:8080/api/prod/organization", {
-          method: "GET",
+      const { data } = await useAsyncData<Organization>("organizations", () => $fetch("http://127.0.0.1:8080/api/prod/organization", {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer insertToken",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2RAdHdlbnRlLmRldiIsImlhdCI6MTY5Njc5NTM0MywiZXhwIjoxNjk2ODgxNzQzfQ.JFgaBUOHQx0FGlaSgM59m5jlj-GZpJDCKaymkdnCYdw",
           },
           body: {
-            email: "dsfadsfadsf",
+            email: "mod@twente.dev",
             type: "info",
           },
         })
       );
-      organizations.value = data.value;
+
+      if(data.value){
+        organizations.value.push(data.value)
+      }
+      console.log(organizations)
     }
 
     return {
       getOrganizations,
+      organizations,
       fetchOrganizations,
     };
-  },
-  {
-    persist: true,
   }
 );

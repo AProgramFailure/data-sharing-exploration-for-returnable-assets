@@ -4,16 +4,17 @@ import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 import { PointExpression } from "leaflet";
 import { useOrganizationStore } from "~/stores/Organization/OrganizationStore";
 import { Organization } from "~/types/Organization/Organization";
+import { storeToRefs } from "pinia";
 
 const organizationStore = useOrganizationStore();
-const organizations = ref<Organization[]>([]);
 
-onMounted(async () => {
+const { getOrganizations } = organizationStore
+
+onBeforeMount(async () => {
   await organizationStore.fetchOrganizations();
-  organizations.value = organizationStore.getOrganizations.value;
 });
 
-const showLocations = ref(Array(organizations.value.length).fill(false));
+const showLocations = ref(Array(getOrganizations.value.length).fill(false));
 
 const toggleLocations = (index: number) => {
   showLocations.value[index] = !showLocations.value[index];
@@ -21,7 +22,7 @@ const toggleLocations = (index: number) => {
 
 const filteredLocations = (index: number) => {
   if (showLocations.value[index]) {
-    return organizations.value[index].locations;
+    return getOrganizations.value[index].locations;
   } else {
     return [];
   }
@@ -29,11 +30,11 @@ const filteredLocations = (index: number) => {
 
 const mapLocations = computed(() => {
   const locations = [];
-  for (let i = 0; i < organizations.value.length; i++) {
+  for (let i = 0; i < getOrganizations.value.length; i++) {
     if (showLocations.value[i]) {
-      for (const location of organizations.value[i].locations) {
+      for (const location of getOrganizations.value[i].locations) {
         locations.push({
-          name: organizations.value[i].name,
+          name: getOrganizations.value[i].name,
           lat: location.latitude,
           lon: location.longitude,
           address: location.address,
@@ -83,7 +84,7 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
       </div>
 
       <div class="mt-4 flex justify-center capitalize text-emerald-600">
-        <a href="#">see all</a>
+        <NuxtLink to="/database">see all</NuxtLink>
       </div>
     </aside>
     <div
@@ -126,7 +127,7 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
           <ul class="pt-1 pb-2 px-3 overflow-y-auto">
             <li
               class="mt-2"
-              v-for="(organization, index) in organizations"
+              v-for="(organization, index) in getOrganizations"
               :key="index"
             >
               <a
