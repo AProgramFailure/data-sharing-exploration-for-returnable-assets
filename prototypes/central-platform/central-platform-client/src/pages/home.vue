@@ -1,20 +1,19 @@
 <script lang="ts" setup>
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import dummyData from "../assets/dummyData.json";
 import { PointExpression } from "leaflet";
+import { useOrganizationStore } from "~/stores/Organization/OrganizationStore";
+import { Organization } from "~/types/Organization/Organization";
 
-const supermarkets = dummyData.institutions.filter((institution) => {
-  const supermarketNames = [
-    "Albert Heijn",
-    "Lidl",
-    "Aldi",
-    "Hoogvliet",
-    "Jumbo",
-  ];
-  return supermarketNames.includes(institution.name);
+const organizationStore = useOrganizationStore();
+const organizations = ref<Organization[]>([]);
+
+onMounted(async () => {
+  await organizationStore.fetchOrganizations();
+  organizations.value = organizationStore.getOrganizations.value;
 });
-const showLocations = ref(Array(supermarkets.length).fill(false));
+
+const showLocations = ref(Array(organizations.value.length).fill(false));
 
 const toggleLocations = (index: number) => {
   showLocations.value[index] = !showLocations.value[index];
@@ -22,34 +21,23 @@ const toggleLocations = (index: number) => {
 
 const filteredLocations = (index: number) => {
   if (showLocations.value[index]) {
-    return supermarkets[index].locations;
+    return organizations.value[index].locations;
   } else {
     return [];
   }
 };
 
-const brewers = dummyData.institutions.filter((institution) => {
-  const supermarketNames = [
-    "Albert Heijn",
-    "Lidl",
-    "Aldi",
-    "Hoogvliet",
-    "Jumbo",
-  ];
-  return supermarketNames.includes(institution.name);
-});
-
 const mapLocations = computed(() => {
   const locations = [];
-  for (let i = 0; i < supermarkets.length; i++) {
+  for (let i = 0; i < organizations.value.length; i++) {
     if (showLocations.value[i]) {
-      for (const location of supermarkets[i].locations) {
+      for (const location of organizations.value[i].locations) {
         locations.push({
-          name: supermarkets[i].name,
+          name: organizations.value[i].name,
           lat: location.latitude,
           lon: location.longitude,
           address: location.address,
-          itemCount: location.items.length,
+          itemCount: location.inventory.length,
         });
       }
     }
@@ -129,7 +117,7 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
       </l-map>
     </div>
     <div
-      class="w-1/4 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto "
+      class="w-1/4 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto"
     >
       <div
         class="mr-6 py-1 flex flex-col bg-neutral-800 border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
@@ -138,7 +126,7 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
           <ul class="pt-1 pb-2 px-3 overflow-y-auto">
             <li
               class="mt-2"
-              v-for="(supermarket, index) in supermarkets"
+              v-for="(organization, index) in organizations"
               :key="index"
             >
               <a
@@ -149,7 +137,7 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
                 <div
                   class="flex items-center justify-between font-semibold capitalize text-gray-700"
                 >
-                  <span>{{ supermarket.name }}</span>
+                  <span>{{ organization.name }}</span>
                   <span>{{
                     showLocations[index] ? "Hide Locations" : "Show Locations"
                   }}</span>
@@ -162,10 +150,10 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
                   class="mt-2"
                 >
                   <ul
-                    class="p-5 flex flex-col  bg-neutral-900 rounded-lg text-white"
+                    class="p-5 flex flex-col bg-neutral-900 rounded-lg text-white"
                   >
                     <li>{{ location.address }}</li>
-                    <li>Items Count: {{ location.items.length }}</li>
+                    <li>Items Count: {{ location.inventory.length }}</li>
                   </ul>
                 </li>
               </ul>
