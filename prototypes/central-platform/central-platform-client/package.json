@@ -25,6 +25,7 @@
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
     "@pinia/nuxt": "^0.4.11",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
     "pinia": "^2.1.4",
     "usemodal-vue3": "^0.3.7",
     "vue-toastification": "^2.0.0-rc.5"
