@@ -40,7 +40,7 @@ const mapLocations = computed(() => {
           lat: location.latitude,
           lon: location.longitude,
           address: location.address,
-          itemCount: location.inventory.length,
+          inventory: location.inventory,
         });
       }
     }
@@ -50,6 +50,26 @@ const mapLocations = computed(() => {
 
 let zoom = ref(7);
 let center = ref<PointExpression>([52.1926, 5.2913]);
+
+const markerStyles = computed(() => {
+  return mapLocations.value.map(location => {
+    const totalInventory = location.inventory.reduce((acc, item) => acc + item.quantity, 0);
+
+    let colorClass = '';
+    if (totalInventory >= 0 && totalInventory <= 50) {
+      colorClass = 'low-inventory';
+    } else if (totalInventory >= 51 && totalInventory <= 99) {
+      colorClass = 'medium-inventory';
+    } else if (totalInventory >= 100 && totalInventory <= 150) {
+      colorClass = 'high-inventory';
+    }
+
+    return {
+      totalInventory,
+      colorClass,
+    };
+  });
+});
 </script>
 
 <template>
@@ -114,7 +134,9 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
               <strong>{{ location.name }}</strong>
             </div>
             <div>{{ location.address }}</div>
-            <div>Items Count: {{ location.itemCount }}</div>
+            <div>
+              Total Inventory: {{ markerStyles[locationIndex].totalInventory }}
+            </div>
           </l-popup>
         </l-marker>
       </l-map>
