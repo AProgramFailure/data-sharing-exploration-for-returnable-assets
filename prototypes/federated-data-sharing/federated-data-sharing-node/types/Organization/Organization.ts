@@ -4,10 +4,10 @@ import type { Privacy } from "../Privacy/Privacy"
 import type { User } from "../User/User"
 
 export type Organization = {
-    id: string,
+    id: number,
     name: string,
     organizationType: string,
     locations: Location[],
     orders: Order[],
-    users: User
+    users: User[]
 } & Privacy

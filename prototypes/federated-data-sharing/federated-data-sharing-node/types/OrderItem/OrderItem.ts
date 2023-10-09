@@ -2,7 +2,7 @@ import type { Order } from "../Order/Order"
 import type { Privacy } from "../Privacy/Privacy"
 
 export type OrderItem = {
-    id: string,
+    id: number,
     itemType: string,
     requestedQuantity: number,
     actualQuantity: number

@@ -1,11 +1,8 @@
 import { Organization } from "../Organization/Organization"
 
 export type User = {
-    id: string,
-    access_token: string,
-    refresh_token: string,
+    id: number,
     email: string,
     first_name: string,
-    last_name: string,
-    organization: Organization
+    last_name: string
 }
