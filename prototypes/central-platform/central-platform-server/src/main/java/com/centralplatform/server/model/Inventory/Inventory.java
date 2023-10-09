@@ -3,6 +3,7 @@ package com.centralplatform.server.model.Inventory;
 import com.centralplatform.server.model.ItemType.ItemType;
 import com.centralplatform.server.model.Location.Location;
 import com.centralplatform.server.model.Order.Order;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,7 @@ public class Inventory {
     private int quantity;
 
     @ManyToOne
+    @JsonBackReference(value = "location-inventory")
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 }

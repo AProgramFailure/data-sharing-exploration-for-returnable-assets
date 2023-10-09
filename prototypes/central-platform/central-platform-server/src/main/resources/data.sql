@@ -71,3 +71,48 @@ VALUES
     ('eaa663d1-4eb7-4a9f-9a90-d61c0d82a875', 'c84e07cc-0d42-44a5-8363-afde90302e9a', 'Jumbo Supermarket 3', 'Jumbo Supermarket Address 3', '52.026688', '5.246085'),
     ('eaa663d1-4eb7-4a9f-9a90-d61c0d82a876', 'c84e07cc-0d42-44a5-8363-afde90302e9a', 'Jumbo Supermarket 4', 'Jumbo Supermarket Address 4', '51.986324', '5.018581'),
     ('eaa663d1-4eb7-4a9f-9a90-d61c0d82a877', 'c84e07cc-0d42-44a5-8363-afde90302e9a', 'Jumbo Supermarket 5', 'Jumbo Supermarket Address 5', '52.058143', '4.417691');
+
+-- Create a temporary table to store the allowed item types
+CREATE TEMP TABLE allowed_item_types (item_type character varying);
+
+-- Populate the allowed_item_types table with the allowed item types
+INSERT INTO allowed_item_types (item_type)
+VALUES
+    ('GRLOSCH_PREMIUM_PILSNER'),
+    ('GROLSCH_RADLER'),
+    ('HERTOG_JAN_PILSNER'),
+    ('HERTOG_JAN_GRAND_PILSNER'),
+    ('HEINEKEN'),
+    ('KORDAAT');
+
+-- Loop through organizations (supermarkets/breweries)
+DO '
+DECLARE
+org_id uuid;
+    location_id uuid;
+    random_item_type character varying;
+BEGIN
+FOR org_id IN
+        (SELECT id FROM organization)
+    LOOP
+        -- Loop through locations for each organization
+        FOR location_id IN
+            (SELECT id FROM location WHERE organization_id = org_id)
+        LOOP
+            -- Select a random item type
+SELECT item_type
+FROM allowed_item_types
+ORDER BY random()
+    LIMIT 1
+INTO random_item_type;
+
+-- Insert data into the inventory table for the location
+INSERT INTO inventory (quantity, id, location_id, item_type)
+VALUES
+    (floor(random() * 148 + 3)::integer,
+     gen_random_uuid(),
+     location_id,
+     random_item_type);
+END LOOP;
+END LOOP;
+END' LANGUAGE PLPGSQL;

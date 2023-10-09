@@ -4,6 +4,7 @@ import com.centralplatform.server.model.Inventory.Inventory;
 import com.centralplatform.server.model.Organization.Organization;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.centralplatform.server.model.Order.Order;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -36,10 +37,11 @@ public class Location {
     private String longitude;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference(value = "institution-location")
+    @JsonBackReference(value = "organization-location")
     @JoinColumn(name = "organization_id", nullable = false)
     private Organization organization;
     @Column(name = "inventory")
+    @JsonManagedReference(value = "location-inventory")
     @OneToMany(mappedBy = "location")
     private List<Inventory> inventory;
 
