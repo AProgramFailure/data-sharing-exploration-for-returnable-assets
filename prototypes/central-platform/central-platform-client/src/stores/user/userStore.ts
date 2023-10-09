@@ -20,7 +20,7 @@ export const useUserStore = defineStore(
         refresh_token: string;
         user: User;
       }>("user", () =>
-        $fetch("127.0.0.1:8080/api/v1/auth/authenticate", {
+        $fetch("http://localhost:8080/api/auth/authenticate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -31,9 +31,9 @@ export const useUserStore = defineStore(
 
       if (data) {
         if (data.value?.access_token) {
-          user.value.token = data.value?.access_token;
+          user.value = data.value.user;
+          user.value.token = data.value.access_token;
         }
-        user.value = data.value?.user;
       }
     }
 
