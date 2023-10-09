@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 public interface OrganizationController<R extends OrganizationRequest> {
-    // GET
-    @RequestMapping(value = "/organization", method = RequestMethod.GET)
-    <T extends R> ResponseEntity<? extends List<OrganizationDTO>>getOrganizations(@RequestBody T request);
-
-    @RequestMapping(value = "/organization/{id}", method = RequestMethod.GET)
-    ResponseEntity<? extends OrganizationDTO> getOrganizationById(@PathVariable("id") String id);
-
     // POST
     @RequestMapping(value = "/organization", method = RequestMethod.POST)
+    <T extends R> ResponseEntity<? extends List<OrganizationDTO>>getOrganizations(@RequestBody T request);
+
+    @RequestMapping(value = "/organization/{id}", method = RequestMethod.POST)
+    ResponseEntity<? extends OrganizationDTO> getOrganizationById(@PathVariable("id") String id);
+
+    @RequestMapping(value = "/organization/new", method = RequestMethod.POST)
     <T extends R>ResponseEntity<? extends OrganizationDTO> uploadOrganization(@RequestBody T request);
 
     @RequestMapping(value = "/organization/update/{id}", method = RequestMethod.POST)

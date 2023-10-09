@@ -12,18 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 public interface OrderController<R extends OrderRequest> {
-    // GET
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    // POST
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
     <T extends R> ResponseEntity<? extends List<OrderDTO>> getOrders(@RequestBody T request);
 
-    @RequestMapping(value = "/order/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
     ResponseEntity<? extends OrderDTO> getOrderById(@PathVariable("id") String id);
 
-    // POST
     @RequestMapping(value = "/order/update/{id}", method = RequestMethod.POST)
     <T extends R> ResponseEntity<? extends OrderDTO> updateOrder(@RequestBody T request, @PathVariable("id") String id);
 
-    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/new", method = RequestMethod.POST)
     <T extends R> ResponseEntity<? extends OrderDTO> uploadOrder(@RequestBody T request);
 
     @RequestMapping(value = "/order/update", method = RequestMethod.POST)

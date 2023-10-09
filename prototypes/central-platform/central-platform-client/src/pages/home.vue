@@ -3,15 +3,17 @@ import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 import { PointExpression } from "leaflet";
 import { useOrganizationStore } from "~/stores/Organization/OrganizationStore";
-import { Organization } from "~/types/Organization/Organization";
-import { storeToRefs } from "pinia";
 
 const organizationStore = useOrganizationStore();
+const { getOrganizations } = organizationStore;
 
-const { getOrganizations } = organizationStore
+const isLoading = ref(true);
 
-onBeforeMount(async () => {
-  await organizationStore.fetchOrganizations();
+onMounted(async () => {
+  setTimeout(async () => {
+    await organizationStore.fetchOrganizations();
+    isLoading.value = false;
+  });
 });
 
 const showLocations = ref(Array(getOrganizations.value.length).fill(false));
@@ -125,40 +127,45 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
       >
         <div>
           <ul class="pt-1 pb-2 px-3 overflow-y-auto">
-            <li
-              class="mt-2"
-              v-for="(organization, index) in getOrganizations"
-              :key="index"
-            >
-              <a
-                class="p-5 flex flex-col bg-neutral-100 rounded-lg"
-                href="#"
-                @click="toggleLocations(index)"
+            <div v-if="isLoading" class="text-white">Loading...</div>
+            <div class="text-white" v-else>
+              <li
+                class="mt-2"
+                v-for="(organization, index) in getOrganizations"
+                :key="index"
               >
-                <div
-                  class="flex items-center justify-between font-semibold capitalize text-gray-700"
+                <a
+                  class="p-5 flex flex-col bg-neutral-100 rounded-lg"
+                  href="#"
+                  @click="toggleLocations(index)"
                 >
-                  <span>{{ organization.name }}</span>
-                  <span>{{
-                    showLocations[index] ? "Hide Locations" : "Show Locations"
-                  }}</span>
-                </div>
-              </a>
-              <ul>
-                <li
-                  v-for="(location, locationIndex) in filteredLocations(index)"
-                  :key="locationIndex"
-                  class="mt-2"
-                >
-                  <ul
-                    class="p-5 flex flex-col bg-neutral-900 rounded-lg text-white"
+                  <div
+                    class="flex items-center justify-between font-semibold capitalize text-gray-700"
                   >
-                    <li>{{ location.address }}</li>
-                    <li>Items Count: {{ location.inventory.length }}</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+                    <span>{{ organization.name }}</span>
+                    <span>{{
+                      showLocations[index] ? "Hide Locations" : "Show Locations"
+                    }}</span>
+                  </div>
+                </a>
+                <ul>
+                  <li
+                    v-for="(location, locationIndex) in filteredLocations(
+                      index
+                    )"
+                    :key="locationIndex"
+                    class="mt-2"
+                  >
+                    <ul
+                      class="p-5 flex flex-col bg-neutral-900 rounded-lg text-white"
+                    >
+                      <li>{{ location.address }}</li>
+                      <li>Items Count: {{ location.inventory.length }}</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </div>
           </ul>
         </div>
       </div>

@@ -17,23 +17,22 @@ export const useOrganizationStore = defineStore(
 
     // function -> mutattion -> do some kind of logic
     async function fetchOrganizations() {
-      const { data } = await useAsyncData<Organization>("organizations", () => $fetch("http://127.0.0.1:8080/api/prod/organization", {
+      const { data } = await useAsyncData<Organization[]>("organizations", () => $fetch("http://localhost:8080/api/prod/organization", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2RAdHdlbnRlLmRldiIsImlhdCI6MTY5Njc5NTM0MywiZXhwIjoxNjk2ODgxNzQzfQ.JFgaBUOHQx0FGlaSgM59m5jlj-GZpJDCKaymkdnCYdw",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkc2ZhZHNmYWRzZiIsImlhdCI6MTY5Njg1MjI3OCwiZXhwIjoxNjk2OTM4Njc4fQ.5UDAWg10R-aFPx5nBCZU5jg2PNZVerq7t9nKD_bjiSw",
           },
           body: {
-            email: "mod@twente.dev",
+            email: "dsfadsfadsf",
             type: "info",
           },
         })
       );
 
       if(data.value){
-        organizations.value.push(data.value)
+        organizations.value = data.value
       }
-      console.log(organizations)
     }
 
     return {

@@ -12,15 +12,14 @@ import java.util.List;
 
 public interface LocationController<R extends LocationRequest>{
 
-    // GET
-    @RequestMapping(value = "/location", method = RequestMethod.GET)
-    <T extends R>ResponseEntity<? extends List<LocationDTO>> getLocations(@RequestBody T request);
-
-    @RequestMapping(value = "/location/{id}", method = RequestMethod.GET)
-    ResponseEntity<? extends LocationDTO> getLocationById(@PathVariable("id") String id);
-
     // POST
     @RequestMapping(value = "/location", method = RequestMethod.POST)
+    <T extends R>ResponseEntity<? extends List<LocationDTO>> getLocations(@RequestBody T request);
+
+    @RequestMapping(value = "/location/{id}", method = RequestMethod.POST)
+    ResponseEntity<? extends LocationDTO> getLocationById(@PathVariable("id") String id);
+
+    @RequestMapping(value = "/location/new", method = RequestMethod.POST)
     <T extends R>ResponseEntity<? extends LocationDTO> uploadLocation(@RequestBody T request);
 
     @RequestMapping(value = "/location/update/{id}", method = RequestMethod.POST)
