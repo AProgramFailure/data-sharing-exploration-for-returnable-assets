@@ -11,7 +11,7 @@ const props = defineProps({
 
 <template>
     <TransitionRoot as="template" :show="isSlideOpen">
-      <Dialog as="div" class="relative z-10" @close="$emit('update:slide-open', !props.isSlideOpen)">
+      <Dialog as="div" class="relative z-[99999]" @close="$emit('update:slide-open', !props.isSlideOpen)">
         <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
@@ -23,16 +23,16 @@ const props = defineProps({
                 <DialogPanel class="pointer-events-auto relative w-screen max-w-2xl">
                   <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
                     <div class="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
-                      <button type="button" class="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white" @click="$emit('update:slide-open', !props.isSlideOpen)">
+                      <button type="button" class="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-0 focus:ring-none outline-none" @click="$emit('update:slide-open', !props.isSlideOpen)">
                         <span class="absolute -inset-2.5" />
                         <span class="sr-only">Close panel</span>
                         <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
                   </TransitionChild>
-                  <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div class="flex h-full flex-col overflow-y-scroll bg-neutral-800 py-6 shadow-xl">
                     <div class="px-4 sm:px-6">
-                      <DialogTitle class="text-base font-semibold leading-6 text-gray-900">Panel title</DialogTitle>
+                      <DialogTitle class="text-base font-semibold leading-6 text-emerald-50">Panel title</DialogTitle>
                     </div>
                     <div class="relative mt-6 flex-1 px-4 sm:px-6">
                       <!-- Your content -->

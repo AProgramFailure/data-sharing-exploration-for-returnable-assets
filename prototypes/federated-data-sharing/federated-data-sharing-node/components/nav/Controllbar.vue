@@ -8,7 +8,7 @@
 
 <template>
     <div>
-        <aside class="h-16 w-[400px] fixed left-1/2 -translate-x-1/2 bottom-5 bg-emerald-500 flex flex-row items-center justify-evenly rounded-md shadow-md">
+        <aside class="h-16 w-[400px] absolute left-1/2 -translate-x-1/2 bottom-10 bg-emerald-500 flex flex-row items-center justify-evenly rounded-md shadow-md z-[99999]">
 
             <LazyNuxtLink
             to="/home"

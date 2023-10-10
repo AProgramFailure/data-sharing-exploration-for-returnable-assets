@@ -32,6 +32,7 @@
     "@pinia/nuxt": "^0.4.11",
     "@trpc/client": "^10.38.5",
     "@trpc/server": "^10.38.5",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
     "better-sqlite3": "^8.6.0",
     "pinia": "^2.1.4",
     "trpc-nuxt": "^0.10.12",
