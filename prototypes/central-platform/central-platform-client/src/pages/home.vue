@@ -58,25 +58,17 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
 };
 
 function createMarkerIcon(totalQuantity: number) {
-  let color;
+  const color = totalQuantity < 50 ? "green" : totalQuantity < 100 ? "yellow" : totalQuantity < 150 ? "orange" : "red";
 
-  if (totalQuantity < 50) {
-    color = "green";
-  } else if (totalQuantity >= 50 && totalQuantity < 100) {
-    color = "yellow";
-  } else if (totalQuantity >= 100 && totalQuantity < 150) {
-    color = "orange";
-  } else {
-    color = "red";
-  }
+  const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32">
+    <path d="M12 2C6.478 2 2 6.478 2 12c0 8 10 18 10 18s10-10 10-18c0-5.522-4.478-10-10-10zm0 18c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z" fill="${color}" stroke="white" stroke-width="2" />
+  </svg>`;
 
   return L.divIcon({
     className: "custom-marker-icon",
-    html: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32">
-            <path d="M12 2C6.478 2 2 6.478 2 12c0 8 10 18 10 18s10-10 10-18c0-5.522-4.478-10-10-10zm0 18c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z" fill="${color}" stroke="white" stroke-width="2" />
-    </svg>`,
+    html: svgIcon,
     iconSize: [24, 32],
-    iconAnchor: [18, 36],
+    iconAnchor: [12, 32],
   });
 }
 </script>
