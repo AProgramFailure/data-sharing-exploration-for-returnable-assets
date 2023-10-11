@@ -197,9 +197,10 @@ function createMarkerIcon(totalQuantity: number) {
                             inventory, inventoryIndex
                           ) in location.inventory"
                           :key="inventoryIndex"
+                          class="mt-2 p-2 bg-neutral-700 rounded-lg"
                         >
-                          Item: {{ inventory.itemType }} <br>
-                          Quantity: {{ inventory.quantity  }}
+                          Item: {{ inventory.itemType }} <br />
+                          Quantity: {{ inventory.quantity }}
                         </li>
                       </ul>
                     </ul>

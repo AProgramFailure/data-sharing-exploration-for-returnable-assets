@@ -88,31 +88,44 @@ VALUES
 -- Loop through organizations (supermarkets/breweries)
 DO '
 DECLARE
-org_id uuid;
+    org_id uuid;
     location_id uuid;
     random_item_type character varying;
 BEGIN
-FOR org_id IN
-        (SELECT id FROM organization)
+    FOR org_id IN (SELECT id FROM organization)
     LOOP
         -- Loop through locations for each organization
-        FOR location_id IN
-            (SELECT id FROM location WHERE organization_id = org_id)
+        FOR location_id IN (SELECT id FROM location WHERE organization_id = org_id)
         LOOP
-            -- Select a random item type
-SELECT item_type
-FROM allowed_item_types
-ORDER BY random()
-    LIMIT 1
-INTO random_item_type;
+            -- Create a temporary table to store used item types for this location
+            CREATE TEMP TABLE used_item_types (item_type character varying);
 
--- Insert data into the inventory table for the location
-INSERT INTO inventory (quantity, id, location_id, item_type)
-VALUES
-    (floor(random() * 148 + 3)::integer,
-     gen_random_uuid(),
-     location_id,
-     random_item_type);
-END LOOP;
-END LOOP;
+            -- Generate a random number of unique item types for this location
+            LOOP
+                SELECT item_type
+                FROM allowed_item_types
+                WHERE item_type NOT IN (SELECT item_type FROM used_item_types)
+                ORDER BY random()
+                LIMIT 1
+                INTO random_item_type;
+
+                -- Exit the loop if there are no more unique item types for this location
+                EXIT WHEN random_item_type IS NULL;
+
+                -- Insert data into the inventory table for the location with a random quantity
+                INSERT INTO inventory (quantity, id, location_id, item_type)
+                VALUES
+                    (floor(random() * 31)::integer,
+                     gen_random_uuid(),
+                     location_id,
+                     random_item_type);
+
+                -- Store the used item type
+                INSERT INTO used_item_types (item_type) VALUES (random_item_type);
+            END LOOP;
+
+            -- Clean up the temporary table
+            DROP TABLE used_item_types;
+        END LOOP;
+    END LOOP;
 END' LANGUAGE PLPGSQL;
