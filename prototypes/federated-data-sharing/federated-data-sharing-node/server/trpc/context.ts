@@ -9,14 +9,19 @@ export const createContext = () => {
     const db = new Database('./federated.db')
     const federated_node = db.prepare(
         `CREATE TABLE IF NOT EXISTS federated_node (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        node_id INTEGER PRIMARY KEY AUTOINCREMENT,
         first_name TEXT NOT NULL,
         owner INTEGER NOT NULL,
-        security TEXT NOT NULL
+        subscriber_id INTEGER,
+        security TEXT NOT NULL,
+        CONSTRAINT organization_location
+            FOREIGN KEY (node_id)
+            REFERENCES federated_node(subscriber_id)
+
     );`)
     const organization = db.prepare(
         `CREATE TABLE IF NOT EXISTS organization (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        organization_id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         organizationType TEXT NOT NULL,
         security TEXT NOT NULL,
@@ -73,6 +78,7 @@ export const createContext = () => {
     const inventory = db.prepare(
         `CREATE TABLE IF NOT EXISTS inventory (
         inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        inventory_name TEXT NOT NULL,
         item_type TEXT NOT NULL,
         quantity INTEGER,
         security TEXT NOT NULL
