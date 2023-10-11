@@ -58,7 +58,14 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
 };
 
 function createMarkerIcon(totalQuantity: number) {
-  const color = totalQuantity < 50 ? "green" : totalQuantity < 100 ? "yellow" : totalQuantity < 150 ? "orange" : "red";
+  const color =
+    totalQuantity < 50
+      ? "green"
+      : totalQuantity < 100
+      ? "yellow"
+      : totalQuantity < 150
+      ? "orange"
+      : "red";
 
   const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32">
     <path d="M12 2C6.478 2 2 6.478 2 12c0 8 10 18 10 18s10-10 10-18c0-5.522-4.478-10-10-10zm0 18c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z" fill="${color}" stroke="white" stroke-width="2" />
@@ -78,7 +85,7 @@ function createMarkerIcon(totalQuantity: number) {
     <aside
       class="w-1/4 my-1 mr-1 px-6 py-4 flex flex-col bg-neutral-900 text-emerald-400 rounded-r-lg overflow-y-auto"
     >
-      <span class="mt-4 text-neutral-200 font-semibold">Lorem Ipsum</span>
+      <!-- <span class="mt-4 text-neutral-200 font-semibold">Lorem Ipsum</span>
       <span class="mt-1 text-3xl font-semibold">€ 0</span>
 
       <button
@@ -108,7 +115,7 @@ function createMarkerIcon(totalQuantity: number) {
 
       <div class="mt-4 flex justify-center capitalize text-emerald-600">
         <NuxtLink to="/database">see all</NuxtLink>
-      </div>
+      </div> -->
     </aside>
     <div
       class="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-800 rounded-lg text-white border-2 border-transparent hover:border-emerald-500 transition duration-500"
@@ -184,7 +191,17 @@ function createMarkerIcon(totalQuantity: number) {
                       class="p-5 flex flex-col bg-neutral-900 rounded-lg text-white"
                     >
                       <li>{{ location.address }}</li>
-                      <li>Items Count: {{ location.inventory.length }}</li>
+                      <ul class="p-3 mt-2 bg-neutral-800 rounded-lg text-white">
+                        <li
+                          v-for="(
+                            inventory, inventoryIndex
+                          ) in location.inventory"
+                          :key="inventoryIndex"
+                        >
+                          Item: {{ inventory.itemType }} <br>
+                          Quantity: {{ inventory.quantity  }}
+                        </li>
+                      </ul>
                     </ul>
                   </li>
                 </ul>
