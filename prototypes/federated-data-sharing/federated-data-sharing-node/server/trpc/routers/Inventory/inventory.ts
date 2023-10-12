@@ -47,9 +47,9 @@ export const inventoryRouter = router({
         SELECT * FROM location WHERE location_id = ${input.location_id}
         `)
 
-        const fetched_inventory = fetchLocation.all();
+        const fetched_location = fetchLocation.all();
 
-        if(fetched_inventory){
+        if(fetched_location){
             const newInvenotry : Inventory = {
                 item_type: input.item_type,
                 inventory_name: input.inventory_name,
@@ -59,7 +59,7 @@ export const inventoryRouter = router({
             }
 
             const insertInventory = ctx.db.prepare<Inventory>(`
-                INSERT INTO invenotry (item_type, inventory_name, quantity, security) VALUES (:item_type, :inventory_name, :quantity, :security )
+                INSERT INTO invenotry (item_type, inventory_name, quantity, security) VALUES (:item_type, :inventory_name, :quantity, :security );
             `)
 
             insertInventory.run(newInvenotry)
@@ -73,7 +73,7 @@ export const inventoryRouter = router({
             response = {
                 message: "Successfully Added an Invenotry",
                 success: true,
-                payload: [] as Inventory[]
+                payload: inventory as Inventory[]
             }
         }
         else {

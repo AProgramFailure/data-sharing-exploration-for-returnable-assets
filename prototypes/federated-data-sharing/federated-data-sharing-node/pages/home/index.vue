@@ -1,11 +1,4 @@
 <script setup lang="ts">
-    const { $trpcClient } = useNuxtApp();
-    const { organizations } = $trpcClient;
-
-    const { data }  = await organizations.getInstitutions.useQuery()
-
-    console.log(data)
-
     const isSidemenuOpen : Ref<boolean> = ref<boolean>(false);
     // const isModalOpen : Ref<boolean> = ref<boolean>(false);
 
