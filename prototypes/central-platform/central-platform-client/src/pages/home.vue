@@ -81,11 +81,13 @@ function createMarkerIcon(totalQuantity: number) {
 </script>
 
 <template>
-  <div class="max-h-[calc(100vh-4rem)] w-full flex overflow-hidden select-none">
-    <aside
+  <div
+    class="max-h-[calc(100vh-4rem)] w-full flex overflow-hidden select-none pl-4 pr-4"
+  >
+    <!-- <aside
       class="w-1/4 my-1 mr-1 px-6 py-4 flex flex-col bg-neutral-900 text-emerald-400 rounded-r-lg overflow-y-auto"
     >
-      <!-- <span class="mt-4 text-neutral-200 font-semibold">Lorem Ipsum</span>
+     <span class="mt-4 text-neutral-200 font-semibold">Lorem Ipsum</span>
       <span class="mt-1 text-3xl font-semibold">€ 0</span>
 
       <button
@@ -115,16 +117,19 @@ function createMarkerIcon(totalQuantity: number) {
 
       <div class="mt-4 flex justify-center capitalize text-emerald-600">
         <NuxtLink to="/database">see all</NuxtLink>
-      </div> -->
-    </aside>
+      </div>
+    </aside> -->
     <div
-      class="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-800 rounded-lg text-white border-2 border-transparent hover:border-emerald-500 transition duration-500"
+      class="mr-6 w-2/3 pt-8 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)]  text-white"
     >
+      <div
+        class="bg-neutral-800 h-full w-full border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
+      >
       <l-map
         ref="map"
         v-model:zoom="zoom"
         v-model:center="center"
-        :style="{ height: '100%', width: '100%' }"
+        class="h-100 w-100 relative"
         :useGlobalLeaflet="false"
       >
         <l-tile-layer
@@ -150,8 +155,11 @@ function createMarkerIcon(totalQuantity: number) {
         </l-marker>
       </l-map>
     </div>
+
+ 
+    </div>
     <div
-      class="w-1/4 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto"
+      class="w-1/3 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto"
     >
       <div
         class="mr-6 py-1 flex flex-col bg-neutral-800 border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
