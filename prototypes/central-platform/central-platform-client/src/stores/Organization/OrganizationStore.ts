@@ -19,8 +19,7 @@ export const useOrganizationStore = defineStore("organizations", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer "+useCookie('userToken').value,
+          Authorization: "Bearer " + useCookie("userToken").value,
         },
         body: {
           email: "amdin@utwente.nl",

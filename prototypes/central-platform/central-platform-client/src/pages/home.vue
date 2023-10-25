@@ -6,6 +6,10 @@ import { createMarkerIcon } from "~/utils/iconFactory";
 import { useOrganizationStore } from "~/stores/Organization/OrganizationStore";
 import { Inventory } from "~/types/Inventory/Inventory";
 
+definePageMeta({
+  middleware: 'auth'
+})
+
 const organizationStore = useOrganizationStore();
 const { getOrganizations } = organizationStore;
 
