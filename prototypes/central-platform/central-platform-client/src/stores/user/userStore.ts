@@ -35,7 +35,7 @@ export const useUserStore = defineStore(
           const userToken = useCookie("userToken", {
             secure: true,
             sameSite: "strict",
-            maxAge: 60,
+            maxAge: 86400,
           });
           userToken.value = data.value.access_token;
         }

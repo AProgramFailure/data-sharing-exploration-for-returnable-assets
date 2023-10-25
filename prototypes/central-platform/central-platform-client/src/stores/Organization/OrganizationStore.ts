@@ -1,17 +1,12 @@
 import { defineStore } from "pinia";
 import { useSessionStorage, type RemovableRef } from "@vueuse/core";
-
 import type { Organization } from "~/types/Organization/Organization";
-import { useUserStore } from "../user/userStore";
 
 export const useOrganizationStore = defineStore("organizations", () => {
   // ref -> state -> data
   const organizations: RemovableRef<Organization[]> = useSessionStorage<
     Organization[]
   >("organizations", [] as Organization[]);
-  const userStore = useUserStore();
-  const { getUser } = userStore;
-
   // computed -> getters -> access information
   const getOrganizations: ComputedRef<RemovableRef<Organization[]>> = computed(
     () => organizations
