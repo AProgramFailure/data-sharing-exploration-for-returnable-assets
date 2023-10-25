@@ -34,17 +34,18 @@ export const createContext = () => {
         CONSTRAINT organization_order
             FOREIGN KEY (order_id)
             REFERENCES _order(order_id),
-        CONSTRAINT organization_user
+        CONSTRAINT organizationuser_table
             FOREIGN KEY (user_id)
-            REFERENCES _user(user_id)
+            REFERENCES user_table(user_id)
 
     );`)
     const user = db.prepare(
-        `CREATE TABLE IF NOT EXISTS _user (
+        `CREATE TABLE IF NOT EXISTS user_table (
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
         first_name TEXT NOT NULL,
-        last_name TEXT NOT NULL
+        last_name TEXT NOT NULL,
+        password TEXT NOT NULL
     );`)
     const location = db.prepare(
         `CREATE TABLE IF NOT EXISTS location (
