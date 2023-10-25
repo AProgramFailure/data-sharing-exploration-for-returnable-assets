@@ -7,6 +7,18 @@ definePageMeta({
   layout: "auth",
 });
 
+onMounted(() => {
+  const toast = useToast();
+
+  if (useCookie("userToken").value) {
+   
+    navigateTo("/home");
+    setTimeout(() => {
+      toast.info("Already authenticated, Redirecting");
+    }, 600);
+  }
+});
+
 const toast = useToast();
 
 async function login() {
@@ -19,19 +31,18 @@ async function login() {
 
   setTimeout(() => {
     toast.info("Checking authentication");
-  },800);
+  }, 800);
 
   await authenticate(credentials.value);
 
-  if (getUser.value.token) {
+  if (useCookie("userToken").value) {
     setTimeout(() => {
       toast.success("Connecting");
-    }, 3000);
-
+    }, 2000);
 
     setTimeout(() => {
       navigateTo("/home");
-    }, 4000);
+    }, 3000);
   } else {
     toast.error("Could not authenticate");
   }
