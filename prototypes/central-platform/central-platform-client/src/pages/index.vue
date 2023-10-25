@@ -23,15 +23,15 @@ async function login() {
 
   await authenticate(credentials.value);
 
-  if (getUser.value.token) {
+  if (useCookie('userToken').value) {
     setTimeout(() => {
       toast.success("Connecting");
-    }, 3000);
+    }, 2000);
 
 
     setTimeout(() => {
       navigateTo("/home");
-    }, 4000);
+    }, 3000);
   } else {
     toast.error("Could not authenticate");
   }

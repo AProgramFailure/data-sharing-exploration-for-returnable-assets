@@ -32,7 +32,8 @@ export const useUserStore = defineStore(
       if (data) {
         if (data.value?.access_token) {
           user.value = data.value.user;
-          user.value.token = data.value.access_token;
+          const userToken = useCookie('userToken',{secure: true, sameSite: "strict"})
+          userToken.value = data.value.access_token;
         }
       }
     }
