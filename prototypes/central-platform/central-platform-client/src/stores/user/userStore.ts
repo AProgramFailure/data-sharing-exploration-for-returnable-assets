@@ -32,7 +32,11 @@ export const useUserStore = defineStore(
       if (data) {
         if (data.value?.access_token) {
           user.value = data.value.user;
-          const userToken = useCookie('userToken',{secure: true, sameSite: "strict"})
+          const userToken = useCookie("userToken", {
+            secure: true,
+            sameSite: "strict",
+            maxAge: 60,
+          });
           userToken.value = data.value.access_token;
         }
       }
