@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import { PointExpression } from "leaflet";
-import L from "leaflet";
+import { type PointExpression } from "leaflet";
+import { createMarkerIcon } from "~/utils/iconFactory";
 import { useOrganizationStore } from "~/stores/Organization/OrganizationStore";
 import { Inventory } from "~/types/Inventory/Inventory";
 
@@ -56,28 +56,6 @@ let center = ref<PointExpression>([52.1926, 5.2913]);
 const calculateTotalInventory = (inventory: Inventory[]) => {
   return inventory.reduce((total, item) => total + item.quantity, 0);
 };
-
-function createMarkerIcon(totalQuantity: number) {
-  const color =
-    totalQuantity < 50
-      ? "green"
-      : totalQuantity < 100
-      ? "yellow"
-      : totalQuantity < 150
-      ? "orange"
-      : "red";
-
-  const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32">
-    <path d="M12 2C6.478 2 2 6.478 2 12c0 8 10 18 10 18s10-10 10-18c0-5.522-4.478-10-10-10zm0 18c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z" fill="${color}" stroke="white" stroke-width="2" />
-  </svg>`;
-
-  return L.divIcon({
-    className: "custom-marker-icon",
-    html: svgIcon,
-    iconSize: [24, 32],
-    iconAnchor: [12, 32],
-  });
-}
 </script>
 
 <template>
@@ -120,43 +98,44 @@ function createMarkerIcon(totalQuantity: number) {
       </div>
     </aside> -->
     <div
-      class="mr-6 w-2/3 pt-8 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)]  text-white"
+      class="mr-6 w-2/3 pt-8 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] text-white"
     >
       <div
         class="bg-neutral-800 h-full w-full border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
       >
-      <l-map
-        ref="map"
-        v-model:zoom="zoom"
-        v-model:center="center"
-        class="h-100 w-100 relative"
-        :useGlobalLeaflet="false"
-      >
-        <l-tile-layer
-          url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-          layer-type="base"
-          name="Locations map"
-        ></l-tile-layer
-        ><l-marker
-          v-for="(location, locationIndex) in mapLocations"
-          :key="locationIndex"
-          :lat-lng="[parseFloat(location.lat), parseFloat(location.lon)]"
-          :icon="createMarkerIcon(calculateTotalInventory(location.inventory))"
+        <l-map
+          ref="map"
+          v-model:zoom="zoom"
+          v-model:center="center"
+          class="h-100 w-100 relative"
+          :useGlobalLeaflet="false"
         >
-          <l-popup>
-            <div>
-              <strong>{{ location.name }}</strong>
-            </div>
-            <div>{{ location.address }}</div>
-            <div>
-              Total Inventory: {{ calculateTotalInventory(location.inventory) }}
-            </div>
-          </l-popup>
-        </l-marker>
-      </l-map>
-    </div>
-
- 
+          <l-tile-layer
+            url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+            layer-type="base"
+            name="Locations map"
+          ></l-tile-layer
+          ><l-marker
+            v-for="(location, locationIndex) in mapLocations"
+            :key="locationIndex"
+            :lat-lng="[parseFloat(location.lat), parseFloat(location.lon)]"
+            :icon="
+              createMarkerIcon(calculateTotalInventory(location.inventory))
+            "
+          >
+            <l-popup>
+              <div>
+                <strong>{{ location.name }}</strong>
+              </div>
+              <div>{{ location.address }}</div>
+              <div>
+                Total Inventory:
+                {{ calculateTotalInventory(location.inventory) }}
+              </div>
+            </l-popup>
+          </l-marker>
+        </l-map>
+      </div>
     </div>
     <div
       class="w-1/3 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] bg-neutral-900 rounded-l-lg transition duration-500 ease-in-out overflow-y-auto"
