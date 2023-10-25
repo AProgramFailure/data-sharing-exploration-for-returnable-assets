@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/vue/24/outline'
 
 const emits = defineEmits(['update:slide-open'])
 const props = defineProps({
+  title: String,
   isSlideOpen: Boolean
 })
 
@@ -11,7 +12,7 @@ const props = defineProps({
 
 <template>
     <TransitionRoot as="template" :show="isSlideOpen">
-      <Dialog as="div" class="relative z-[99999]" @close="$emit('update:slide-open', !props.isSlideOpen)">
+      <Dialog as="div" class="relative z-[999]" @close="$emit('update:slide-open', !props.isSlideOpen)">
         <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
@@ -32,10 +33,10 @@ const props = defineProps({
                   </TransitionChild>
                   <div class="flex h-full flex-col overflow-y-scroll bg-neutral-800 py-6 shadow-xl">
                     <div class="px-4 sm:px-6">
-                      <DialogTitle class="text-base font-semibold leading-6 text-emerald-50">Panel title</DialogTitle>
+                      <DialogTitle class="text-base font-semibold leading-6 text-emerald-50">{{ props.title}}</DialogTitle>
                     </div>
                     <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                      <!-- Your content -->
+                      <slot />
                     </div>
                   </div>
                 </DialogPanel>

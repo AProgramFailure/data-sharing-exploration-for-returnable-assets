@@ -1,5 +1,12 @@
 <script lang="ts" setup>
+
     import { PlusIcon } from "@heroicons/vue/24/solid"
+    import { useOrganizationStore } from "~/stores/Organization/organizationStore";
+
+    const organizationStore = useOrganizationStore();
+
+    const { getOrganizations } = organizationStore
+
 </script>
 
 <template>
@@ -8,22 +15,24 @@
             <div class="w-[110px] h-full overflow-y-scroll no-scrollbar">
                 <div class="flex flex-col justify-start items-center py-2 gap-2">
                     <NuxtLink
-                    v-for="(shortcut, index) in 10"
+                    v-for="(organization, index) in getOrganizations"
                     :key="index"
                     :to="`/home/institution/${index}`"
                     class="border-2 bg-transparent border-emerald-300/20 hover:border-emerald-300 transition-colors duration-500 rounded-md w-[70px] h-[70px] min-w-[70px] flex flex-col items-center justify-center select-none text-white"
                     >
-                    hi
+                    {{ useAbreviation(organization.name) }}
                     </NuxtLink>
-                    <button
+                    <NuxtLink
+                    to="/dashboard"
                     class="border-2 bg-transparent border-emerald-300/20 hover:border-emerald-300 transition-colors duration-500 rounded-md w-[70px] h-[70px] min-w-[70px] flex flex-col items-center justify-center select-none text-white"
                     >
                         <PlusIcon class="group-hover:text-neutral-900 w-6 text-neutral-400 transition-colors duration-500" />
-                    </button>
-
+                    </NuxtLink>
                 </div>
             </div>
-            <div class="w-full h-full flex flex-col items-center justify-between border-l-2 border-neutral-700">
+            <div
+
+            class="w-full h-full flex flex-col items-center justify-between border-l-2 border-neutral-700">
                 <div class="w-full h-full pb-10 overflow-hidden">
                     <div class=" border-b-2 border-neutral-700 h-10 w-full flex flex-col items-center justify-center">
                         <h1 class="font-semibold text-md select-none text-white">
