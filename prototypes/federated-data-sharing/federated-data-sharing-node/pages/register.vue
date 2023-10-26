@@ -74,7 +74,8 @@
                         email: email,
                         password: password,
                         first_name: first_name,
-                        last_name: last_name
+                        last_name: last_name,
+                        organization_id: 1
                     })"
                     minlength="6"
                     class="w-full px-4 py-3 text-neutral-900 rounded-lg bg-neutral-100 mt-2 border-4 focus:border-emerald-400 transition duration-300 focus:bg-white focus:outline-none" required>
@@ -83,11 +84,12 @@
                 <div class="flex flex-row items-center justify-center mt-6">
                     <div
                     @click="register({
-                            email: email,
-                            password: password,
-                            first_name: first_name,
-                            last_name: last_name
-                        })"
+                        email: email,
+                        password: password,
+                        first_name: first_name,
+                        last_name: last_name,
+                        organization_id: 1
+                    })"
                     class="w-full block bg-emerald-500 hover:bg-emerald-400 focus:bg-emerald-600 text-white font-semibold rounded-l-md rounded-r-none transition duration-300 px-4 py-3 text-center cursor-pointer">Register</div>
                     <NuxtLink to="/" class="border-2 border-emerald-500 rounded-r-md p-[10px] text-white/40 hover:border-emerald-500 hover:bg-emerald-500 transition duration-300 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
