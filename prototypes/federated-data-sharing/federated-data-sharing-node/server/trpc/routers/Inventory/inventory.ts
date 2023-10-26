@@ -59,7 +59,7 @@ export const inventoryRouter = router({
             }
 
             const insertInventory = ctx.db.prepare<Inventory>(`
-                INSERT INTO invenotry (item_type, inventory_name, quantity, security) VALUES (:item_type, :inventory_name, :quantity, :security );
+                INSERT INTO inventory (item_type, inventory_name, quantity, security) VALUES (:item_type, :inventory_name, :quantity, :security );
             `)
 
             insertInventory.run(newInvenotry)

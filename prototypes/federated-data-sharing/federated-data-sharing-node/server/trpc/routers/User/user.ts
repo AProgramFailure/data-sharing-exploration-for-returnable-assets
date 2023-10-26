@@ -10,6 +10,7 @@ type UserResponse = {
 type User = {
     id?: number,
     email: string,
+    organization_id: number,
     first_name : string,
     last_name: string,
     password: string
@@ -20,7 +21,7 @@ export const userRouter = router({
     getUsers: publicProcedure
     .query( ({ ctx }) => {
         const fetchUsers = ctx.db.prepare(`
-        SELECT * FROM _user
+        SELECT user_id, email, first_name, last_name, organization_id FROM user_table
         `)
         const users = fetchUsers.all();
         return {
@@ -53,7 +54,8 @@ export const userRouter = router({
             email: z.string().email(),
             password: z.string(),
             first_name: z.string(),
-            last_name: z.string()
+            last_name: z.string(),
+            organization_id: z.number()
         })
     )
     .query( ({ input, ctx }) => {
@@ -66,12 +68,13 @@ export const userRouter = router({
             email: input.email,
             password: input.password,
             first_name: input.first_name,
-            last_name: input.last_name
+            last_name: input.last_name,
+            organization_id: input.organization_id
         }
 
         const insertUser = ctx.db.prepare(`
-        INSERT INTO user_table (email, first_name, last_name, password) VALUES (?, ?, ?, ?)
-        `).bind(newUser.email, newUser.first_name, newUser.last_name, newUser.password)
+        INSERT INTO user_table (email, first_name, last_name, password, organization_id) VALUES (?, ?, ?, ?, ?)
+        `).bind(newUser.email, newUser.first_name, newUser.last_name, newUser.password, newUser.organization_id)
 
         insertUser.run()
 

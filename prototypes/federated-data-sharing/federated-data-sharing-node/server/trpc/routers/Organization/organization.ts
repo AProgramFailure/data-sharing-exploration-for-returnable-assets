@@ -24,7 +24,7 @@ type ShallowOrganization = Omit<Organization,
 
 export const organizationRouter = router({
     getOrganizations: publicProcedure
-    .query( ({ input, ctx }) => {
+    .query( ({ ctx }) => {
         const fetchInstitutions = ctx.db.prepare(`
         SELECT * FROM organization
         `)
