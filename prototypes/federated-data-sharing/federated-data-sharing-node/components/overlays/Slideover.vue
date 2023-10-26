@@ -14,7 +14,7 @@ const props = defineProps({
     <TransitionRoot as="template" :show="isSlideOpen">
       <Dialog as="div" class="relative z-[999]" @close="$emit('update:slide-open', !props.isSlideOpen)">
         <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
-          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div class="fixed inset-0 bg-gray-500 bg-neutral-100/5 transition-opacity" />
         </TransitionChild>
 
         <div class="fixed inset-0 overflow-hidden">

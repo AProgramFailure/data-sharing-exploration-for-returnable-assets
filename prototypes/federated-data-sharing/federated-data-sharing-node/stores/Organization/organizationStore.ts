@@ -2,7 +2,10 @@ import { defineStore } from "pinia"
 import { useSessionStorage, type RemovableRef } from "@vueuse/core"
 import { useToast } from "vue-toastification";
 
-import { Organization } from "~/types/Organization/Organization";
+import { useRandomString } from "#imports";
+
+import type { Organization } from "~/types/Organization/Organization";
+
 
 export const useOrganizationStore = defineStore("organization", () => {
     const { $trpcClient } = useNuxtApp();
@@ -28,8 +31,20 @@ export const useOrganizationStore = defineStore("organization", () => {
         })
     }
 
+    async function addDummy(){
+        toast.info('Preparing dummy node')
+
+        console.log()
+        const dummy = await organizations.addOrganization.useQuery({
+            name: useRandomString(10),
+            organization_type: "brewery",
+            security: "public"
+        })
+        toast.success("Dummy node successfully created")
+    }
+
     return {
-        getOrganizations, addSampleOrg
+        getOrganizations, addSampleOrg, addDummy
     }
 }, {
     persist: true

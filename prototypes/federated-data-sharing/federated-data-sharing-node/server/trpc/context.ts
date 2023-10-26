@@ -21,7 +21,7 @@ export const createContext = () => {
     const organization = db.prepare(
         `CREATE TABLE IF NOT EXISTS organization (
         organization_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
         organization_type TEXT NOT NULL,
         security TEXT NOT NULL
     );`)
@@ -43,7 +43,7 @@ export const createContext = () => {
     const user = db.prepare(
         `CREATE TABLE IF NOT EXISTS user_table (
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        email TEXT NOT NULL UNIQUE,
+        email TEXT NOT NULL,
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
         password TEXT NOT NULL,

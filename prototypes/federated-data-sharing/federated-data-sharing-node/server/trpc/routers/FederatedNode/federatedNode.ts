@@ -58,18 +58,14 @@ export const federatedNodeRouter = router({
     subscribe : publicProcedure
     .input(
         z.object({
-            node_id: z.number(),
-            name: z.string()
+            subscribed_node_id: z.number(),
+            subscribing_node_id: z.number()
         })
     )
     .query( ({ input, ctx }) => {
 
-        const subscribe = ctx.db.prepare(`UPDATE TABLE federated_node
-        SET subscriber_id = ?
-        WHERE name = ?
-        ORDER BY name
-        LIMIT 1
-        `).bind(input.node_id, input.name)
+        const subscribe = ctx.db.prepare(`INSERT INTO node_subscribers ( subscribed_node_id , subscribing_node_id ) VALUES (?, ?)
+        `).bind(input.subscribed_node_id, input.subscribing_node_id)
 
         subscribe.run()
 
@@ -103,7 +99,7 @@ export const federatedNodeRouter = router({
         `)
         const owner_organization = fetchOrganization.all()
 
-        if(owner_organization){
+        if(owner_organization.length > 0){
             const newNode : FederatedNode = {
                 name: input.name,
                 owner: input.owner,
