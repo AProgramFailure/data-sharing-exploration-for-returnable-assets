@@ -7,8 +7,8 @@ import { useOrganizationStore } from "~/stores/Organization/OrganizationStore";
 import { Inventory } from "~/types/Inventory/Inventory";
 
 definePageMeta({
-  middleware: 'auth'
-})
+  middleware: "auth",
+});
 
 const organizationStore = useOrganizationStore();
 const { getOrganizations } = organizationStore;
@@ -42,7 +42,8 @@ const mapLocations = computed(() => {
     if (showLocations.value[i]) {
       for (const location of getOrganizations.value[i].locations) {
         locations.push({
-          name: getOrganizations.value[i].name,
+          id: location.id,
+          organizationName: getOrganizations.value[i].name,
           lat: location.latitude,
           lon: location.longitude,
           address: location.address,
@@ -102,7 +103,7 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
       </div>
     </aside> -->
     <div
-      class="mr-6 w-2/3 pt-8 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] text-white"
+      class="mr-6 w-2/3 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] text-white"
     >
       <div
         class="bg-neutral-800 h-full w-full border-2 border-transparent hover:border-emerald-500 transition duration-500 rounded-lg"
@@ -129,13 +130,14 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
           >
             <l-popup>
               <div>
-                <strong>{{ location.name }}</strong>
+                <strong>{{ location.organizationName }}</strong>
               </div>
               <div>{{ location.address }}</div>
               <div>
                 Total Inventory:
                 {{ calculateTotalInventory(location.inventory) }}
               </div>
+              <NuxtLink :to="'location/' + location.id" class="underline">Location details</NuxtLink>
             </l-popup>
           </l-marker>
         </l-map>
@@ -182,6 +184,11 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
                       class="p-5 flex flex-col bg-neutral-900 rounded-lg text-white"
                     >
                       <li>{{ location.address }}</li>
+                      <li>
+                        <NuxtLink :to="'location/' + location.id"
+                          class="underline">Location details</NuxtLink
+                        >
+                      </li>
                       <ul class="p-3 mt-2 bg-neutral-800 rounded-lg text-white">
                         <li
                           v-for="(
