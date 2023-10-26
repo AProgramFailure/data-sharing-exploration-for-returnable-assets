@@ -4,7 +4,7 @@ import { publicProcedure, router } from "../../trpc";
 type OrganizationResponse = {
     message: string,
     success: boolean,
-    payload: Organization[] | null
+    payload: Organization[] | Organization | null
 }
 
 type Organization = {
@@ -33,6 +33,33 @@ export const organizationRouter = router({
             organizations
         }
     }),
+    getSubscribedOrganizations: publicProcedure
+    .input(
+        z.object({
+            user_id: z.number(),
+            organization_id: z.number()
+
+        })
+    )
+    .query( ({ input, ctx }) => {
+
+        const query = ctx.db.prepare(`
+            SELECT * FROM organization o
+            INNER JOIN organization_node n ON o.organization_id = n.organization_id
+            INNER JOIN node_subscribers ns ON n.node_id = ns.subscribed_node_id
+            WHERE o.organization_id = ? AND ( o.security = 'public' OR o.security = 'subscribe' )
+
+        `).bind(input.organization_id).all()
+
+        const response : OrganizationResponse = {
+            message: "Fetched all nodes subscbrided to input node",
+            success: false,
+            payload: query as Organization[]
+        }
+        return {
+            response
+        }
+    }),
     addOrganization : publicProcedure
     .input(
         z.object({
@@ -54,22 +81,18 @@ export const organizationRouter = router({
             security: input.security
         }
 
-        const insertOrganizationy = ctx.db.prepare<ShallowOrganization>(`
-                INSERT INTO invenotry (name, organization_type, security) VALUES (:name, :organization_type, :security );
-        `)
-
-        insertOrganizationy.run(newOrganization)
+        const _insertOrganization = ctx.db.prepare(`
+            INSERT INTO organization (name, organization_type, security) VALUES (?, ?, ?)
+        `).run(newOrganization.name, newOrganization.organization_type, newOrganization.security)
 
         const getInsertedOrganization = ctx.db.prepare(`
-            SELECT * FROM inventory WHERE inventory_name = ${newOrganization.name}
-        `)
-
-        const organization = getInsertedOrganization.all();
+            SELECT * FROM organization o WHERE o.name = '${newOrganization.name}'
+        `).get()
 
         response = {
             message: "Successfully Added an Invenotry",
             success: true,
-            payload: organization as Organization[]
+            payload: getInsertedOrganization as Organization
         }
 
         return {

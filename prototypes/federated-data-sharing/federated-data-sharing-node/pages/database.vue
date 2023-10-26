@@ -1,23 +1,29 @@
 <script setup lang="ts">
     import { storeToRefs } from 'pinia';
     import { useInventoryStore } from '~/stores/Inventory/inventoryStore';
-    import { useFederatedNodeStore } from '~/stores/Node/nodeStore';
     import { useOrderSotre } from '~/stores/Order/orderStore';
     import { useOrganizationStore } from '~/stores/Organization/organizationStore';
     import { useLocationStore } from '~/stores/Location/locationStore';
     import { RemovableRef } from '@vueuse/core';
 
     const inventoryStore = useInventoryStore();
-    const federatedNodeStore = useFederatedNodeStore();
     const orderStore = useOrderSotre();
     const organizationStore = useOrganizationStore();
     const locationStore = useLocationStore();
 
     const { getInventories } = inventoryStore;
-    const { getFederatedNotes } = federatedNodeStore;
     const { getOrders } = orderStore;
     const { getOrganizations } = organizationStore;
     const { getLocations } = locationStore
+
+    const isInfoSlideOpen : Ref<boolean> = ref<boolean>(false);
+    const selectedItem : Ref<unknown | null> = ref<unknown>();
+
+    function selectItem(item: unknown) {
+        selectedItem.value = item
+        isInfoSlideOpen.value = !isInfoSlideOpen.value
+    }
+
 
     const dictionary : {
         name: string,
@@ -26,10 +32,6 @@
         {
             name: "Inventory",
             key: getInventories
-        },
-        {
-            name: "Nodes",
-            key: getFederatedNotes
         },
         {
             name: "Orders",
@@ -45,7 +47,6 @@
         }
     ]
 
-    defineEmits(["update:slide"])
 </script>
 
 <template>
@@ -54,18 +55,27 @@
             <div
             v-for="(entry, index) in dictionary"
             :key="index"
-            class="bg-neutral-800 w-full min-h-[20rem] p-3 rounded-md border-2 border-transparent hover:border-emerald-400 transition duration-500 relative flex flex-col items-start justify-evenly"
+            class="bg-neutral-800 w-full min-h-[25rem] p-3 rounded-md border-2 border-transparent hover:border-emerald-400 transition duration-500 relative flex flex-col items-start justify-evenly"
             >
             <h1 class="text-white font-semibold text-[18px]">{{ entry.name }}</h1>
-                <div class="h-40 bg-neutral-900 rounded-md w-full overflow-y-scroll no-scrollbar">
+                <div class="h-60 bg-neutral-900 rounded-md w-full overflow-y-scroll no-scrollbar border-emerald-500/30 border-2 p-2 flex flex-col gap-2">
                     <div
-                    class="bg-transparent hover:bg-emerald-500 transition duration-500 text-white hover:text-neutral-900 h-10 flex flex-row justify-between items-center p-2 font-semibold"
+                    class="bg-transparent rounded-md hover:bg-emerald-400 transition duration-500 text-white hover:text-neutral-900 flex flex-row justify-between items-center p-4 font-semibold"
                     v-for="(item, index) in 30"
                     :key="index"
+                    @click="selectItem(item)"
                     >
                     <h1>{{ index }}</h1>
                     <h1>Some Name</h1>
                     </div>
+
+                    <LazySlideover
+                    title="Account Information"
+                    :is-slide-open="isInfoSlideOpen"
+                    @update:slide-open="isInfoSlideOpen = $event"
+                    >
+                        <h1> selected item: {{ selectedItem }}</h1>
+                    </LazySlideover>
                 </div>
             </div>
         </div>

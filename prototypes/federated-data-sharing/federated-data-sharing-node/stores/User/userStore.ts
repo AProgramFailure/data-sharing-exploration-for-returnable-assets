@@ -24,7 +24,6 @@ export const useUserStore = defineStore("user", () =>{
             last_name: user_details.last_name,
             organization_id: user_details.organization_id
         })
-        console.log(data)
         user.value = data.value?.response.payload
         user.value.password = "";
         toast.success("Successfully Registered in the system!")
