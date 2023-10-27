@@ -22,7 +22,7 @@
                 @update:slide-open="isSidemenuOpen = $event"
                 >
                 <div class="flex flex-col items-start justify-center gap-4 w-full">
-                    <h1 class="text-white font-semibold text-[30px] pb-10">Hello {{ user.first_name }} {{ user.last_name }}!</h1>
+                    <h1 class="text-white font-semibold text-[30px] pb-10">Hello {{ user.name }}!</h1>
                     <div class="bg-neutral-900 text-white w-full flex flex-col p-3 gap-2 rounded-md">
                         <h1 class="font-semibold">Organization:</h1>
                         <h1 class="bg-neutral-950 p-2 rounded-md">Some organization name</h1>

@@ -16,12 +16,12 @@
     const { getOrganizations } = organizationStore;
     const { getLocations } = locationStore
 
-    const isInfoSlideOpen : Ref<boolean> = ref<boolean>(false);
+   const isSidemenuOpen : Ref<boolean> = ref<boolean>(false);
     const selectedItem : Ref<unknown | null> = ref<unknown>();
 
     function selectItem(item: unknown) {
         selectedItem.value = item
-        isInfoSlideOpen.value = !isInfoSlideOpen.value
+        isSidemenuOpen.value = !isSidemenuOpen.value
     }
 
 
@@ -68,17 +68,16 @@
                     <h1>{{ index }}</h1>
                     <h1>Some Name</h1>
                     </div>
-
-                    <LazySlideover
-                    title="Account Information"
-                    :is-slide-open="isInfoSlideOpen"
-                    @update:slide-open="isInfoSlideOpen = $event"
-                    >
-                        <h1> selected item: {{ selectedItem }}</h1>
-                    </LazySlideover>
                 </div>
             </div>
         </div>
+        <LazySlideover
+            title="Account Information"
+            :is-slide-open="isSidemenuOpen"
+            @update:slide-open="isSidemenuOpen = $event"
+            >
+                <h1> selected item: {{ selectedItem }}</h1>
+        </LazySlideover>
     </div>
 </template>
 
