@@ -12,9 +12,7 @@ export const createContext = () => {
     const federated_node = db.prepare(
         `CREATE TABLE IF NOT EXISTS federated_node (
         node_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        owner INTEGER NOT NULL,
-        subscriber_id INTEGER,
+        name TEXT NOT NULL UNIQUE,
         security TEXT NOT NULL
     );`)
     // 2
@@ -22,6 +20,7 @@ export const createContext = () => {
         `CREATE TABLE IF NOT EXISTS organization (
         organization_id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
+        secret_key TEXT NOT NULL,
         organization_type TEXT NOT NULL,
         security TEXT NOT NULL
     );`)
@@ -44,8 +43,7 @@ export const createContext = () => {
         `CREATE TABLE IF NOT EXISTS user_table (
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL,
-        first_name TEXT NOT NULL,
-        last_name TEXT NOT NULL,
+        name TEXT NOT NULL,
         password TEXT NOT NULL,
         organization_id INTEGER,
         CONSTRAINT user_organization
@@ -100,7 +98,8 @@ export const createContext = () => {
         order_id INTEGER NOT NULL,
         status TEXT NOT NULL,
         security TEXT NOT NULL,
-        order_item_id INTEGER,
+        source_location_id INTEGER NOT NULL,
+        destination_location_id INTEGER NOT NULL,
         organization_id INTEGER,
         CONSTRAINT order_organization
             FOREIGN KEY (organization_id)
