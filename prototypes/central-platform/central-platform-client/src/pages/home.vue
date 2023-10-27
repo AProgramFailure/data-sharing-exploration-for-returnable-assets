@@ -58,8 +58,12 @@ const mapLocations = computed(() => {
 let zoom = ref(7);
 let center = ref<PointExpression>([52.1926, 5.2913]);
 
-const calculateTotalInventory = (inventory: Inventory[]) => {
-  return inventory.reduce((total, item) => total + item.quantity, 0);
+const calculateHighestCapacityPercentage = (inventory: Inventory[]) => {
+  const inventoryPercentage= (inventory.reduce((highestPercentage, item) => {
+    const percentage = (item.quantity / item.capacity) * 100;
+    return Math.max(highestPercentage, percentage);
+  }, 0))
+  return Math.round(inventoryPercentage*10) / 10 ;
 };
 </script>
 
@@ -67,41 +71,6 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
   <div
     class="max-h-[calc(100vh-4rem)] w-full flex overflow-hidden select-none pl-4 pr-4"
   >
-    <!-- <aside
-      class="w-1/4 my-1 mr-1 px-6 py-4 flex flex-col bg-neutral-900 text-emerald-400 rounded-r-lg overflow-y-auto"
-    >
-     <span class="mt-4 text-neutral-200 font-semibold">Lorem Ipsum</span>
-      <span class="mt-1 text-3xl font-semibold">€ 0</span>
-
-      <button
-        class="mt-8 flex border-2 border-transparent items-center py-4 px-3 text-white rounded-lg bg-emerald-500 shadow focus:outline-none hover:bg-emerald-400 hover:border-emerald-300 transition duration-500"
-      >
-        <svg class="h-5 w-5 fill-current mr-2 ml-3" viewBox="0 0 24 24">
-          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-        </svg>
-
-        <span>Lorem ipsum</span>
-      </button>
-
-      <div class="mt-12 flex items-center">
-        <span>Lorem ipsum</span>
-        <button class="ml-2 focus:outline-none">
-          <svg class="h-5 w-5 fill-current" viewBox="0 0 256 512">
-            <path
-              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9
-                            0l-22.6-22.6c-9.4-9.4-9.4-24.6
-                            0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3
-                            103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1
-                            34z"
-            ></path>
-          </svg>
-        </button>
-      </div>
-
-      <div class="mt-4 flex justify-center capitalize text-emerald-600">
-        <NuxtLink to="/database">see all</NuxtLink>
-      </div>
-    </aside> -->
     <div
       class="mr-6 w-2/3 pt-8 pb-2 flex-shrink-0 flex flex-col h-[calc(100vh-4rem)] text-white"
     >
@@ -125,7 +94,9 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
             :key="locationIndex"
             :lat-lng="[parseFloat(location.lat), parseFloat(location.lon)]"
             :icon="
-              createMarkerIcon(calculateTotalInventory(location.inventory))
+              createMarkerIcon(
+                calculateHighestCapacityPercentage(location.inventory)
+              )
             "
           >
             <l-popup>
@@ -134,10 +105,12 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
               </div>
               <div>{{ location.address }}</div>
               <div>
-                Total Inventory:
-                {{ calculateTotalInventory(location.inventory) }}
+                Highest item capacity usage:
+                {{ calculateHighestCapacityPercentage(location.inventory) }}
               </div>
-              <NuxtLink :to="'location/' + location.id" class="underline">Location details</NuxtLink>
+              <NuxtLink :to="'location/' + location.id" class="underline"
+                >Location details</NuxtLink
+              >
             </l-popup>
           </l-marker>
         </l-map>
@@ -185,8 +158,10 @@ const calculateTotalInventory = (inventory: Inventory[]) => {
                     >
                       <li>{{ location.address }}</li>
                       <li>
-                        <NuxtLink :to="'location/' + location.id"
-                          class="underline">Location details</NuxtLink
+                        <NuxtLink
+                          :to="'location/' + location.id"
+                          class="underline"
+                          >Location details</NuxtLink
                         >
                       </li>
                       <ul class="p-3 mt-2 bg-neutral-800 rounded-lg text-white">

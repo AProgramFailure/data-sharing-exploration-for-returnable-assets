@@ -11,4 +11,6 @@ public class InventoryDTO {
 
     ItemType itemType;
     int quantity;
+
+    int capacity;
 }

@@ -14,6 +14,7 @@ public class InventoryDTOConverter implements GenericConverter<Inventory, Invent
     public InventoryDTO apply(Inventory inventory) {
         InventoryDTO dto = new InventoryDTO();
         dto.setQuantity(inventory.getQuantity());
+        dto.setQuantity(inventory.getCapacity());
         dto.setItemType(inventory.getItemType());
         return dto;
     }

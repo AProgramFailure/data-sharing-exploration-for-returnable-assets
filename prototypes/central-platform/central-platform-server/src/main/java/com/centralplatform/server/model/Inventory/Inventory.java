@@ -26,6 +26,8 @@ public class Inventory {
     private ItemType itemType;
     private int quantity;
 
+    private int capacity;
+
     @ManyToOne
     @JsonBackReference(value = "location-inventory")
     @JoinColumn(name = "location_id", referencedColumnName = "id")

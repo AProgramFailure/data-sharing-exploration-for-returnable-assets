@@ -113,12 +113,12 @@ BEGIN
                 EXIT WHEN random_item_type IS NULL;
 
                 -- Insert data into the inventory table for the location with a random quantity
-                INSERT INTO inventory (quantity, id, location_id, item_type)
+                INSERT INTO inventory (quantity, id, location_id, item_type, capacity)
                 VALUES
-                    (floor(random() * 31)::integer,
+                    (floor(random() * 32)::integer,
                      gen_random_uuid(),
                      location_id,
-                     random_item_type);
+                     random_item_type, 30);
 
                 -- Store the used item type
                 INSERT INTO used_item_types (item_type) VALUES (random_item_type);
