@@ -1,13 +1,12 @@
 import type { Location } from "../Location/Location"
 import type { Order } from "../Order/Order"
 import type { Privacy } from "../Privacy/Privacy"
-import type { User } from "../User/User"
 
 export type Organization = {
     id: number,
     name: string,
     organizationType: string,
     locations: Location[],
+    secret_key: string,
     orders: Order[],
-    users: User[]
 } & Privacy

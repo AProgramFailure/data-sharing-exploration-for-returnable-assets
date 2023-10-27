@@ -1,21 +1,8 @@
 import { z } from "zod";
 import { publicProcedure, router } from "../../trpc";
 
-type UserResponse = {
-    message : string,
-    success: boolean
-    payload: User | null | unknown
-}
-
-type User = {
-    id?: number,
-    email: string,
-    organization_id: number,
-    first_name : string,
-    last_name: string,
-    password: string
-}
-
+import type { UserResponse, User, UserAuthenticationResponse } from "../../../types/User/User";
+import type { Organization } from "../../../types/Organization/Organization"
 
 export const userRouter = router({
     getUsers: publicProcedure
@@ -53,37 +40,65 @@ export const userRouter = router({
         z.object({
             email: z.string().email(),
             password: z.string(),
-            first_name: z.string(),
-            last_name: z.string(),
-            organization_id: z.number()
+            name: z.string(),
+            secret_key: z.string(),
         })
     )
     .query( ({ input, ctx }) => {
-        let response : UserResponse = {
+        let response : UserAuthenticationResponse = {
             message: "error occured before db transaction",
             success: false,
             payload: null
         }
-        const newUser: User = {
-            email: input.email,
-            password: input.password,
-            first_name: input.first_name,
-            last_name: input.last_name,
-            organization_id: input.organization_id
+
+        const fetchOrganization = ctx.db.prepare(`
+            SELECT * FROM organization o WHERE o.secret_key = '${input.secret_key}'
+        `).get() as Organization
+
+        const name = input.name.split(" ")
+
+        let newUser: User;
+
+        if( name.length == 1){
+            newUser = {
+                email: input.email,
+                password: input.password,
+                name: input.name,
+                organization_id: fetchOrganization.organization_id
+            }
+        }
+        else {
+            newUser = {
+                email: input.email,
+                password: input.password,
+                name: ` ${name[0]} ${name[name.length - 1]}`,
+                organization_id: fetchOrganization.organization_id
+            }
         }
 
+
         const insertUser = ctx.db.prepare(`
-        INSERT INTO user_table (email, first_name, last_name, password, organization_id) VALUES (?, ?, ?, ?, ?)
-        `).bind(newUser.email, newUser.first_name, newUser.last_name, newUser.password, newUser.organization_id)
+        INSERT INTO user_table (email, name, password, organization_id) VALUES ( ?, ?, ?, ? )
+        `).bind(newUser.email, newUser.name, newUser.password, newUser.organization_id).run()
 
-        insertUser.run()
 
-        const user = ctx.db.prepare(`SELECT * FROM user_table WHERE email = ?`).get(input.email)
+        const subscribed_organiations = ctx.db.prepare(`
+        SELECT * FROM organization o
+        INNER JOIN organization_node n ON o.organization_id = n.organization_id
+        INNER JOIN node_subscribers ns ON n.node_id = ns.subscribed_node_id
+        WHERE o.organization_id = ? AND ( o.security = 'public' OR o.security = 'subscribe' )
+        `).bind(fetchOrganization.organization_id).all() as Organization[]
+
+        const user = ctx.db.prepare(`SELECT * FROM user_table WHERE email = ?`).get(input.email) as User
 
         response = {
             message: "Successfully Added an User",
             success: true,
-            payload: user
+            payload: {
+                user: user,
+                organization: fetchOrganization,
+                organization_subscribers: subscribed_organiations
+            }
 
         }
 
@@ -95,20 +110,37 @@ export const userRouter = router({
     .input(
         z.object({
             email: z.string().email(),
-            password: z.string().min(10)
+            password: z.string()
         })
     )
     .query( ({ input, ctx }) => {
-        let response : UserResponse = {
+        let response : UserAuthenticationResponse = {
             message: "error occured before db transaction",
             success: false,
             payload: null
         }
-        const user = ctx.db.prepare(`SELECT * FROM user_table WHERE email = ?`).get(input.email)
+        const user = ctx.db.prepare(`SELECT * FROM user_table WHERE email = ?`).get(input.email) as User
+
+        const fetchOrganization = ctx.db.prepare(`
+            SELECT * FROM organization o WHERE o.organization_id= '${user.user_id}'
+        `).get() as Organization
+
+        const subscribed_organiations = ctx.db.prepare(`
+            SELECT * FROM organization o
+            INNER JOIN organization_node n ON o.organization_id = n.organization_id
+            INNER JOIN node_subscribers ns ON n.node_id = ns.subscribed_node_id
+            WHERE o.organization_id = ? AND ( o.security = 'public' OR o.security = 'subscribe' )
+        `).bind(fetchOrganization.organization_id).all() as Organization[]
+
+
         response = {
             message: "Successfully Added an User",
             success: true,
-            payload: user
+            payload: {
+                user: user,
+                organization: fetchOrganization,
+                organization_subscribers: subscribed_organiations
+            }
 
         }
         return {

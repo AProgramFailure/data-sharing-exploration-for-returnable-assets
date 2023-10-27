@@ -20,12 +20,10 @@ export const useUserStore = defineStore("user", () =>{
         const { data } = await users.register.useQuery({
             email: user_details.email,
             password: user_details.password,
-            first_name: user_details.first_name,
-            last_name: user_details.last_name,
-            organization_id: user_details.organization_id
+            name: user_details.name,
+            secret_key: user_details.secret_key
         })
         user.value = data.value?.response.payload
-        user.value.password = "";
         toast.success("Successfully Registered in the system!")
         navigateTo("/home")
     }
@@ -38,7 +36,6 @@ export const useUserStore = defineStore("user", () =>{
         })
 
         user.value = data.value?.response.payload
-        user.value.password = "";
         toast.success("Successfully Authenticated!")
         navigateTo("/home")
     }

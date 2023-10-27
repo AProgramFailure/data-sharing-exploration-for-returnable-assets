@@ -1,20 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure, router } from '../../trpc';
 
-type FederatedNodeResponse = {
-    message: string,
-    success: boolean,
-    payload: FederatedNode | null | unknown
-}
-
-type FederatedNode = {
-    node_id?: number,
-    name: string,
-    owner: number,
-    subscriber_id?: FederatedNode[],
-    security : "private" | "public" | "subscribe",
-}
-
+import { DBFederatedNode, FederatedNode, FederatedNodeResponse} from "../../../types/FederatedNode/federatedNode"
 
 export const federatedNodeRouter = router({
     getNodes : publicProcedure
@@ -100,14 +87,13 @@ export const federatedNodeRouter = router({
         const owner_organization = fetchOrganization.all()
 
         if(owner_organization.length > 0){
-            const newNode : FederatedNode = {
+            const newNode : DBFederatedNode = {
                 name: input.name,
-                owner: input.owner,
                 security: input.security
             }
             const insertNode = ctx.db.prepare(`
                 INSERT INTO federated_node (name, owner, security) VALUES (?, ?, ?)
-            `).bind(newNode.name, newNode.owner, newNode.security)
+            `).bind(newNode.name, newNode.security)
 
             insertNode.run(newNode);
 

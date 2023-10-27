@@ -1,21 +1,8 @@
 import { z } from "zod";
 import { publicProcedure, router } from "../../trpc";
 
-type LocationResponse = {
-    message: string,
-    success: boolean,
-    payload: Location[] | Location | null
-}
-
-type Location = {
-    id?: number,
-    name: string,
-    address: string,
-    latitude: string,
-    longitude: string,
-    security : "private" | "public" | "subscribe",
-    organization_id?: number
-}
+import type {DBLocation, Location, LocationResponse } from "../../../types/Location/Location"
+import { Inventory } from "~/server/types/Inventory/Inventory";
 
 
 export const locationRouter = router({
@@ -41,15 +28,23 @@ export const locationRouter = router({
         const locations = ctx.db.prepare(`
             SELECT * FROM inventory i
             INNER JOIN organization o ON i.inventory_id = o.organization_id
-            INNER JOIN user_table ut ON u.organization_id = o.prganization_id
+            INNER JOIN user_table ut ON o.organization_id = u.organization_id
             WHERE o.organization_id = ? AND ut.user_id = ?
-        `).bind(input.organiation_id, input.user_id).all();
+        `).bind(input.organiation_id, input.user_id).all() as Location[];
 
+
+        const payload_body = locations.map((dblocation: Location) => {
+            const inventories = ctx.db.prepare(`
+                SELECT * FROM inventory i
+                WHERE i.location_id = '${dblocation.location_id}'
+            `).all() as Inventory[]
+            return  Object.assign(dblocation, inventories)
+        });
 
         const response : LocationResponse = {
             message: "Fecthed all locations for an organization",
             success: true,
-            payload: locations as Location[]
+            payload: payload_body
         }
         return {
             response
@@ -73,7 +68,7 @@ export const locationRouter = router({
             payload: null
         }
 
-        const newLocation : Location = {
+        const newLocation : DBLocation = {
             name: input.name,
             address: input.address,
             latitude: input.latitude,

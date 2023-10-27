@@ -1,20 +1,7 @@
 import { z } from "zod";
 import { publicProcedure, router } from "../../trpc";
 
-type InventoryResponse = {
-    message: string,
-    success: boolean,
-    payload: Inventory[] | Inventory | null
-}
-
-type Inventory = {
-    id?: number,
-    inventory_name: string,
-    item_type: string,
-    quantity: number,
-    location_id: number,
-    security : "private" | "public" | "subscribe",
-}
+import type { DBInventory, Inventory, InventoryResponse } from "../../../types/Inventory/Inventory"
 
 export const inventoryRouter = router({
     getInventory: publicProcedure
@@ -43,7 +30,7 @@ export const inventoryRouter = router({
             INNER JOIN user_table u ON u.organization_id = o.organization_id
             WHERE l.location_id = ? AND u.user_id = ?
             ORDER BY i.inventory_id
-            `).bind(input.location_id, input.user_id).all()
+            `).bind(input.location_id, input.user_id).all() as DBInventory[]
 
 
             const response : InventoryResponse = {
@@ -73,7 +60,7 @@ export const inventoryRouter = router({
             payload: null
         }
 
-        const newInvenotry : Inventory = {
+        const newInvenotry : DBInventory = {
             item_type: input.item_type,
             inventory_name: input.inventory_name,
             quantity: input.quantity,

@@ -24,6 +24,7 @@ export const useOrganizationStore = defineStore("organization", () => {
             id: 1,
             name: `Jumbo ${i}`,
             organizationType: "brewery",
+            secret_key: "sdfsdfsdfsdfsd",
             users: [],
             orders: [],
             locations: [],
@@ -31,16 +32,18 @@ export const useOrganizationStore = defineStore("organization", () => {
         })
     }
 
-    async function addDummy(){
-        toast.info('Preparing dummy node')
+    async function addDummy( name: string, type: string, privacy: "public" | "private" | "subscribe" ){
+        toast.info('Generating new Organization')
 
-        console.log()
-        const dummy = await organizations.addOrganization.useQuery({
-            name: useRandomString(10),
-            organization_type: "brewery",
-            security: "public"
+        const { data } = await organizations.addOrganization.useQuery({
+            name: name,
+            secret_key: useRandomString(20),
+            organization_type: type,
+            security: privacy
         })
-        toast.success("Dummy node successfully created")
+        toast.success("Organization successfully Generated")
+
+        toast.info(`Use code: ${data.value?.response.payload?.secret_key} to register`)
     }
 
     return {

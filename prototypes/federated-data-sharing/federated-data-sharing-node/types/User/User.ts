@@ -1,12 +1,31 @@
+import { Organization } from "../Organization/Organization"
+
 export type User = {
     user_id: number,
-    password: string,
     email: string,
-    first_name: string,
-    last_name: string,
+    name: string,
     organization_id: number
 }
 
-export type MinifiedUser = Omit<User, "user_id">
+export type MinifiedUser = Omit<
+    User,
+     "user_id"
+     | "organization_id"
+> & {
+    secret_key : string,
+    password: string
+}
 
-export type UserCredentials = Omit<MinifiedUser, "first_name" | "last_name" | "organization_id">
+export type UserCredentials = Omit<
+    MinifiedUser,
+    "first_name"
+    | "last_name"
+    | "organization_id"
+> & {
+    secret_key : string
+}
+
+export type UserAuthResponse =  {
+    user: User
+    organization: Organization
+}
