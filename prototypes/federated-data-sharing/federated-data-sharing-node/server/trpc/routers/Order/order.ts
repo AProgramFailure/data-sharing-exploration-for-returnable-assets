@@ -33,7 +33,7 @@ export const orderRouter = router({
         })
     )
     .query( ({ input, ctx}) => {
-        let response : OrderReponse = {
+        const response : OrderReponse = {
             message: "error occured before db transaction",
             success: false,
             payload: null

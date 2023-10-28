@@ -1,13 +1,12 @@
-import type { Organization } from "../Organization/Organization"
-import type { Location } from "../Location/Location"
-import type { OrderItem } from "../OrderItem/OrderItem"
+import type{ OrderItem } from "../OrderItem/OrderItem"
 import type { Privacy } from "../Privacy/Privacy"
 
 export type Order = {
-    id: number,
-    organization: Organization,
-    sourceLocation: Location,
-    destinationLocation: Location
+    order_id: number | bigint,
     status: string,
-    orderItems: OrderItem[]
+    security: string,
+    source_location_id: number,
+    destination_location_id: number
+    organization_id: number,
+    ordered_items: OrderItem[]
 } & Privacy

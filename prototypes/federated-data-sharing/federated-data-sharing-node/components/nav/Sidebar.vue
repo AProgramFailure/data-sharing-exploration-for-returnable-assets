@@ -2,10 +2,14 @@
 
     import { PlusIcon } from "@heroicons/vue/24/solid"
     import { useOrganizationStore } from "~/stores/Organization/organizationStore";
+import { Organization } from "~/types/Organization/Organization";
 
     const organizationStore = useOrganizationStore();
 
     const { getOrganizations } = organizationStore
+
+    const selecttedOrganization : Ref<Organization> = ref<Organization>(getOrganizations.value[0])
+
 
 </script>
 
@@ -42,9 +46,11 @@
 
                     <div class="w-full h-full flex flex-col justify-start gap-2 mt-1 pt-1 overflow-y-scroll no-scrollbar">
                         <div
-                        v-for="(item, index) in 20"
+                        class="text-white"
+                        v-for="(location, index) in 20"
                         :key="index"
                         >
+                         <h1> {{ index }}</h1>
                         </div>
                     </div>
                 </div>

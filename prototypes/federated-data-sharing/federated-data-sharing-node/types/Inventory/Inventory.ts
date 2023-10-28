@@ -1,9 +1,9 @@
-import type { Location } from "../Location/Location"
 import type { Privacy } from "../Privacy/Privacy"
 
 export type Inventory = {
-    id: number,
-    itemType: string,
+    invenotry_id: number,
+    invenotry_name: string,
+    item_type: string,
     quantity: number,
-    location: Location,
+    location_id: number,
 } & Privacy

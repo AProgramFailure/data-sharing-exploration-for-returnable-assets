@@ -3,9 +3,9 @@ import type { Order } from "../Order/Order"
 import type { Privacy } from "../Privacy/Privacy"
 
 export type Organization = {
-    id: number,
+    organization_id: number,
     name: string,
-    organizationType: string,
+    organization_type: string,
     locations: Location[],
     secret_key: string,
     orders: Order[],

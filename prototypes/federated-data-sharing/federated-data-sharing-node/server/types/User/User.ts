@@ -1,11 +1,15 @@
 import { Organization } from "../Organization/Organization"
 
-export type User = {
-    user_id?: number,
+export type DBUser = {
     email: string,
     organization_id: number,
     name : string,
     password: string
+
+}
+
+export type User = DBUser & {
+    user_id: number,
 }
 
 export type BasicResponse = {
@@ -14,7 +18,7 @@ export type BasicResponse = {
 }
 
 export type UserResponse = {
-    payload: User | null | unknown
+    payload: User
 } & BasicResponse
 
 export type UserAuthenticationResponse = {

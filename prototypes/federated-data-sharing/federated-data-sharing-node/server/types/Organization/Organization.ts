@@ -18,7 +18,7 @@ export type DBOrganization = {
     name: string,
     organization_type: string,
     secret_key: string,
-    security : string,
+    security :  "private" | "public" | "subscribe",
 }
 export type Organization = DBOrganization & {
     locations: Location[],

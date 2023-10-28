@@ -2,14 +2,18 @@ import { defineStore } from "pinia"
 import { useToast } from "vue-toastification";
 import { type RemovableRef, useSessionStorage } from "@vueuse/core"
 
+import { useOrganizationStore } from "../Organization/organizationStore";
+
 import type { MinifiedUser, User, UserCredentials } from "~/types/User/User";
 
 export const useUserStore = defineStore("user", () =>{
 
     const { $trpcClient } = useNuxtApp();
     const toast = useToast()
+    const organizationStore = useOrganizationStore();
 
     const { users } = $trpcClient
+    const { getOrganizations } = organizationStore
 
     const user : RemovableRef<User> = useSessionStorage<User>("user", {} as User)
 
@@ -23,7 +27,14 @@ export const useUserStore = defineStore("user", () =>{
             name: user_details.name,
             secret_key: user_details.secret_key
         })
-        user.value = data.value?.response.payload
+
+        if(data.value?.response.payload?.organization){
+            user.value = data.value?.response.payload?.user
+
+            getOrganizations.value.push(data.value?.response.payload?.organization)
+            getOrganizations.value.push(...data.value?.response.payload.organization_subscribers)
+        }
+
         toast.success("Successfully Registered in the system!")
         navigateTo("/home")
     }
@@ -35,7 +46,7 @@ export const useUserStore = defineStore("user", () =>{
             password: credentials.password
         })
 
-        user.value = data.value?.response.payload
+        user.value = data.value?.response.payload?.user
         toast.success("Successfully Authenticated!")
         navigateTo("/home")
     }

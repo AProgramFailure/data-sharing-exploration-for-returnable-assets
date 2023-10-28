@@ -7,15 +7,15 @@ export type LocationResponse = {
 }
 
 export type DBLocation = {
-    location_id?: number,
+    location_id: number,
     name: string,
     address: string,
     latitude: string,
     longitude: string,
     security : "private" | "public" | "subscribe",
-    organization_id?: number
+    organization_id: number
 }
 
 export type Location = DBLocation & {
-    invenotries: Inventory[]
+    inventories: Inventory[]
 }

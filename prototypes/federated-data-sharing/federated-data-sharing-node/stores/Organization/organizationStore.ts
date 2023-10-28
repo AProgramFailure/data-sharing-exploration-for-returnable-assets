@@ -21,11 +21,10 @@ export const useOrganizationStore = defineStore("organization", () => {
     function addSampleOrg() : void {
         for(let i = 0 ; i < 10; i++)
         client_organizations.value.push({
-            id: 1,
+            organization_id: 1,
             name: `Jumbo ${i}`,
-            organizationType: "brewery",
+            organization_type: "brewery",
             secret_key: "sdfsdfsdfsdfsd",
-            users: [],
             orders: [],
             locations: [],
             security: 'public'
@@ -46,8 +45,12 @@ export const useOrganizationStore = defineStore("organization", () => {
         toast.info(`Use code: ${data.value?.response.payload?.secret_key} to register`)
     }
 
+    function clear() :  void  {
+        client_organizations.value = []
+    }
+
     return {
-        getOrganizations, addSampleOrg, addDummy
+        getOrganizations, addSampleOrg, addDummy,clear
     }
 }, {
     persist: true
