@@ -2,7 +2,9 @@ package com.centralplatform.server.model.User;
 
 import com.centralplatform.server.model.Role.Role;
 import com.centralplatform.server.model.Token.Token;
+import com.centralplatform.server.model.UserAssignOrganizationRequest.UserAssignOrganizationRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,6 +37,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
+    private String organizationId;
 
     @Column(columnDefinition = "TEXT")
     private String userDescription;
@@ -53,6 +56,11 @@ public class User implements UserDetails {
     @UpdateTimestamp
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
+
+    @Column(name = "user_assign_organization_requests")
+    @JsonManagedReference(value = "user-asign-organization-requests")
+    @OneToMany(mappedBy = "user")
+    private List<UserAssignOrganizationRequest> userAssignOrganizationRequests;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

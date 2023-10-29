@@ -27,16 +27,10 @@ public interface OrganizationController<R extends OrganizationRequest> {
     @RequestMapping(value = "/organization/update", method = RequestMethod.POST)
     <T extends R>ResponseEntity<? extends List<OrganizationDTO>> uploadOrganizations(@RequestBody T request);
 
-
     // DELETE
     @RequestMapping(value = "/organization/delete/{id}", method = RequestMethod.GET)
     ResponseEntity<?> deleteOrganizationById(@PathVariable("id") String id);
 
     @RequestMapping(value = "/organization/delete", method = RequestMethod.GET)
     <T extends R>ResponseEntity<?> deleteOrganizations(@RequestBody T request);
-
-
-
-
-
 }
