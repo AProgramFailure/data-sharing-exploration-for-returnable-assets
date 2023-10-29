@@ -2,7 +2,7 @@ package com.centralplatform.server.model.User;
 
 import com.centralplatform.server.model.Role.Role;
 import com.centralplatform.server.model.Token.Token;
-import com.centralplatform.server.model.UserAssignOrganizationRequest.UserAssignOrganizationRequest;
+import com.centralplatform.server.model.UserOrganizationApplication.UserOrganizationApplication;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -57,10 +57,10 @@ public class User implements UserDetails {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
-    @Column(name = "user_assign_organization_requests")
-    @JsonManagedReference(value = "user-asign-organization-requests")
+    @Column(name = "user_organization_applications")
+    @JsonManagedReference(value = "user-organization-applications")
     @OneToMany(mappedBy = "user")
-    private List<UserAssignOrganizationRequest> userAssignOrganizationRequests;
+    private List<UserOrganizationApplication> userOrganizationApplications;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
