@@ -21,7 +21,8 @@ public class AdminController {
 
     @RequestMapping(value = "/user-assign-request", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('admin:read')")
-    public <T extends UserOrganizationApplicationRequest> ResponseEntity<? extends List<UserOrganizationApplication>> getUserOrganizationApplications(@RequestBody T request) {
-        return ResponseEntity.ok(userOrganizationApplicationService.getUserOrganizationApplications(request));
+    public ResponseEntity<? extends List<UserOrganizationApplication>> getUserOrganizationApplications() {
+
+        return ResponseEntity.ok(userOrganizationApplicationService.getUserOrganizationApplications());
     }
 }
