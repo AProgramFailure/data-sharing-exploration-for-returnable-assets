@@ -31,6 +31,7 @@ export const useUserStore = defineStore("user", () =>{
         if(data.value?.response.payload?.organization){
             user.value = data.value?.response.payload?.user
 
+            getOrganizations.value = []
             getOrganizations.value.push(data.value?.response.payload?.organization)
             getOrganizations.value.push(...data.value?.response.payload.organization_subscribers)
         }

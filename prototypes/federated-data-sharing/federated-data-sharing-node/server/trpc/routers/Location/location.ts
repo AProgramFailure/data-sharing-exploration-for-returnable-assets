@@ -69,6 +69,7 @@ export const locationRouter = router({
         }
 
         const newLocation : DBLocation = {
+            location_id: 1,
             name: input.name,
             address: input.address,
             latitude: input.latitude,

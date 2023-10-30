@@ -8,7 +8,7 @@ import { Organization } from "~/types/Organization/Organization";
 
     const { getOrganizations } = organizationStore
 
-    const selecttedOrganization : Ref<Organization> = ref<Organization>(getOrganizations.value[0])
+    const selectedOrganization : Ref<Organization> = ref<Organization>(getOrganizations.value[0])
 
 
 </script>
@@ -21,7 +21,7 @@ import { Organization } from "~/types/Organization/Organization";
                     <NuxtLink
                     v-for="(organization, index) in getOrganizations"
                     :key="index"
-                    :to="`/home/institution/${index}`"
+                    :to="`/home/institution/${organization.organization_id}`"
                     class="border-2 bg-transparent border-emerald-300/20 hover:border-emerald-300 transition-colors duration-500 rounded-md w-[70px] h-[70px] min-w-[70px] flex flex-col items-center justify-center select-none text-white"
                     >
                     {{ useAbreviation(organization.name) }}
@@ -44,13 +44,15 @@ import { Organization } from "~/types/Organization/Organization";
                         </h1>
                     </div>
 
-                    <div class="w-full h-full flex flex-col justify-start gap-2 mt-1 pt-1 overflow-y-scroll no-scrollbar">
+                    <div class="w-full h-full flex flex-col justify-start gap-2 mt-1 py-4 overflow-y-scroll no-scrollbar">
                         <div
-                        class="text-white"
+                        class="text-white w-11/12  bg-neutral-800 mx-auto rounded-md border-2 border-emerald-500/20 hover:border-emerald-500 p-3 duration-300 transition"
                         v-for="(location, index) in 20"
                         :key="index"
                         >
-                         <h1> {{ index }}</h1>
+                            <h1>Name: {{ location }}</h1>
+
+                            <p>Organiation: {{ selectedOrganization.name }}</p>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ export const userRouter = router({
     getUsers: publicProcedure
     .query( ({ ctx }) => {
         const fetchUsers = ctx.db.prepare(`
-        SELECT user_id, email, first_name, last_name, organization_id FROM user_table
+        SELECT user_id, email, name, organization_id FROM user_table
         `)
         const users = fetchUsers.all();
         return {
