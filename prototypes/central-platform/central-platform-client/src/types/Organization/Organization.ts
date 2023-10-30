@@ -6,3 +6,5 @@ export type Organization = {
     organizationType: string,
     locations: Location[]
 }
+
+export type OrganizationDTO = Omit<Organization, 'locations'>;

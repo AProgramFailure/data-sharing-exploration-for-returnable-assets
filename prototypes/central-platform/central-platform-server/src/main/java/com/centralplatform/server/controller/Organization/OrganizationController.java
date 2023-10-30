@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-
+//TODO pre auths
 public interface OrganizationController<R extends OrganizationRequest> {
     // POST
     @RequestMapping(value = "/organization", method = RequestMethod.POST)

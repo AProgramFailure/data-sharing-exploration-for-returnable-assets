@@ -33,7 +33,6 @@ public class OrganizationControllerImpl implements OrganizationController<Organi
         return ResponseEntity.ok(organizationService.getOrganizationDTOs(request));
     }
 
-
     @Override
     public <T extends OrganizationRequest> ResponseEntity<? extends OrganizationDTO> uploadOrganization(T request) {
         return ResponseEntity.ok(organizationService.uploadOrganization(request));
