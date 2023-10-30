@@ -30,8 +30,8 @@ public class UserOrganizationApplication {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     private String organizationId;
-    private Date registeredAt;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusType status;
     @CreationTimestamp
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;

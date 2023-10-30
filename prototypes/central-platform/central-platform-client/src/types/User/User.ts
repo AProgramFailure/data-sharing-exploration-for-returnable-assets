@@ -10,5 +10,4 @@ export type User = {
     institutionId: string,
     role : string[],
     token: string
-
 } & UserCredentials
