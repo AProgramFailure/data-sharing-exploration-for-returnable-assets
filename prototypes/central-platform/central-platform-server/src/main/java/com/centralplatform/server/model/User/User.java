@@ -46,9 +46,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
-
     @CreationTimestamp
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
@@ -57,6 +54,8 @@ public class User implements UserDetails {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
     @Column(name = "user_organization_applications")
     @JsonManagedReference(value = "user-organization-applications")
     @OneToMany(mappedBy = "user")
