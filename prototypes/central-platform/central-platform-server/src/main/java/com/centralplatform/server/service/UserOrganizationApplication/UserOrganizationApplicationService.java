@@ -1,13 +1,9 @@
 package com.centralplatform.server.service.UserOrganizationApplication;
 
-import com.centralplatform.server.dto.Organization.OrganizationDTO;
-import com.centralplatform.server.model.Inventory.Inventory;
 import com.centralplatform.server.model.User.User;
 import com.centralplatform.server.model.UserOrganizationApplication.StatusType;
 import com.centralplatform.server.model.UserOrganizationApplication.UserOrganizationApplication;
-import com.centralplatform.server.payload.request.Organization.OrganizationRequest;
 import com.centralplatform.server.payload.request.UserOrganizationApplication.UserOrganizationApplicationCreateRequest;
-import com.centralplatform.server.payload.request.UserOrganizationApplication.UserOrganizationApplicationRequest;
 import com.centralplatform.server.payload.request.UserOrganizationApplication.UserOrganizationApplicationUpdateRequest;
 import com.centralplatform.server.repository.User.UserRepository;
 import com.centralplatform.server.repository.UserOrganizationApplicationRepository.UserOrganizationApplicationRepository;
@@ -23,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+//TODO Refactor methods/use maps instead of nested ifs and optionals
 @Service
 @RequiredArgsConstructor
 public class UserOrganizationApplicationService {
@@ -64,12 +61,24 @@ public class UserOrganizationApplicationService {
         return null;
     }
 
-
-
-
     public UserOrganizationApplication updateUserOrganizationApplication(UserOrganizationApplicationUpdateRequest request, String id) {
-        Optional<UserOrganizationApplication> userOrganizationApplication = organizationApplicationRepository.findById(UUID.fromString(id));
-        userOrganizationApplication.ifPresent(organizationApplication -> organizationApplication.setStatus(request.getUserOrganizationApplication().getStatus()));
+        Optional<UserOrganizationApplication> foundUserOrganizationApplication = organizationApplicationRepository.findById(UUID.fromString(id));
+
+        if(foundUserOrganizationApplication.isPresent()){
+            UserOrganizationApplication userOrganizationApplication =  foundUserOrganizationApplication.get();
+            userOrganizationApplication.setStatus(request.getUserOrganizationApplication().getStatus());
+            organizationApplicationRepository.save(userOrganizationApplication);
+            if(userOrganizationApplication.getStatus() == StatusType.APPROVED){
+                String userEmail = userOrganizationApplication.getUser().getEmail();
+                Optional<User> foundUser = ((userRepository.findByEmail(userEmail)));
+                if(foundUser.isPresent()){
+                    User user = foundUser.get();
+                    user.setOrganizationId(userOrganizationApplication.getOrganizationId());
+                    userRepository.save(user);
+                }
+            }
+        }
+
         return null;
     }
 //    public void deleteUserOrganizationApplicationById(String id) {
