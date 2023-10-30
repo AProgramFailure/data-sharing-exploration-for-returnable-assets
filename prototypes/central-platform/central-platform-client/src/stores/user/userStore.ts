@@ -48,13 +48,14 @@ export const useUserStore = defineStore(
         refresh_token: string;
         user: User;
       }>("user", () =>
-        $fetch("http://localhost:8080/api/auth/authenticate", {
+        $fetch("http://localhost:8080/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: {
             email: newUser.email,
+            firstname: newUser.firstName,
             lastname: newUser.lastName,
             password: newUser.password,
             role: "USER",
@@ -75,7 +76,7 @@ export const useUserStore = defineStore(
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + useCookie("userToken").value,
+              Authorization: "Bearer " + userToken.value,
             },
             body: {
               type: "create",
