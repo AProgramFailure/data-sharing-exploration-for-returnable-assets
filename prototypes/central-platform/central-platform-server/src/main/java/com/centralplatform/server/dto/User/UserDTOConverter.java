@@ -18,6 +18,7 @@ public class UserDTOConverter implements GenericConverter<User, UserDTO> {
 
         output.setEmail(user.getEmail());
         output.setRole(user.getRole());
+        output.setOrganizationId(user.getOrganizationId());
         return output;
     }
 }
