@@ -12,9 +12,9 @@ public class OrganizationDTOConverter implements GenericConverter<Organization, 
     @Override
     public OrganizationDTO apply(Organization organization) {
         OrganizationDTO dto = new OrganizationDTO();
+        dto.setId(organization.getId());
         dto.setName(organization.getName());
         dto.setOrganizationType(organization.getOrganizationType());
-        dto.setLocations(organization.getLocations());
         return dto;
     }
 

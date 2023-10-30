@@ -20,7 +20,12 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationDTOConverter converter;
 
     @Override
-    public List<OrganizationDTO> getOrganizations(OrganizationRequest request) {
+    public List<Organization> getOrganizations(OrganizationRequest request) {
+        return organizationRepository.findAll();
+    }
+
+    @Override
+    public List<OrganizationDTO> getOrganizationDTOs(OrganizationRequest request) {
         return converter.convert(organizationRepository.findAll());
     }
 

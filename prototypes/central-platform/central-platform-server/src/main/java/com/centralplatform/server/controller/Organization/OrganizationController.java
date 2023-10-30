@@ -1,6 +1,7 @@
 package com.centralplatform.server.controller.Organization;
 
 import com.centralplatform.server.dto.Organization.OrganizationDTO;
+import com.centralplatform.server.model.Organization.Organization;
 import com.centralplatform.server.payload.request.Organization.OrganizationRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,10 @@ import java.util.List;
 public interface OrganizationController<R extends OrganizationRequest> {
     // POST
     @RequestMapping(value = "/organization", method = RequestMethod.POST)
-    <T extends R> ResponseEntity<? extends List<OrganizationDTO>>getOrganizations(@RequestBody T request);
+    <T extends R> ResponseEntity<? extends List<Organization>>getOrganizations(@RequestBody T request);
+
+    @RequestMapping(value = "/organizationdto", method = RequestMethod.POST)
+    <T extends R> ResponseEntity<? extends List<OrganizationDTO>>getOrganizationDTOs(@RequestBody T request);
 
     @RequestMapping(value = "/organization/{id}", method = RequestMethod.POST)
     ResponseEntity<? extends OrganizationDTO> getOrganizationById(@PathVariable("id") String id);
