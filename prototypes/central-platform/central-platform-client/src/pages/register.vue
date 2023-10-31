@@ -3,7 +3,6 @@ import { useToast } from "vue-toastification";
 import { useUserStore } from "~/stores/user/userStore";
 import { useOrganizationDTOStore } from "~/stores/Organization/OrganizationStoreDTO";
 import { MinifiedUser } from "~/types/User/User";
-import { OrganizationDTO } from "~/types/Organization/Organization";
 
 const organizationDTOStore = useOrganizationDTOStore();
 const { getOrganizationDTOs } = organizationDTOStore;
@@ -31,7 +30,7 @@ onMounted(async () => {
 });
 
 const email = ref<string | null>(null);
-const organization = ref<OrganizationDTO | null>(null);
+const organizationId = ref<string | null>(null);
 
 const firstName = ref<string | null>(null);
 const lastName = ref<string | null>(null);
@@ -46,11 +45,11 @@ async function register() {
   setTimeout(() => {
     toast.info("Creating user");
   });
-
+  
   await register({
     firstName: firstName.value as string,
     lastName: lastName.value as string,
-    organizationId: organization.value?.id as string,
+    organizationId: organizationId.value,
     email: email.value as string,
     password: password.value as string,
   } as MinifiedUser);
@@ -125,7 +124,7 @@ async function register() {
             <div class="mt-2">
               <label class="block text-neutral-300">Organization</label>
               <select
-                v-model="organization"
+                v-model="organizationId"
                 class="w-full px-4 py-3 rounded-lg bg-neutral-100 mt-2 border-4 border-transparent focus:border-emerald-400 focus:bg-white focus:outline-none transition duration-300 text-neutral-900"
                 autofocus
                 required
