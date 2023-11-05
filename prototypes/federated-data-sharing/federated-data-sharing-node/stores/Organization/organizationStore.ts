@@ -14,7 +14,7 @@ export const useOrganizationStore = defineStore("organization", () => {
 
     const client_organizations : RemovableRef<Organization[]> =
         useSessionStorage<Organization[]>("organization", [] as Organization[])
-
+    const selected_organization : Ref<Organization> = ref<Organization>({} as Organization)
     const getOrganizations: ComputedRef<RemovableRef<Organization[]>> = computed(() => client_organizations)
 
 
@@ -30,6 +30,8 @@ export const useOrganizationStore = defineStore("organization", () => {
             security: 'public'
         })
     }
+
+    const get_selected_organization : ComputedRef<Ref<Organization>> = computed(() => selected_organization)
 
     async function addDummy( name: string, type: string, privacy: "public" | "private" | "subscribe" ){
         toast.info('Generating new Organization')
@@ -49,8 +51,37 @@ export const useOrganizationStore = defineStore("organization", () => {
         client_organizations.value = []
     }
 
+    async function subscribe_to_organization(organization_id: number, secret_key: string) : Promise<void>{
+        const { data } = await organizations.subscribe.useQuery({
+            organization_id: organization_id,
+            secret_key: secret_key
+        })
+
+        console.log(data)
+    }
+
+    async function getOrganizationById(organization_id: number): Promise<Organization | undefined> {
+        const { data } = await organizations.getOrganizationById.useQuery({
+            organization_id: organization_id
+        })
+
+        if(data.value?.response.payload){
+            return data.value?.response.payload
+        } else {
+            return undefined
+        }
+
+    }
+
+    function setCurrentOrganization(organization: Organization) {
+        selected_organization.value = organization
+
+    }
+
     return {
-        getOrganizations, addSampleOrg, addDummy,clear
+        getOrganizations, addSampleOrg, addDummy,clear,
+        subscribe_to_organization, getOrganizationById, setCurrentOrganization,
+        get_selected_organization
     }
 }, {
     persist: true

@@ -74,14 +74,13 @@ export const inventoryRouter = router({
 
         const getInsertedInventory = ctx.db.prepare(`
         SELECT * FROM inventory WHERE inventory_name = ${newInvenotry.inventory_name}
-        `)
+        `).get() as DBInventory
 
-        const inventory = getInsertedInventory.get()
 
         response = {
             message: "Successfully Added an Invenotry",
             success: true,
-            payload: inventory as Inventory
+            payload: getInsertedInventory
         }
 
         return {

@@ -13,7 +13,7 @@ export const useUserStore = defineStore("user", () =>{
     const organizationStore = useOrganizationStore();
 
     const { users } = $trpcClient
-    const { getOrganizations } = organizationStore
+    const { getOrganizations, setCurrentOrganization } = organizationStore
 
     const user : RemovableRef<User> = useSessionStorage<User>("user", {} as User)
 
@@ -47,7 +47,16 @@ export const useUserStore = defineStore("user", () =>{
             password: credentials.password
         })
 
-        user.value = data.value?.response.payload?.user
+
+        if(data.value?.response.payload?.organization){
+            user.value = data.value?.response.payload?.user
+
+            getOrganizations.value = []
+            getOrganizations.value.push(data.value?.response.payload?.organization)
+            getOrganizations.value.push(...data.value?.response.payload.organization_subscribers)
+            setCurrentOrganization(data.value?.response.payload?.organization)
+        }
+
         toast.success("Successfully Authenticated!")
         navigateTo("/home")
     }

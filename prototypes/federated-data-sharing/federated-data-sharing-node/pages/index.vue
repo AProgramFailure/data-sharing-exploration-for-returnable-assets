@@ -7,7 +7,12 @@
     const { authenticate } = userStore
 
     definePageMeta({
-        layout: "auth"
+        layout: "auth",
+        name: "Federated - Login"
+    })
+
+    useHead({
+        title: "Federated - Login"
     })
 
     const email: Ref<string> = ref<string>('');

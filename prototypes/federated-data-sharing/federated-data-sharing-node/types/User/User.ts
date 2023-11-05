@@ -18,12 +18,10 @@ export type MinifiedUser = Omit<
 
 export type UserCredentials = Omit<
     MinifiedUser,
-    "first_name"
-    | "last_name"
+    "name"
     | "organization_id"
-> & {
-    secret_key : string
-}
+    | "secret_key"
+>
 
 export type UserAuthResponse =  {
     user: User

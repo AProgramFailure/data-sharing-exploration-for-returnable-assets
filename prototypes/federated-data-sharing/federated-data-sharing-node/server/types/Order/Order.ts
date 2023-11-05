@@ -9,6 +9,7 @@ export type DBOrder = {
     status: string,
     security:  "private" | "public" | "subscribe",
     source_location_id: number,
+    created: string,
     destination_location_id: number
     organization_id: number
 }
