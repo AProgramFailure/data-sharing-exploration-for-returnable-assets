@@ -1,5 +1,7 @@
 package com.centralplatform.server.service.UserOrganizationApplication;
 
+import com.centralplatform.server.dto.UserOrganizationApplication.UserOrganizationApplicationDTO;
+import com.centralplatform.server.dto.UserOrganizationApplication.UserOrganizationApplicationDTOConverter;
 import com.centralplatform.server.model.User.User;
 import com.centralplatform.server.model.UserOrganizationApplication.StatusType;
 import com.centralplatform.server.model.UserOrganizationApplication.UserOrganizationApplication;
@@ -27,7 +29,9 @@ public class UserOrganizationApplicationService {
     private final UserOrganizationApplicationRepository organizationApplicationRepository;
     private final UserRepository userRepository;
 
-    public List<UserOrganizationApplication> getUserOrganizationApplications() {
+    private final UserOrganizationApplicationDTOConverter converter;
+
+    public List<UserOrganizationApplicationDTO> getUserOrganizationApplications() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<UserOrganizationApplication> resultList = new ArrayList<>();
 
@@ -40,7 +44,7 @@ public class UserOrganizationApplicationService {
             }
         }
 
-        return resultList;
+        return converter.convert(resultList);
     }
 
     public UserOrganizationApplication uploadUserOrganizationApplication(UserOrganizationApplicationCreateRequest request) {
