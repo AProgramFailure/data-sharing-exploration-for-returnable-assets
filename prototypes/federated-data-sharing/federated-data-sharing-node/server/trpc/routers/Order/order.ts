@@ -14,7 +14,52 @@ export const orderRouter = router({
             orders
         }
     }),
-    addOrder : publicProcedure
+    addOrder: publicProcedure
+    .input(
+        z.object({
+            organization_id : z.number(),
+            source_location_id: z.number(),
+            destination_location_id: z.number(),
+            status: z.string(),
+            security: z.literal("private").or(z.literal("subscribe")).or(z.literal("public")),
+        })
+    )
+    .query( ({ input, ctx }) => {
+        const insert_order = ctx.db.prepare(`
+            INSERT INTO order_table VALUES (status, security, source_location_id, destination_location_id, organization_id) VALUES (?, ?, ?, ?, ?)
+        `).bind(input.status, input.security, input.source_location_id, input.destination_location_id, input.organization_id).run()
+
+
+        const inserted_order = ctx.db.prepare(`
+            SELECT * FROM order o WHERE o.order_id = ${insert_order.lastInsertRowid}
+        `).get() as DBOrder
+
+        const ordered_items = ctx.db.prepare(`
+            SELECT * FROM order_item o WHERE o.order_id = ${insert_order.lastInsertRowid}
+        `).all() as DBOrderItem[]
+
+        const order: Order = {
+            order_id: insert_order.lastInsertRowid,
+            status: inserted_order.status,
+            security: inserted_order.security,
+            created: inserted_order.created,
+            source_location_id: inserted_order.source_location_id,
+            destination_location_id: inserted_order.destination_location_id,
+            organization_id: inserted_order.organization_id,
+            ordered_items: ordered_items
+        }
+
+        const response : OrderReponse = {
+            message: "Successfully added Order",
+            success: true,
+            payload: order
+        }
+        return {
+            response
+        }
+    }),
+
+    addOrderWithItems : publicProcedure
     .input(
         z.object({
             organization_id : z.number(),
@@ -33,6 +78,7 @@ export const orderRouter = router({
         })
     )
     .query( ({ input, ctx}) => {
+
         const response : OrderReponse = {
             message: "error occured before db transaction",
             success: false,
@@ -65,6 +111,7 @@ export const orderRouter = router({
             order_id: insert_order.lastInsertRowid,
             status: inserted_order.status,
             security: inserted_order.security,
+            created: inserted_order.created,
             source_location_id: inserted_order.source_location_id,
             destination_location_id: inserted_order.destination_location_id,
             organization_id: inserted_order.organization_id,

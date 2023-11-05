@@ -12,7 +12,12 @@
     const { addDummy } = organizationStore
 
     definePageMeta({
-        layout: "auth"
+        layout: "auth",
+        name: "Federated - Register"
+    })
+
+    useHead({
+        title: "Federated - Register"
     })
 
     const isOrganizationModalOpen: Ref<boolean> = ref<boolean>(false)

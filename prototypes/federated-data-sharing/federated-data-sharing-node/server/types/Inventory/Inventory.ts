@@ -5,7 +5,7 @@ export type InventoryResponse = {
 }
 
 export type DBInventory = {
-    invenotry_id: number,
+    invenotry_id?: number,
     inventory_name: string,
     item_type: string,
     quantity: number,

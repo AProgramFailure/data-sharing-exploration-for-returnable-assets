@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
     const trpcClient = createTRPCNuxtClient<AppRouter>({
         links: [
             httpBatchLink({
-                url: 'api/trpc'
+                url: 'http://localhost:3000/api/trpc'
             })
         ]
     })

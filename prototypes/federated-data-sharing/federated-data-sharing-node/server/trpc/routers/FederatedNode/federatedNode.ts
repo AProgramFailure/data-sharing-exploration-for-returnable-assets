@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure, router } from '../../trpc';
 
-import { DBFederatedNode, FederatedNode, FederatedNodeResponse} from "../../../types/FederatedNode/federatedNode"
+import { DBFederatedNode, FederatedNodeResponse} from "../../../types/FederatedNode/federatedNode"
 
 export const federatedNodeRouter = router({
     getNodes : publicProcedure
@@ -51,10 +51,9 @@ export const federatedNodeRouter = router({
     )
     .query( ({ input, ctx }) => {
 
-        const subscribe = ctx.db.prepare(`INSERT INTO node_subscribers ( subscribed_node_id , subscribing_node_id ) VALUES (?, ?)
-        `).bind(input.subscribed_node_id, input.subscribing_node_id)
-
-        subscribe.run()
+        const _subscribe = ctx.db.prepare(`
+            INSERT INTO node_subscribers ( subscribed_node_id , subscribing_node_id ) VALUES (?, ?)
+        `).bind(input.subscribed_node_id, input.subscribing_node_id).run()
 
         const response : FederatedNodeResponse = {
             message: "Successfully Subscribed to Node",

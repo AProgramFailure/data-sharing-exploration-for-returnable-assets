@@ -101,6 +101,7 @@ export const createContext = () => {
         source_location_id INTEGER NOT NULL,
         destination_location_id INTEGER NOT NULL,
         organization_id INTEGER,
+        created DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')),
         CONSTRAINT order_organization
             FOREIGN KEY (organization_id)
             REFERENCES organization(organization_id)

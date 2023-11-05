@@ -1,14 +1,23 @@
 <script setup lang="ts">
 
     import { useUserStore } from '~/stores/User/userStore';
-    import { useOrderSotre } from '~/stores/Order/orderStore';
+    import { useOrganizationStore } from '~/stores/Organization/organizationStore';
 
     const userStore = useUserStore()
-    const orderStore = useOrderSotre();
+    const organizationStore = useOrganizationStore()
 
     const { getUser } = userStore;
-    const { getOrders } = orderStore;
+    const { getOrganizations } = organizationStore
+
     const isSidemenuOpen : Ref<boolean> = ref<boolean>(false);
+
+    definePageMeta({
+        name: "Federated - Home"
+    })
+
+    useHead({
+        title: "Federated - Home"
+    })
 
 </script>
 
@@ -18,7 +27,7 @@
             <div>
             <div class="w-full">
                 <div class="p-8 mb-5 h-screen">
-                <h1 class="text-3xl font-bold mb-10 text-white">Welcome back: {{ getUser.first_name }} {{ getUser.last_name }}</h1>
+                <h1 class="text-3xl font-bold mb-10 text-white">Welcome back: {{ getUser.name }}</h1>
 
                 <hr class="my-10 border-neutral-800">
 
@@ -58,18 +67,28 @@
 
                     <div class="space-y-4 overflow-y-auto h-[700px] no-scrollbar">
                         <div
-                        v-for="(order, index) in 10"
+                        v-for="(order, index) in 20"
                         :key="index"
                         class="p-4 border-2 border-emerald-500/20 hover:border-emerald-500 rounded-md text-white space-y-2 transition duration-300">
                             <div class="flex justify-between">
-                                <div class="text-white/90 text-xs">Number 10</div>
-                                <div class="text-white/90 text-xs">4h</div>
+                                <div class="text-white/90 text-xs">Order Number: 3</div>
+                                <div class="text-white/90 text-xs"> 20:30</div>
                             </div>
-                            <h1 class="font-bold text-white ">Go to Order</h1>
                             <div class="text-sm text-white/60">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="text-white inline align-middle mr-1" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>Destination: Destination{{ index }}
+                                </svg>
+                                <h1 class="font-semibold text-[14px]">
+                                    Destination: id-{{ index }}
+                                </h1>
+                            </div>
+                            <div class="text-sm text-white/60">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="text-white inline align-middle mr-1" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                </svg>
+                                <h1 class="font-semibold text-[14px]">
+                                    Destination: id-{{ index }}
+                                </h1>
                             </div>
                         </div>
 

@@ -7,6 +7,7 @@ export type Order = {
     security: string,
     source_location_id: number,
     destination_location_id: number
+    created: string,
     organization_id: number,
     ordered_items: OrderItem[]
 } & Privacy
