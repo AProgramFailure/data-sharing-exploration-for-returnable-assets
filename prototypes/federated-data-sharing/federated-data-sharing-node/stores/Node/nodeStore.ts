@@ -1,31 +1,25 @@
 import { defineStore } from "pinia"
-import { useSessionStorage, type RemovableRef } from "@vueuse/core"
 import { useToast } from "vue-toastification";
-
-import type { FederatedNode } from "~/types/FederatedNode/FederatedNode";
-
-import { useInventoryStore } from "../Inventory/inventoryStore";
-import { useLocationStore } from "../Location/locationStore";
-import { useOrderSotre } from "../Order/orderStore";
-import { useOrganizationStore } from "../Organization/organizationStore";
 
 export const useFederatedNodeStore = defineStore("nodes", () => {
 
     const { $trpcClient } = useNuxtApp();
+    const { federatedNodes } = $trpcClient
     const toast = useToast();
 
-    const inventoryStore = useInventoryStore();
-    const locationStore = useLocationStore();
-    const orderStore = useOrderSotre();
-    const organizationStore = useOrganizationStore()
+    async function create_node(node_information: {
+        name: string,
+        security: "private" | "subscribe" | "public"
 
-    const federatedNodes : RemovableRef<FederatedNode[]> =
-        useSessionStorage<FederatedNode[]>("federatedNodes", [] as FederatedNode[])
-
-    const getFederatedNotes : ComputedRef<RemovableRef<FederatedNode[]>> = computed(() => federatedNodes)
+    }) {
+        const { data } = await federatedNodes.addNode.useQuery({
+            name: node_information.name,
+            security: node_information.security
+        })
+    }
 
     return {
-        getFederatedNotes
+
     }
 }, {
     persist: true

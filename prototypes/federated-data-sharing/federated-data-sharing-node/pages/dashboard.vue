@@ -77,8 +77,27 @@
         }
     })
 
-    const selected_content = ref({})
+    const selected_content : Ref<{
+        title: String,
+        content: {
+            name?: String,
+            type?: String,
+            email?: String,
+            password?: String,
+            owner?: String,
+            secret_key?: String
+        }
+    }> = ref<{
+        title: String,
+        content: {
 
+        }
+    }>({
+        title: "",
+        content: {
+
+        }
+    })
 
     function select_property(property : {
         title: String,
@@ -86,6 +105,25 @@
     }) {
         selected_content.value = property
         isSidemenuOpen.value = !isSidemenuOpen.value
+    }
+
+    function update_property(prop_name: string, prop_value : string){
+        (selected_content.value.content as Record<string, any>)[prop_name] = prop_value
+        console.log(selected_content)
+    }
+
+    function create_element(content: {
+        title: String,
+        content: {
+            name?: String,
+            type?: String,
+            email?: String,
+            password?: String,
+            owner?: String,
+            secret_key?: String
+        }
+    }){
+        console.log(selected_content)
     }
 </script>
 
@@ -109,6 +147,13 @@
                         class="relative group bg-neutral-800/60 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center rounded-md hover:bg-neutral-700 hover:smooth-hover transition duration-300">
                             <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1547592180-85f173990554?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="cuisine" />
                             <h4 class="text-white text-2xl font-bold capitalize text-center">Organization</h4>
+                        </div>
+
+                        <div
+                        @click="select_property(content.user)"
+                        class="relative group bg-neutral-800/60 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center rounded-md hover:bg-neutral-700 hover:smooth-hover transition duration-300">
+                            <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1547592180-85f173990554?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="cuisine" />
+                            <h4 class="text-white text-2xl font-bold capitalize text-center">Users</h4>
                         </div>
 
                         <div
@@ -136,19 +181,30 @@
                         @click="select_property(content.order_item)"
                         class="relative group bg-neutral-800/60 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center rounded-md hover:bg-neutral-700 hover:smooth-hover transition duration-300">
                             <img class="w-20 h-20 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1547592180-85f173990554?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" alt="cuisine" />
-                            <h4 class="text-white text-2xl font-bold capitalize text-center">Orer Item</h4>
+                            <h4 class="text-white text-2xl font-bold capitalize text-center">Odrer Item</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <LazySlideover
-        title="Account Information"
+        :title="`${selected_content.title}`"
         :is-slide-open="isSidemenuOpen"
         @update:slide-open="isSidemenuOpen = $event"
         >
-            <div class="flex flex-col justify-center items-center">
-                <h1 class="text-white"> {{ selected_content }} </h1>
+            <div class="flex flex-col justify-center items-center w-10/12">
+                <LazyFormInput
+                    v-for="(part, index) in selected_content.content"
+                    :label="index"
+                    @change="update_property($event.label, $event.value)"
+                />
+
+                <div
+                @click="create_element(selected_content)"
+                class="w-full px-4 py-3 rounded-lg bg-emerald-400 mt-4 text-center font-semibold border-4 border-emerald-500 hover:bg-emerald-300 hover:border-emerald-400 focus:border-emerald-400 transition duration-300 focus:bg-emerald-500 focus:outline-none outline-none text-white">
+                    Add
+                </div>
+
             </div>
         </LazySlideover>
     </div>

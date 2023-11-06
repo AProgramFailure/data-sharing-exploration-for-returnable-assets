@@ -69,7 +69,6 @@ export const federatedNodeRouter = router({
     .input(
         z.object({
             name: z.string(),
-            owner: z.number().positive(),
             security: z.literal("private").or(z.literal("subscribe")).or(z.literal("public"))
         })
     )

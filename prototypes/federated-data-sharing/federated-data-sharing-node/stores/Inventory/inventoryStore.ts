@@ -1,5 +1,4 @@
 import { defineStore } from "pinia"
-import { useSessionStorage, type RemovableRef } from "@vueuse/core"
 import { useToast } from "vue-toastification";
 
 import type { Inventory } from "~/types/Inventory/Inventory"
@@ -7,15 +6,27 @@ import type { Inventory } from "~/types/Inventory/Inventory"
 export const useInventoryStore = defineStore("inventory", () => {
 
     const { $trpcClient } = useNuxtApp();
+    const { inventories } = $trpcClient
     const toast = useToast();
 
-    const inventories : RemovableRef<Inventory[]> =
-        useSessionStorage<Inventory[]>("inventories", [] as Inventory[])
-
-    const getInventories : ComputedRef<RemovableRef<Inventory[]>> = computed(() => inventories)
+    async function create_inventory(inventory_details : {
+        item_type: string,
+        inventory_name: string,
+        quantity: number,
+        location_id: number,
+        security: "private" | "subscribe" | "public"
+    }){
+        const { data } = await inventories.addInventory.useQuery({
+            item_type: inventory_details.item_type,
+            inventory_name: inventory_details.inventory_name,
+            quantity:  inventory_details.quantity,
+            location_id: inventory_details.location_id,
+            security: inventory_details.security
+        })
+    }
 
     return {
-        getInventories
+        create_inventory,
     }
 }, {
     persist: true
