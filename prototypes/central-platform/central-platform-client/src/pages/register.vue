@@ -46,25 +46,15 @@ async function register() {
     toast.info("Creating user");
   });
 
-  await register({
-    firstName: firstName.value as string,
-    lastName: lastName.value as string,
-    organizationId: organizationId.value,
-    email: email.value as string,
-    password: password.value as string,
-  } as MinifiedUser);
-
-  if (useCookie("userToken").value) {
-    setTimeout(() => {
-      toast.success("Registration successfull");
-    }, 5000);
-
-    setTimeout(() => {
-      navigateTo("/home");
-    }, 6000);
-  } else {
-    toast.error("Could not create user");
-  }
+  setTimeout(async () => {
+    await register({
+      firstName: firstName.value as string,
+      lastName: lastName.value as string,
+      organizationId: organizationId.value,
+      email: email.value as string,
+      password: password.value as string,
+    } as MinifiedUser);
+  });
 }
 </script>
 
