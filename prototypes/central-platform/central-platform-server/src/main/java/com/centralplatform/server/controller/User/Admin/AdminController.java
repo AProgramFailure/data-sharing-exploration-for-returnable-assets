@@ -1,5 +1,6 @@
 package com.centralplatform.server.controller.User.Admin;
 
+import com.centralplatform.server.dto.UserOrganizationApplication.UserOrganizationApplicationDTO;
 import com.centralplatform.server.model.UserOrganizationApplication.UserOrganizationApplication;
 import com.centralplatform.server.payload.request.UserOrganizationApplication.UserOrganizationApplicationCreateRequest;
 import com.centralplatform.server.payload.request.UserOrganizationApplication.UserOrganizationApplicationRequest;
@@ -23,7 +24,7 @@ public class AdminController {
 
     @RequestMapping(value = "/user-assign-request", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<? extends List<UserOrganizationApplication>> getUserOrganizationApplications() {
+    public ResponseEntity<? extends List<UserOrganizationApplicationDTO>> getUserOrganizationApplications() {
         return ResponseEntity.ok(userOrganizationApplicationService.getUserOrganizationApplications());
     }
 

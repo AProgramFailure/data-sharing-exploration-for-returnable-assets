@@ -72,6 +72,7 @@ export const useUserStore = defineStore(
             maxAge: 86400,
           });
           userToken.value = data.value.access_token;
+          // Automatically create a request for the user to join chosen organization
           $fetch("http://localhost:8080/api/user/user-assign-request/new", {
             method: "POST",
             headers: {
