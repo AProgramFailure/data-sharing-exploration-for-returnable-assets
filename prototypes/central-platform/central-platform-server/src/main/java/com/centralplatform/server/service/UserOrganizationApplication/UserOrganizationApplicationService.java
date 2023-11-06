@@ -40,7 +40,7 @@ public class UserOrganizationApplicationService {
             Optional<User> user = ((userRepository.findByEmail(userEmail)));
 
             if(user.isPresent()){
-                resultList = organizationApplicationRepository.findByOrganizationId(user.get().getOrganizationId());
+                resultList = organizationApplicationRepository.findByOrganizationIdAndStatus(user.get().getOrganizationId(), StatusType.IN_PROGRESS);
             }
         }
 

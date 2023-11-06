@@ -29,20 +29,98 @@ async function fetchUserOrganizationApplications() {
 }
 
 await fetchUserOrganizationApplications();
+
+function formattedDate(dateArray: number[]) {
+  const date = new Date(
+    dateArray[0],
+    dateArray[1] - 1,
+    dateArray[2],
+    dateArray[3],
+    dateArray[4],
+    dateArray[5]
+  );
+  return date.toLocaleString("en-NL");
+}
+
+async function updateUserOrganizationApplication(
+  newStatus: string,
+  userOrganizationApplication: UserOrganizationApplication
+) {
+  userOrganizationApplication.status = newStatus;
+
+  const { data } = await useAsyncData<UserOrganizationApplication[]>(
+    "updateUserOrganizationApplication",
+    () =>
+      $fetch(
+        "http://localhost:8080/api/admin/user-assign-request/update/" +
+          userOrganizationApplication.id,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + useCookie("userToken").value,
+          },
+          body: {
+            type: "update",
+            userOrganizationApplication: userOrganizationApplication,
+          },
+        }
+      )
+  );
+
+  // if (data.value) {
+  //   userOrganizationApplications.value = data.value;
+  // }
+}
 </script>
 
 <template>
   <ul class="p-5 flex flex-col bg-neutral-900 rounded-lg text-white">
-    <ul class="p-3 mt-2 bg-neutral-800 rounded-lg text-white">
-      <li
-        v-for="(
-          userOrganizationApplication, index
-        ) in userOrganizationApplications"
-        :key="index"
-        class="mt-2 p-2 bg-neutral-700 rounded-lg"
-      >
-        {{ userOrganizationApplication }}
+    <ul
+      v-if="userOrganizationApplications.length > 0"
+      class="p-3 mt-2 bg-neutral-800 rounded-lg text-white"
+      v-for="(
+        userOrganizationApplication, index
+      ) in userOrganizationApplications"
+      :key="index"
+    >
+      <li class="mt-2 p-2 bg-neutral-700 rounded-lg">
+        <p>User email: {{ userOrganizationApplication.email }}</p>
+        <p>
+          Created at:
+          {{ formattedDate(userOrganizationApplication.createdAt) }}
+        </p>
+        <p>
+          Updated at: {{ formattedDate(userOrganizationApplication.updatedAt) }}
+        </p>
+        <div class="flex space-x-4 mt-12 mb-2 bg-neutral-800 rounded p-4">
+          <button
+            class="border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors duration-300"
+            @click="
+              updateUserOrganizationApplication(
+                'APPROVED',
+                userOrganizationApplication
+              )
+            "
+          >
+            Approve
+          </button>
+          <button
+            class="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-300"
+            @click="
+              updateUserOrganizationApplication(
+                'DENIED',
+                userOrganizationApplication
+              )
+            "
+          >
+            Decline
+          </button>
+        </div>
       </li>
     </ul>
+    <div class="text-white" v-else>
+        No applications at this moment.
+    </div>
   </ul>
 </template>
