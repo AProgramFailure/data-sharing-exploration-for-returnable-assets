@@ -57,11 +57,11 @@ async function register() {
   if (useCookie("userToken").value) {
     setTimeout(() => {
       toast.success("Registration successfull");
-    }, 2000);
+    }, 5000);
 
     setTimeout(() => {
       navigateTo("/home");
-    }, 3000);
+    }, 6000);
   } else {
     toast.error("Could not create user");
   }
