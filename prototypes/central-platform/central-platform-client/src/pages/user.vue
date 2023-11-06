@@ -48,10 +48,10 @@ async function updateUserOrganizationApplication(
 ) {
   userOrganizationApplication.status = newStatus;
 
-  const { data } = await useAsyncData<UserOrganizationApplication[]>(
+  await useAsyncData<UserOrganizationApplication[]>(
     "updateUserOrganizationApplication",
-    () =>
-      $fetch(
+    async () =>
+      await $fetch(
         "http://localhost:8080/api/admin/user-assign-request/update/" +
           userOrganizationApplication.id,
         {
@@ -68,29 +68,31 @@ async function updateUserOrganizationApplication(
       )
   );
 
-  // if (data.value) {
-  //   userOrganizationApplications.value = data.value;
-  // }
+  const updatedApplications = userOrganizationApplications.value.filter(
+    (application) => application.id !== userOrganizationApplication.id
+  );
+  userOrganizationApplications.value = updatedApplications;
 }
 </script>
 
 <template>
-  <ul class="p-5 flex flex-col bg-neutral-900 rounded-lg text-white">
-    <ul
+  <div class="grid grid-cols-2 gap-1 max-h-screen pb-16 overflow-y-auto">
+    <div
       v-if="userOrganizationApplications.length > 0"
-      class="p-3 mt-2 bg-neutral-800 rounded-lg text-white"
       v-for="(
         userOrganizationApplication, index
       ) in userOrganizationApplications"
       :key="index"
+      class="p-5 bg-neutral-900 rounded-lg text-white"
     >
-      <li class="mt-2 p-2 bg-neutral-700 rounded-lg">
-        <p>User email: {{ userOrganizationApplication.email }}</p>
-        <p>
-          Created at:
-          {{ formattedDate(userOrganizationApplication.createdAt) }}
+      <div class="p-3 bg-neutral-800 rounded-lg text-white">
+        <p class="mt-2 p-2 bg-neutral-700 rounded-lg">
+          User email: {{ userOrganizationApplication.email }}
         </p>
-        <p>
+        <p class="mt-2 p-2 bg-neutral-700 rounded-lg">
+          Created at: {{ formattedDate(userOrganizationApplication.createdAt) }}
+        </p>
+        <p class="mt-2 p-2 bg-neutral-700 rounded-lg">
           Updated at: {{ formattedDate(userOrganizationApplication.updatedAt) }}
         </p>
         <div class="flex space-x-4 mt-12 mb-2 bg-neutral-800 rounded p-4">
@@ -117,10 +119,8 @@ async function updateUserOrganizationApplication(
             Decline
           </button>
         </div>
-      </li>
-    </ul>
-    <div class="text-white" v-else>
-        No applications at this moment.
+      </div>
     </div>
-  </ul>
+    <div class="text-white" v-else>No applications at this moment.</div>
+  </div>
 </template>
