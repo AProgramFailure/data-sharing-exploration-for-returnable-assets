@@ -80,7 +80,7 @@ if (useCookie("userRole").value == "ADMIN") {
 <template>
   <div v-if="useCookie('userRole').value == 'ADMIN'" class="text-white">
     <h1 class="pl-5 mt-5 text-lg">User organization applications</h1>
-    <div class="grid grid-cols-2 gap-1 max-h-screen pb-16 overflow-y-auto">
+    <div class="grid grid-cols-2 gap-1 overflow-y-scroll" style="height: 650px;">
       <div
         v-if="userOrganizationApplications.length > 0"
         v-for="(
@@ -127,7 +127,7 @@ if (useCookie("userRole").value == "ADMIN") {
           </div>
         </div>
       </div>
-      <div class="text-white" v-else>No applications at this moment.</div>
+      <div class="text-white p-5" v-else>No applications at this moment.</div>
     </div>
   </div>
 
