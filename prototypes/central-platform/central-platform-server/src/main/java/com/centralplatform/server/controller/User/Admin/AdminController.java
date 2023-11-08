@@ -2,11 +2,8 @@ package com.centralplatform.server.controller.User.Admin;
 
 import com.centralplatform.server.dto.OrganizationAccess.OrganizationAccessDTO;
 import com.centralplatform.server.dto.UserOrganizationApplication.UserOrganizationApplicationDTO;
-import com.centralplatform.server.model.OrganizationAccess.OrganizationAccess;
 import com.centralplatform.server.model.UserOrganizationApplication.UserOrganizationApplication;
-import com.centralplatform.server.payload.request.Organization.OrganizationRequest;
 import com.centralplatform.server.payload.request.OrganizationAccess.OrganizationAccessCreateRequest;
-import com.centralplatform.server.payload.request.UserOrganizationApplication.UserOrganizationApplicationCreateRequest;
 import com.centralplatform.server.payload.request.UserOrganizationApplication.UserOrganizationApplicationUpdateRequest;
 import com.centralplatform.server.service.OrganizationAccess.OrganizationAccessService;
 import com.centralplatform.server.service.UserOrganizationApplication.UserOrganizationApplicationService;
@@ -48,7 +45,7 @@ public class AdminController {
 
     @RequestMapping(value = "/organization-access/external", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<? extends List<OrganizationAccessDTO>> getExternalOrganizationAccess() {
+    public ResponseEntity<? extends OrganizationAccessDTO> getExternalOrganizationAccess() {
         return ResponseEntity.ok(organizationAccessService.getExternalOrganizationAccess());
     }
 

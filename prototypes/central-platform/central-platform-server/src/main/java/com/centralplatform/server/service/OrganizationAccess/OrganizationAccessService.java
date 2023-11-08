@@ -31,20 +31,20 @@ public class OrganizationAccessService {
     private final OrganizationAccessDTOConverter converter;
     private final OrganizationRepository organizationRepository;
 
-    public List<OrganizationAccessDTO> getExternalOrganizationAccess() {
+    public OrganizationAccessDTO getExternalOrganizationAccess() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<OrganizationAccess> resultList = new ArrayList<>();
+        OrganizationAccess result = OrganizationAccess.builder().build();
 
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             String userEmail = ((UserDetails) authentication.getPrincipal()).getUsername();
             Optional<User> user = ((userRepository.findByEmail(userEmail)));
 
             if(user.isPresent()){
-                resultList = organizationAccessRepository.findOrganizationAccessesByOrganizationId(UUID.fromString(user.get().getOrganizationId()));
+                result = organizationAccessRepository.findOrganizationAccessByOrganizationId(UUID.fromString(user.get().getOrganizationId()));
             }
         }
 
-        return converter.convert(resultList);
+        return converter.convert(result);
     }
 
     public void removeOrganizationAccessById(String id) {
