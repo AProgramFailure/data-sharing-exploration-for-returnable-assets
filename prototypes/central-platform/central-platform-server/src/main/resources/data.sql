@@ -40,8 +40,8 @@ VALUES
     ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', 'd1408c98-878d-4d2a-b5c5-370fea22d312'),  -- Grolsch - Hoogvliet
     ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', 'c84e07cc-0d42-44a5-8363-afde90302e9a'),  -- Grolsch - Jumbo
 
-    ('3e4bdc4e-51d2-4e82-a05a-93ac3e3a7862', '7c697a6f-8d4a-4c8b-8e21-7e57fc07316a'); -- Lidl - Grolsch
-
+    ('3e4bdc4e-51d2-4e82-a05a-93ac3e3a7862', '7c697a6f-8d4a-4c8b-8e21-7e57fc07316a'), -- Lidl - Grolsch
+    ('3e4bdc4e-51d2-4e82-a05a-93ac3e3a7862', 'eaa663d1-4eb7-4a9f-9a90-d61c0d82a856'); -- Lidl - Heineken
 -- Insert locations for breweries (2 locations each)
 INSERT INTO location (id, organization_id, name, address, latitude, longitude)
 VALUES

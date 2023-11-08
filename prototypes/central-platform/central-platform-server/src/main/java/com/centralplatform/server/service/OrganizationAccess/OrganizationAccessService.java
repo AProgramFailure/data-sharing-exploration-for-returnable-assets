@@ -57,6 +57,10 @@ public class OrganizationAccessService {
 
             if(user.isPresent()){
                 resultList = organizationAccessRepository.findOrganizationAccessByAllowedOrganizationId(UUID.fromString(user.get().getOrganizationId()));
+                //TODO properly hide access relations of others
+                for (OrganizationAccess access : resultList) {
+                    access.setAllowedOrganizations(new ArrayList<>());
+                }
             }
         }
 
