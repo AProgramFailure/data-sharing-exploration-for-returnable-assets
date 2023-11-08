@@ -10,8 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface OrganizationAccessRepository extends JpaRepository<OrganizationAccess, UUID> {
-
-
+    
     OrganizationAccess findOrganizationAccessByOrganizationId(UUID organization_id);
 
     @Query("SELECT oa FROM OrganizationAccess oa JOIN oa.allowedOrganizations ao WHERE ao.id = :organizationId")

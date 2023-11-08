@@ -31,7 +31,7 @@ public class OrganizationAccessService {
     private final OrganizationAccessDTOConverter converter;
     private final OrganizationRepository organizationRepository;
 
-    public OrganizationAccessDTO getExternalOrganizationAccess() {
+    public OrganizationAccessDTO getOwnOrganizationAccess() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OrganizationAccess result = OrganizationAccess.builder().build();
 
@@ -45,6 +45,22 @@ public class OrganizationAccessService {
         }
 
         return converter.convert(result);
+    }
+
+    public List<OrganizationAccessDTO> getExternalOrganizationAccesses() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<OrganizationAccess> resultList = new ArrayList<>();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            String userEmail = ((UserDetails) authentication.getPrincipal()).getUsername();
+            Optional<User> user = ((userRepository.findByEmail(userEmail)));
+
+            if(user.isPresent()){
+                resultList = organizationAccessRepository.findOrganizationAccessByAllowedOrganizationId(UUID.fromString(user.get().getOrganizationId()));
+            }
+        }
+
+        return converter.convert(resultList);
     }
 
     public void removeOrganizationAccessById(String id) {
@@ -85,22 +101,6 @@ public class OrganizationAccessService {
                 }
             }
         }
-    }
-
-    public List<OrganizationAccessDTO> getOwnOrganizationAccess() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<OrganizationAccess> resultList = new ArrayList<>();
-
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            String userEmail = ((UserDetails) authentication.getPrincipal()).getUsername();
-            Optional<User> user = ((userRepository.findByEmail(userEmail)));
-
-            if(user.isPresent()){
-                resultList = organizationAccessRepository.findOrganizationAccessByAllowedOrganizationId(UUID.fromString(user.get().getOrganizationId()));
-            }
-        }
-
-        return converter.convert(resultList);
     }
 }
 

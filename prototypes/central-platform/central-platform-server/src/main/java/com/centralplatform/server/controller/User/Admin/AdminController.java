@@ -37,16 +37,16 @@ public class AdminController {
         return ResponseEntity.ok(userOrganizationApplicationService.updateUserOrganizationApplication(request, id));
     }
 
-    @RequestMapping(value = "/organization-access/own", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<? extends List<OrganizationAccessDTO>> getOwnOrganizationAccess() {
-        return ResponseEntity.ok(organizationAccessService.getOwnOrganizationAccess());
-    }
-
     @RequestMapping(value = "/organization-access/external", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<? extends OrganizationAccessDTO> getExternalOrganizationAccess() {
-        return ResponseEntity.ok(organizationAccessService.getExternalOrganizationAccess());
+    public ResponseEntity<? extends List<OrganizationAccessDTO>> getExternalOrganizationAccesses() {
+        return ResponseEntity.ok(organizationAccessService.getExternalOrganizationAccesses());
+    }
+
+    @RequestMapping(value = "/organization-access/own", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('admin:read')")
+    public ResponseEntity<? extends OrganizationAccessDTO> getOwnOrganizationAccess() {
+        return ResponseEntity.ok(organizationAccessService.getOwnOrganizationAccess());
     }
 
     @RequestMapping(value = "/organization-access/remove/{id}", method = RequestMethod.POST)

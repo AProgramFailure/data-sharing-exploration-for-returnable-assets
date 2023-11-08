@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/prod")
 @RequiredArgsConstructor
+//TODO creating/deleting orgs cascade and users
 public class OrganizationControllerImpl implements OrganizationController<OrganizationRequest> {
 
     private final OrganizationServiceImpl organizationService;
