@@ -7,6 +7,7 @@ definePageMeta({
 
 const userOrganizationApplications = ref<UserOrganizationApplication[]>([]);
 
+//TODO convert to store
 async function fetchUserOrganizationApplications() {
   const { data } = await useAsyncData<UserOrganizationApplication[]>(
     "userOrganizationApplications",
@@ -40,6 +41,7 @@ function formattedDate(dateArray: number[]) {
   return date.toLocaleString("en-NL");
 }
 
+//TODO convert to store
 async function updateUserOrganizationApplication(
   newStatus: string,
   userOrganizationApplication: UserOrganizationApplication
@@ -72,6 +74,7 @@ async function updateUserOrganizationApplication(
   userOrganizationApplications.value = updatedApplications;
 }
 
+//TODO convert to store
 if (useCookie("userRole").value == "ADMIN") {
   await fetchUserOrganizationApplications();
 }
