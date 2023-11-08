@@ -85,8 +85,5 @@ public class UserOrganizationApplicationService {
 
         return null;
     }
-//    public void deleteUserOrganizationApplicationById(String id) {
-//        organizationRequestRepository.delete(organizationRequestRepository.findById(UUID.fromString(id)).orElseThrow());
-//    }
 }
 

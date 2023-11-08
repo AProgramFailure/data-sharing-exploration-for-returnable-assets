@@ -15,6 +15,33 @@ VALUES
     ('d1408c98-878d-4d2a-b5c5-370fea22d312', 'Hoogvliet', 'SUPERMARKET'),
     ('c84e07cc-0d42-44a5-8363-afde90302e9a', 'Jumbo', 'SUPERMARKET');
 
+-- Insert organization access entities for breweries
+INSERT INTO organization_access (id, organization_id)
+VALUES
+    ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', '7c697a6f-8d4a-4c8b-8e21-7e57fc07316a'), -- Grolsch
+    ('eaa663d1-4eb7-4a9f-9a90-d61c0d82a857', 'eaa663d1-4eb7-4a9f-9a90-d61c0d82a856'), -- Heineken
+    ('1b92a522-e99d-42e7-925d-7a065d6c9d51', '1b92a522-e99d-42e7-925d-7a065d6c9d50'), -- Hertog Jan
+    ('eec8b7a2-20a2-47da-8c9a-bac8d68a3f5b', 'eec8b7a2-20a2-47da-8c9a-bac8d68a3f5a'); -- Kordaat
+
+-- Insert organization access entities for supermarkets
+INSERT INTO organization_access (id, organization_id)
+VALUES
+    ('3e4bdc4e-51d2-4e82-a05a-93ac3e3a7862', '3e4bdc4e-51d2-4e82-a05a-93ac3e3a7861'), -- Lidl
+    ('9c24c37b-6a5b-4c5a-8b4e-0b3a5a8f385e', '9c24c37b-6a5b-4c5a-8b4e-0b3a5a8f385d'), -- Aldi
+    ('8318c3b0-590c-4845-8cb9-d30d2f344edc', '8318c3b0-590c-4845-8cb9-d30d2f344edb'), -- Albert Heijn
+    ('d1408c98-878d-4d2a-b5c5-370fea22d313', 'd1408c98-878d-4d2a-b5c5-370fea22d312'), -- Hoogvliet
+    ('c84e07cc-0d42-44a5-8363-afde90302ea0', 'c84e07cc-0d42-44a5-8363-afde90302e9a'); -- Jumbo
+
+INSERT INTO organization_access_allowed_organizations (organization_access_id, organization_id)
+VALUES
+    ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', '3e4bdc4e-51d2-4e82-a05a-93ac3e3a7861'), -- Grolsch - Lidl
+    ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', '9c24c37b-6a5b-4c5a-8b4e-0b3a5a8f385d'), -- Grolsch - Aldi
+    ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', '8318c3b0-590c-4845-8cb9-d30d2f344edb'),  -- Grolsch - Albert Heijn
+    ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', 'd1408c98-878d-4d2a-b5c5-370fea22d312'),  -- Grolsch - Hoogvliet
+    ('7c697a6f-8d4a-4c8b-8e21-7e57fc07316b', 'c84e07cc-0d42-44a5-8363-afde90302e9a'),  -- Grolsch - Jumbo
+
+    ('3e4bdc4e-51d2-4e82-a05a-93ac3e3a7862', '7c697a6f-8d4a-4c8b-8e21-7e57fc07316a'); -- Lidl - Grolsch
+
 -- Insert locations for breweries (2 locations each)
 INSERT INTO location (id, organization_id, name, address, latitude, longitude)
 VALUES

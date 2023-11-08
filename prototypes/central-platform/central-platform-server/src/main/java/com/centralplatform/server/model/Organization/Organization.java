@@ -2,6 +2,8 @@ package com.centralplatform.server.model.Organization;
 
 import com.centralplatform.server.model.Location.Location;
 import com.centralplatform.server.model.Order.Order;
+import com.centralplatform.server.model.OrganizationAccess.OrganizationAccess;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,4 +40,8 @@ public class Organization {
     @JsonManagedReference(value = "organization-order")
     @OneToMany(mappedBy = "organization")
     private List<Order> orders;
+
+    @OneToOne(mappedBy = "organization")
+    @JsonManagedReference
+    private OrganizationAccess organizationAccess;
 }
