@@ -4,6 +4,8 @@ import { type RemovableRef, useSessionStorage } from "@vueuse/core";
 
 import type { User, MinifiedUser, UserCredentials } from "~/types/User/User";
 
+import { useToast } from "vue-toastification";
+
 export const useUserStore = defineStore(
   "user",
   () => {
@@ -11,7 +13,7 @@ export const useUserStore = defineStore(
       "user",
       {} as User
     );
-
+    const toast = useToast();
     const getUser = computed(() => user);
 
     async function authenticate(credentials: UserCredentials): Promise<void> {
@@ -37,18 +39,24 @@ export const useUserStore = defineStore(
             sameSite: "strict",
             maxAge: 86400,
           });
+          const userRole = useCookie("userRole", {
+            secure: true,
+            sameSite: "strict",
+            maxAge: 86400,
+          });
+          userRole.value = data.value.user.role
           userToken.value = data.value.access_token;
         }
       }
     }
 
     async function register(newUser: MinifiedUser): Promise<void> {
-      const { data } = await useAsyncData<{
+      try { const { data } = await useAsyncData<{
         access_token: string;
         refresh_token: string;
         user: User;
-      }>("user", () =>
-        $fetch("http://localhost:8080/api/auth/register", {
+      }>("user", async () =>
+      await $fetch("http://localhost:8080/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -71,9 +79,15 @@ export const useUserStore = defineStore(
             sameSite: "strict",
             maxAge: 86400,
           });
+          const userRole = useCookie("userRole", {
+            secure: true,
+            sameSite: "strict",
+            maxAge: 86400,
+          });
           userToken.value = data.value.access_token;
+          userRole.value = data.value.user.role;
           // Automatically create a request for the user to join chosen organization
-          $fetch("http://localhost:8080/api/user/user-assign-request/new", {
+          await $fetch("http://localhost:8080/api/user/user-assign-request/new", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -85,8 +99,19 @@ export const useUserStore = defineStore(
               organizationId: newUser.organizationId,
             },
           });
+          setTimeout(() => {
+            toast.success("Registration successfull");
+          }, 5000);
+      
+          setTimeout(() => {
+            navigateTo("/home");
+          }, 6000);
         }
+      }} catch (error){
+        console.log(error)
+        toast.error("Could not create user");
       }
+     
     }
 
     return {

@@ -1,11 +1,9 @@
-import { User } from "../User/User"
-
 export type UserOrganizationApplication = {
     id: string,
-    user: User
+    email: string
     organizationId: string
     status: string
-    createdAt: string
-    updatedAt: string
+    createdAt: number[]
+    updatedAt: number[]
 }
 

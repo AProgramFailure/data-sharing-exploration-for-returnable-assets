@@ -7,6 +7,9 @@ function logOut() {
 
   const userToken = useCookie("userToken");
   userToken.value = null;
+  
+  const userRole = useCookie("userRole");
+  userRole.value = null;
 
   setTimeout(() => {
     toast.info("Logged out");
