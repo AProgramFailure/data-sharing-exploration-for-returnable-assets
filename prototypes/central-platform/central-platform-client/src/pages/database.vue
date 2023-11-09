@@ -1,13 +1,60 @@
 <script lang="ts" setup>
+import { OrganizationDTO } from "~/types/Organization/Organization";
 import type { OrganizationAccessDTO } from "../types/OrganizationAccess/OrganizationAccess.ts";
+import { useOrganizationDTOStore } from "~/stores/Organization/OrganizationStoreDTO";
 
 definePageMeta({
   middleware: "auth",
+});
+const organizationDTOStore = useOrganizationDTOStore();
+const { getOrganizationDTOs } = organizationDTOStore;
+const filteredOrganizations = computed(() => {
+  if (ownOrganizationAccess.value) {
+    const usedOrganizationIds = externalOrganizationAccesses.value.map(
+      (access) => access.organization.id
+    );
+    const ownOrganizationId = ownOrganizationAccess.value.organization.id;
+
+    return getOrganizationDTOs.value.filter((organization) => {
+      return (
+        !usedOrganizationIds.includes(organization.id) &&
+        organization.id !== ownOrganizationId
+      );
+    });
+  } else {
+    //TODO
+  }
 });
 
 const ownOrganizationAccess = ref<OrganizationAccessDTO | null>(null);
 const externalOrganizationAccesses = ref<OrganizationAccessDTO[]>([]);
 
+const showModal = ref(false);
+const selectedOrganization = ref<OrganizationDTO | null>(null);
+
+onBeforeMount(async () => {
+  setTimeout(async () => {
+    await organizationDTOStore.fetchOrganizationDTOs();
+  });
+});
+
+const openModal = () => {
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  showModal.value = false;
+};
+
+const confirmSelection = async () => {
+  if (selectedOrganization.value && selectedOrganization.value.id) {
+    await addOrganizationAccess(selectedOrganization.value.id);
+  } else {
+    //TODO add toast
+  }
+
+  showModal.value = false;
+};
 //TODO convert to store
 async function fetchOwnOrganizationAccess() {
   const { data } = await useAsyncData<OrganizationAccessDTO>(() =>
@@ -27,7 +74,7 @@ async function fetchOwnOrganizationAccess() {
     ownOrganizationAccess.value = data.value;
   }
 }
-
+//TODO convert to store
 async function fetchExternalOrganizationAccesses() {
   const { data } = await useAsyncData<OrganizationAccessDTO[]>(() =>
     $fetch("http://localhost:8080/api/admin/organization-access/external", {
@@ -46,11 +93,15 @@ async function fetchExternalOrganizationAccesses() {
     externalOrganizationAccesses.value = data.value;
   }
 }
-
-async function removeOrganizationAccess(accessId: string, organizationId: string ) {
+//TODO convert to store
+async function removeOrganizationAccess(
+  accessId: string,
+  organizationId: string
+) {
   const { data } = await useAsyncData<string>(() =>
     $fetch(
-      "http://localhost:8080/api/admin/organization-access/remove/" + organizationId,
+      "http://localhost:8080/api/admin/organization-access/remove/" +
+        organizationId,
       {
         method: "POST",
         headers: {
@@ -63,13 +114,31 @@ async function removeOrganizationAccess(accessId: string, organizationId: string
       }
     )
   );
-  console.log(data.value);
   if (data.value) {
-    console.log("test");
     const updatedOrganizationAccesses = externalOrganizationAccesses.value.filter(
       (access) => access.id !== accessId
     );
     externalOrganizationAccesses.value = updatedOrganizationAccesses;
+  }
+}
+//TODO convert to store
+async function addOrganizationAccess(organizationId: string) {
+  const { data } = await useAsyncData<string>(() =>
+    $fetch("http://localhost:8080/api/admin/organization-access/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + useCookie("userToken").value,
+      },
+      body: {
+        type: "create",
+        organizationId: organizationId,
+      },
+    })
+  );
+
+  if (data.value) {
+    await fetchExternalOrganizationAccesses();
   }
 }
 
@@ -119,10 +188,47 @@ if (useCookie("userRole").value == "ADMIN") {
       <div class="ml-5 mt-2">
         <button
           class="border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors duration-300"
-          @click=""
+          @click="openModal"
         >
           Add
         </button>
+
+        <div
+          v-if="showModal"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg"
+        >
+          <div class="bg-neutral-800 p-4 rounded-md shadow-lg">
+            <div class="p-6 bg-neutral-700 rounded">
+              <h2 class="text-lg font-bold mb-4">Select Organization</h2>
+              <select
+                v-model="selectedOrganization"
+                class="block w-full border border-gray-300 p-2 rounded-md mb-4 text-black"
+              >
+                <option
+                  v-for="organization in filteredOrganizations"
+                  :value="organization"
+                  class="text-black"
+                >
+                  {{ organization.name }}
+                </option>
+              </select>
+              <div class="flex justify-end">
+                <button
+                  @click="confirmSelection"
+                  class="px-4 py-2 bg-emerald-500 text-white rounded-md mr-2"
+                >
+                  Confirm
+                </button>
+                <button
+                  @click="closeModal"
+                  class="px-4 py-2 border border-gray-300 rounded-md"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5"
@@ -140,7 +246,12 @@ if (useCookie("userRole").value == "ADMIN") {
             <div class="flex space-x-4 mt-8 mb-2 rounded pb-2">
               <button
                 class="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-300"
-                @click="removeOrganizationAccess(extAccess.id,extAccess.organization.id)"
+                @click="
+                  removeOrganizationAccess(
+                    extAccess.id,
+                    extAccess.organization.id
+                  )
+                "
               >
                 Remove
               </button>
