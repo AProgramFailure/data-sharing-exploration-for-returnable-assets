@@ -156,3 +156,23 @@ BEGIN
         END LOOP;
     END LOOP;
 END' LANGUAGE PLPGSQL;
+
+-- Update inventory items related to Grolsch to be associated with Grolsch
+UPDATE inventory
+SET organization_id = '7c697a6f-8d4a-4c8b-8e21-7e57fc07316a'
+WHERE item_type IN ('GRLOSCH_PREMIUM_PILSNER', 'GROLSCH_RADLER');
+
+-- Update inventory items related to Heineken to be associated with Heineken
+UPDATE inventory
+SET organization_id = 'eaa663d1-4eb7-4a9f-9a90-d61c0d82a856'
+WHERE item_type = 'HEINEKEN';
+
+-- Update inventory items related to Hertog Jan to be associated with Hertog Jan
+UPDATE inventory
+SET organization_id = '1b92a522-e99d-42e7-925d-7a065d6c9d50'
+WHERE item_type IN ('HERTOG_JAN_PILSNER', 'HERTOG_JAN_GRAND_PILSNER');
+
+-- Update inventory items related to Kordaat to be associated with Kordaat
+UPDATE inventory
+SET organization_id = 'eec8b7a2-20a2-47da-8c9a-bac8d68a3f5a'
+WHERE item_type = 'KORDAAT';

@@ -2,6 +2,8 @@ package com.centralplatform.server.service.Organization;
 
 import com.centralplatform.server.dto.Organization.OrganizationDTO;
 import com.centralplatform.server.dto.Organization.OrganizationDTOConverter;
+import com.centralplatform.server.model.Inventory.Inventory;
+import com.centralplatform.server.model.Location.Location;
 import com.centralplatform.server.model.Organization.Organization;
 import com.centralplatform.server.model.OrganizationAccess.OrganizationAccess;
 import com.centralplatform.server.model.User.User;
@@ -41,9 +43,22 @@ public class OrganizationServiceImpl implements OrganizationService {
             if(user.isPresent()){
                 OrganizationAccess organizationAccess = organizationAccessRepository.findOrganizationAccessByOrganizationId(UUID.fromString(user.get().getOrganizationId()));
 
-                for (Organization org : organizationRepository.findAll()) {
-                    if (org.getId().equals(organizationAccess.getOrganization().getId()) || organizationAccess.getAllowedOrganizations().contains(org)) {
-                        resultList.add(org);
+                for (Organization organization : organizationRepository.findAll()) {
+                    if (organization.getId().equals(organizationAccess.getOrganization().getId()) || organizationAccess.getAllowedOrganizations().contains(organization)) {
+                        if(organizationAccess.getAllowedOrganizations().contains(organization)){
+                           for(Location location :  organization.getLocations()){
+                               List<Inventory> inventoriesToRemove = new ArrayList<>();
+
+                               for (Inventory inventory : location.getInventory()) {
+                                   if (!organizationAccess.getAllowedOrganizations().contains(inventory.getOrganization()) && inventory.getOrganization() != organizationAccess.getOrganization()) {
+                                       inventoriesToRemove.add(inventory);
+                                   }
+                               }
+
+                               location.getInventory().removeAll(inventoriesToRemove);
+                           }
+                        }
+                        resultList.add(organization);
                     }
                 }
             }
