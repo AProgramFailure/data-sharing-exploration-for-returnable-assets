@@ -32,9 +32,14 @@ export const useOrganizationStore = defineStore("organizations", () => {
     }
   }
 
+  function reset(){
+    organizations.value = []
+  }
+
   return {
     getOrganizations,
     organizations,
     fetchOrganizations,
+    reset
   };
 });

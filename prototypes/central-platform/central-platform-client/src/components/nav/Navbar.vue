@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useToast } from "vue-toastification";
+import { useOrganizationStore } from "~/stores/Organization/OrganizationStore";
 
 const route = useRoute();
 function logOut() {
@@ -10,6 +11,9 @@ function logOut() {
   
   const userRole = useCookie("userRole");
   userRole.value = null;
+
+  const store = useOrganizationStore() 
+  store.reset()
 
   setTimeout(() => {
     toast.info("Logged out");
