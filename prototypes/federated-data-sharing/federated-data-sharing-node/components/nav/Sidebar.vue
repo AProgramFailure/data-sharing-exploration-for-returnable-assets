@@ -63,7 +63,7 @@
                     :to="`/home/institution/${organization.organization_id}`"
                     class="border-2 bg-transparent border-emerald-300/20 hover:border-emerald-300 transition-colors duration-500 rounded-md w-[70px] h-[70px] min-w-[70px] flex flex-col items-center justify-center select-none text-white"
                     >
-                     hi
+                     {{ useAbreviation(organization.name) }}
                     </NuxtLink>
                     <div
                     @click="isOrganizationModalOpen = !isOrganizationModalOpen"

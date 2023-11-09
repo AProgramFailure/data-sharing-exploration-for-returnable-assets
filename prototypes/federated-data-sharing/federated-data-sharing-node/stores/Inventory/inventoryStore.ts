@@ -23,6 +23,8 @@ export const useInventoryStore = defineStore("inventory", () => {
             location_id: inventory_details.location_id,
             security: inventory_details.security
         })
+
+        return data.value?.response.payload
     }
 
     return {

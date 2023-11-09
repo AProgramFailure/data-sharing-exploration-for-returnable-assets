@@ -4,6 +4,13 @@ import { publicProcedure, router } from "../../trpc";
 import type { DBInventory, Inventory, InventoryResponse } from "../../../types/Inventory/Inventory"
 
 export const inventoryRouter = router({
+    getInventories: publicProcedure
+    .query(({ ctx }) => {
+        const inventories = ctx.db.prepare('SELECT * FROM inventory').all() as Inventory[]
+        return {
+            inventories
+        }
+    }),
     getInventory: publicProcedure
     .query( ({ ctx }) => {
         const fetchInventory = ctx.db.prepare(`
@@ -73,7 +80,7 @@ export const inventoryRouter = router({
         `).bind(newInvenotry.inventory_name, newInvenotry.item_type, newInvenotry.quantity, newInvenotry.security, newInvenotry.location_id).run()
 
         const getInsertedInventory = ctx.db.prepare(`
-        SELECT * FROM inventory WHERE inventory_name = ${newInvenotry.inventory_name}
+        SELECT * FROM inventory WHERE inventory_name = '${newInvenotry.inventory_name}'
         `).get() as DBInventory
 
 

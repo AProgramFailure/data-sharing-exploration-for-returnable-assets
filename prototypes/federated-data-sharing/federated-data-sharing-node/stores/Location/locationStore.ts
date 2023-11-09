@@ -24,6 +24,8 @@ export const useLocationStore = defineStore("location", () => {
             security: location_information.security,
             organization_id: location_information.organization_id
         })
+
+        return data.value?.response.payload
     }
 
     return {

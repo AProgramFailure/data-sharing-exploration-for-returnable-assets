@@ -14,7 +14,7 @@ export const userRouter = router({
         const fetchUsers = ctx.db.prepare(`
         SELECT user_id, email, name, organization_id FROM user_table
         `)
-        const users = fetchUsers.all();
+        const users = fetchUsers.all() as User[];
         return {
             users
         }

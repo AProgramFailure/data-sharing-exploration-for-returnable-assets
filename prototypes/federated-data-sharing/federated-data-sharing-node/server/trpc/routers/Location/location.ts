@@ -79,11 +79,11 @@ export const locationRouter = router({
         }
 
         const _insertLocation = ctx.db.prepare(`
-        INSERT INTO location (name, address, latitude, longitude, security, organization_id) VALUES (?, ?, ?, ?, ?, ?);
-        `).bind(newLocation.name, newLocation.address, newLocation.latitude, newLocation.longitude, newLocation.security, newLocation.organization_id).run()
+        INSERT INTO location (location_name, address, latitude, longitude, security, organization_id) VALUES (?, ?, ?, ?, ?, ?)
+        `).run(input.name, newLocation.address, newLocation.latitude, newLocation.longitude, newLocation.security, newLocation.organization_id)
 
         const getInsertedLocation = ctx.db.prepare(`
-        SELECT * FROM location WHERE name = ${newLocation.name}
+        SELECT * FROM location WHERE location_name = '${newLocation.name}'
         `)
 
         const location = getInsertedLocation.get();
