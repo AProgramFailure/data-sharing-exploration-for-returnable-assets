@@ -1,75 +1,31 @@
-# Nuxt 3 Minimal Starter
+# Centralized Server Prototype 
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This repository contains the frontend code for the Centralized Server Prototype, implemented using Nuxt.js.
 
-## Setup
+## Project Structure
 
-Make sure to install the dependencies:
+### Frontend
 
-```bash
-# npm
-npm install
+- `assets`: Contains Tailwind.
+- `components`: Houses reusable Vue components used throughout the application. Includes a Navbar component with logout functionality.
+- `composables`: Contains Vue Composition API logic for sharing across components (currently empty).
+- `layouts`: Includes layout files for the application views (default and Authorization).
+- `middleware`: Holds middleware files for route navigation guards (authentication).
+- `pages`: Contains the application's views and routes.
+- `plugins`: Includes Toast plugin.
+- `public`: Holds static files.
+- `store`: Houses Pinia store files for managing state.
+- `types`: Includes TypeScript type definitions.
+- `utils`: Consists of an Icon Factory for generating custom Nuxt Leaflet components, as it's an incomplete library not fully implemented by the official library.
 
-# pnpm
-pnpm install
+## Getting Started
 
-# yarn
-yarn install
+### Prerequisites
 
-# bun
-bun install
-```
+- Node.js
 
-## Development Server
+### Running the Project
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+1. Install dependencies with `npm install`.
+2. Run the project in development mode using `npm run dev`.
+3. Access the application by navigating to the specified local development server (usually http://localhost:3000 , using other routes might lead to CORS issues).
