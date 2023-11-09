@@ -51,8 +51,8 @@ public class AdminController {
 
     @RequestMapping(value = "/organization-access/remove/{id}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('admin:delete')")
-    public ResponseEntity<?> removeOrganizationAccess(@PathVariable("id") String id) {
-        organizationAccessService.removeOrganizationAccessById(id);
+    public ResponseEntity<?> removeOrganizationAccess(@PathVariable("id") String organizationId) {
+        organizationAccessService.removeOrganizationAccessById(organizationId);
         return ResponseEntity.ok("Successfully removed");
     }
 

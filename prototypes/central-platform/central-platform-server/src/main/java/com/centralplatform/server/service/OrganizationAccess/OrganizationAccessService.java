@@ -75,13 +75,13 @@ public class OrganizationAccessService {
             Optional<User> user = ((userRepository.findByEmail(userEmail)));
 
             if(user.isPresent()){
-                OrganizationAccess organizationAccess = organizationAccessRepository.findOrganizationAccessByOrganizationId(UUID.fromString(user.get().getOrganizationId()));
-                Optional<Organization> organization = organizationRepository.findById(UUID.fromString(id));
+                OrganizationAccess organizationAccess = organizationAccessRepository.findOrganizationAccessByOrganizationId(UUID.fromString(id));
+                Optional<Organization> organization = organizationRepository.findById((UUID.fromString(user.get().getOrganizationId())));
                 if(organization.isPresent()){
                     organizationAccess.getAllowedOrganizations().remove(organization.get());
                     organizationAccessRepository.save(organizationAccess);
                 }else{
-                    System.out.println("Organization not found when adding organization access.");
+                    System.out.println("Organization not found when removing organization access.");
                 }
             }
         }
