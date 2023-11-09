@@ -186,10 +186,7 @@ if (useCookie("userRole").value == "ADMIN") {
       </div>
     </div>
 
-    <div
-      v-if="externalOrganizationAccesses.length > 0"
-      class="min-h-[400px] overflow-y-auto"
-    >
+    <div class="min-h-[400px] overflow-y-auto">
       <h2 class="pl-5 mt-3 text-md text-emerald">
         External Organizations that received access:
       </h2>
@@ -239,6 +236,7 @@ if (useCookie("userRole").value == "ADMIN") {
         </div>
       </div>
       <div
+        v-if="externalOrganizationAccesses.length > 0"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5"
       >
         <div
@@ -246,11 +244,14 @@ if (useCookie("userRole").value == "ADMIN") {
           :key="extAccess.id"
           class="bg-neutral-800 rounded-lg p-4"
         >
-          <div class="bg-neutral-900  h-100 p-4 rounded">
+          <div class="bg-neutral-900 h-100 p-4 rounded">
             <p>
               {{ extAccess.organization.name }}
             </p>
-            <p><i>Organization ID:</i> <br> {{ extAccess.organization.id }}</p>
+            <p>
+              <i>Organization ID:</i> <br />
+              {{ extAccess.organization.id }}
+            </p>
             <div class="flex space-x-4 mt-8 mb-2 rounded pb-2">
               <button
                 class="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-300"
