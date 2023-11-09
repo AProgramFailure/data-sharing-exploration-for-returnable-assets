@@ -38,11 +38,11 @@ async function login() {
   if (useCookie("userToken").value) {
     setTimeout(() => {
       toast.success("Connecting");
-    }, 2000);
+    }, 1400);
 
     setTimeout(() => {
       navigateTo("/home");
-    }, 3000);
+    }, 2000);
   } else {
     toast.error("Could not authenticate");
   }

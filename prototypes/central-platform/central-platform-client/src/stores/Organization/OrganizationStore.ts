@@ -22,7 +22,6 @@ export const useOrganizationStore = defineStore("organizations", () => {
           Authorization: "Bearer " + useCookie("userToken").value,
         },
         body: {
-          email: "amdin@utwente.nl",
           type: "info",
         },
       })

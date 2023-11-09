@@ -2,10 +2,14 @@
 import { OrganizationDTO } from "~/types/Organization/Organization";
 import type { OrganizationAccessDTO } from "../types/OrganizationAccess/OrganizationAccess.ts";
 import { useOrganizationDTOStore } from "~/stores/Organization/OrganizationStoreDTO";
+import { useToast } from "vue-toastification";
 
 definePageMeta({
   middleware: "auth",
 });
+
+const toast = useToast();
+
 const organizationDTOStore = useOrganizationDTOStore();
 const { getOrganizationDTOs } = organizationDTOStore;
 const filteredOrganizations = computed(() => {
@@ -22,7 +26,9 @@ const filteredOrganizations = computed(() => {
       );
     });
   } else {
-    //TODO
+    setTimeout(() => {
+      toast.error("Organization access entity not found.");
+    }, 600);
   }
 });
 
@@ -50,7 +56,9 @@ const confirmSelection = async () => {
   if (selectedOrganization.value && selectedOrganization.value.id) {
     await addOrganizationAccess(selectedOrganization.value.id);
   } else {
-    //TODO add toast
+    setTimeout(() => {
+      toast.error("Organization was not found");
+    }, 600);
   }
 
   showModal.value = false;
@@ -238,11 +246,11 @@ if (useCookie("userRole").value == "ADMIN") {
           :key="extAccess.id"
           class="bg-neutral-800 rounded-lg p-4"
         >
-          <div class="bg-neutral-900 p-4 rounded">
+          <div class="bg-neutral-900  h-100 p-4 rounded">
             <p>
               {{ extAccess.organization.name }}
             </p>
-            <p><i>Organization ID:</i> {{ extAccess.organization.id }}</p>
+            <p><i>Organization ID:</i> <br> {{ extAccess.organization.id }}</p>
             <div class="flex space-x-4 mt-8 mb-2 rounded pb-2">
               <button
                 class="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-300"
