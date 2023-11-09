@@ -6,13 +6,15 @@
     const userStore = useUserStore()
     const organizationStore = useOrganizationStore()
 
-    const { getUser } = userStore;
-    const { getOrganizations } = organizationStore
+    const { getUser, user } = userStore;
+    const { getOrganizations, get_selected_organization } = organizationStore
 
     const isSidemenuOpen : Ref<boolean> = ref<boolean>(false);
 
-    definePageMeta({
-        name: "Federated - Home"
+    onMounted(() => {
+        if(user === undefined || user.email == undefined){
+            navigateTo("/")
+        }
     })
 
     useHead({
@@ -67,11 +69,11 @@
 
                     <div class="space-y-4 overflow-y-auto h-[700px] no-scrollbar">
                         <div
-                        v-for="(order, index) in 20"
+                        v-for="(order, index) in get_selected_organization.orders"
                         :key="index"
                         class="p-4 border-2 border-emerald-500/20 hover:border-emerald-500 rounded-md text-white space-y-2 transition duration-300">
                             <div class="flex justify-between">
-                                <div class="text-white/90 text-xs">Order Number: 3</div>
+                                <div class="text-white/90 text-xs">Order ID: {{ order.order_id }}</div>
                                 <div class="text-white/90 text-xs"> 20:30</div>
                             </div>
                             <div class="text-sm text-white/60">
@@ -79,7 +81,7 @@
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                                 </svg>
                                 <h1 class="font-semibold text-[14px]">
-                                    Destination: id-{{ index }}
+                                    Source: id-{{ order.source_location_id }}
                                 </h1>
                             </div>
                             <div class="text-sm text-white/60">
@@ -87,7 +89,7 @@
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                                 </svg>
                                 <h1 class="font-semibold text-[14px]">
-                                    Destination: id-{{ index }}
+                                    Destination: id-{{ order.destination_location_id }}
                                 </h1>
                             </div>
                         </div>

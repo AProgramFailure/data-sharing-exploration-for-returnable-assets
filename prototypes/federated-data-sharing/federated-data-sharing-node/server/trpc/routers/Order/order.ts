@@ -7,7 +7,7 @@ export const orderRouter = router({
     getOrders: publicProcedure
     .query( ({ ctx }) => {
         const fetchOrders = ctx.db.prepare(`
-        SELECT * FROM _order
+        SELECT * FROM order_table
         `)
         const orders = fetchOrders.all();
         return {
@@ -26,12 +26,12 @@ export const orderRouter = router({
     )
     .query( ({ input, ctx }) => {
         const insert_order = ctx.db.prepare(`
-            INSERT INTO order_table VALUES (status, security, source_location_id, destination_location_id, organization_id) VALUES (?, ?, ?, ?, ?)
+            INSERT INTO order_table (status, security, source_location_id, destination_location_id, organization_id) VALUES ( ?, ?, ?, ?, ?)
         `).bind(input.status, input.security, input.source_location_id, input.destination_location_id, input.organization_id).run()
 
 
         const inserted_order = ctx.db.prepare(`
-            SELECT * FROM order o WHERE o.order_id = ${insert_order.lastInsertRowid}
+            SELECT * FROM order_table o WHERE o.order_id = ${insert_order.lastInsertRowid}
         `).get() as DBOrder
 
         const ordered_items = ctx.db.prepare(`
@@ -100,7 +100,7 @@ export const orderRouter = router({
         `).run()
 
         const inserted_order = ctx.db.prepare(`
-            SELECT * FROM order o WHERE o.order_id = ${insert_order.lastInsertRowid}
+            SELECT * FROM order_table o WHERE o.order_id = ${insert_order.lastInsertRowid}
         `).get() as DBOrder
 
         const ordered_items = ctx.db.prepare(`

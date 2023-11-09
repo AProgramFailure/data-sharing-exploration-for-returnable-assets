@@ -16,10 +16,13 @@ export const useFederatedNodeStore = defineStore("nodes", () => {
             name: node_information.name,
             security: node_information.security
         })
+
+        return data.value?.response.payload
+
     }
 
     return {
-
+        create_node
     }
 }, {
     persist: true

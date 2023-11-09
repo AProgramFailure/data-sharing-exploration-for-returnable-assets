@@ -42,6 +42,8 @@ export const useOrganizationStore = defineStore("organization", () => {
             organization_type: type,
             security: privacy
         })
+
+        console.log(data)
         toast.success("Organization successfully Generated")
 
         toast.info(`Use code: ${data.value?.response.payload?.secret_key} to register`)
@@ -60,7 +62,7 @@ export const useOrganizationStore = defineStore("organization", () => {
         console.log(data)
     }
 
-    async function getOrganizationById(organization_id: number): Promise<Organization | undefined> {
+    async function getOrganizationById(organization_id: number) {
         const { data } = await organizations.getOrganizationById.useQuery({
             organization_id: organization_id
         })

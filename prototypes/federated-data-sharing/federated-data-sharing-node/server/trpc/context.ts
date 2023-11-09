@@ -68,10 +68,10 @@ export const createContext = () => {
     const location = db.prepare(
         `CREATE TABLE IF NOT EXISTS location (
         location_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        location_name TEXT NOT NULL,
         address TEXT NOT NULL,
         latitude TEXT NOT NULL,
-        longitute TEXT NOT NULL,
+        longitude TEXT NOT NULL,
         security TEXT NOT NULL,
         organization_id INTEGER,
         CONSTRAINT location_organization
@@ -95,7 +95,7 @@ export const createContext = () => {
     //8
     const order = db.prepare(
         `CREATE TABLE IF NOT EXISTS order_table (
-        order_id INTEGER NOT NULL,
+        order_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         status TEXT NOT NULL,
         security TEXT NOT NULL,
         source_location_id INTEGER NOT NULL,

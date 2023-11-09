@@ -15,6 +15,7 @@ export const useUserStore = defineStore("user", () =>{
     const { users } = $trpcClient
     const { getOrganizations, setCurrentOrganization } = organizationStore
 
+    const isAuthenticated : RemovableRef<boolean> = ref<boolean>(false)
     const user : RemovableRef<User> = useSessionStorage<User>("user", {} as User)
 
     const getUser : ComputedRef<RemovableRef<User>> = computed(() => user)
@@ -36,8 +37,14 @@ export const useUserStore = defineStore("user", () =>{
             getOrganizations.value.push(...data.value?.response.payload.organization_subscribers)
         }
 
-        toast.success("Successfully Registered in the system!")
-        navigateTo("/home")
+        if(!(data.value?.response.payload?.user == null || data.value?.response.payload?.user == undefined)){
+            toast.success("Successfully Registered!")
+            isAuthenticated.value = true;
+            navigateTo("/home")
+        }
+        else {
+            toast.error("No user found")
+        }
     }
 
     async function authenticate( credentials : UserCredentials) {
@@ -55,15 +62,35 @@ export const useUserStore = defineStore("user", () =>{
             getOrganizations.value.push(data.value?.response.payload?.organization)
             getOrganizations.value.push(...data.value?.response.payload.organization_subscribers)
             setCurrentOrganization(data.value?.response.payload?.organization)
+
         }
 
-        toast.success("Successfully Authenticated!")
-        navigateTo("/home")
+        if(!(data.value?.response.payload?.user == null || data.value?.response.payload?.user == undefined)){
+            toast.success("Successfully Authenticated!")
+            isAuthenticated.value = true
+            navigateTo("/home")
+        }
+        else {
+            toast.error("No user found")
+        }
+
+    }
+
+    async function create_user( user_details : MinifiedUser){
+        toast.info("Registering Instance.")
+        const { data } = await users.register.useQuery({
+            email: user_details.email,
+            password: user_details.password,
+            name: user_details.name,
+            secret_key: user_details.secret_key
+        })
+
+        toast.success("Successfully Created!")
     }
 
 
     return {
-        getUser, register, authenticate
+        getUser, register, authenticate, user, isAuthenticated, create_user
     }
 }, {
     persist: true
