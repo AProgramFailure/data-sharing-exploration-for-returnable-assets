@@ -1,75 +1,49 @@
-# Nuxt 3 Minimal Starter
+# Bilateral Data Sharing Approach with Nuxt Instances
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Overview
 
-## Setup
+This project implements a bilateral data sharing approach that allows users to log in with any credentials and connect different Nuxt instances. This README provides a guide on how to set up and use the bilateral data sharing feature with an example of two Nuxt instances running on localhost. Databases are present but empty.
 
-Make sure to install the dependencies:
+## Table of Contents
 
-```bash
-# npm
-npm install
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
 
-# pnpm
-pnpm install
+## Prerequisites
 
-# yarn
-yarn install
+Before you begin, ensure you have the following installed:
 
-# bun
-bun install
-```
+- [Node.js](https://nodejs.org/) 
+- [npm](https://www.npmjs.com/) 
 
-## Development Server
+## Installation
 
-Start the development server on `http://localhost:3000`:
+1. Install dependencies:
 
-```bash
-# npm
-npm run dev
+    ```bash
+    npm install
+    ```
 
-# pnpm
-pnpm run dev
+## Usage
 
-# yarn
-yarn dev
+1. Run Nuxt instances on localhost:
 
-# bun
-bun run dev
-```
+    ```bash
+    # First instance
+    npm run dev 
 
-## Production
+    # Second instance 
+    npm run dev 
+    ```
 
-Build the application for production:
+2. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) and [http://localhost:3001](http://localhost:3001) to ensure both instances are running. 
 
-```bash
-# npm
-npm run build
+3. Login in both.
 
-# pnpm
-pnpm run build
+4. In the connection modal which appears after pressing **connection**, enter the following details:
 
-# yarn
-yarn build
+    - **Address:** 127.0.0.1
+    - **Port:** 3001 for the first instance, 3000 for the second instance (so in each application enter the port number of the other instance).
 
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+5. Connect to the instances and observe bilateral data sharing in action.
