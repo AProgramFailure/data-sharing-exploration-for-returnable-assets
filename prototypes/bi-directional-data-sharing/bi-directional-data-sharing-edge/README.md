@@ -27,7 +27,7 @@ Before you begin, ensure you have the following installed:
 
 ## Usage
 
-1. Run Nuxt instances on localhost:
+1. Run Nuxt instances on localhost (npm run build for production):
 
     ```bash
     # First instance
@@ -35,15 +35,18 @@ Before you begin, ensure you have the following installed:
 
     # Second instance 
     npm run dev 
+
+    # nth instance ...
+    npm run dev
     ```
 
 2. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) and [http://localhost:3001](http://localhost:3001) to ensure both instances are running. 
 
-3. Login in both.
+3. Login in with any credentials.
 
 4. In the connection modal which appears after pressing **connection**, enter the following details:
 
-    - **Address:** 127.0.0.1
-    - **Port:** 3001 for the first instance, 3000 for the second instance (so in each application enter the port number of the other instance).
+    - **Address:** 127.0.0.1 (for localhost)
+    - **Port:** Each instance is given a port, enter the respective ports in the respective nodes that should be connected to.
 
 5. Connect to the instances and observe bilateral data sharing in action.
